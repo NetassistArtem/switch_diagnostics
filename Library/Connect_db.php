@@ -1,7 +1,7 @@
 <?php
 
 
-class Connect {
+class Connect_db {
 
 
     private static $connection;
@@ -17,10 +17,12 @@ class Connect {
         //}
     }
 
-    public static function getConnection()
+    public static function getConnection($db_number = 1)
     {
+
+        $db_data = Config::get('db_'.$db_number);
         if(!self::$connection){
-            self::$connection = new Connect(DSN, USER, PASS);
+            self::$connection = new Connect_db($db_data['dsn'], $db_data['user'], $db_data['pass']);
         }
         return self::$connection;
     }

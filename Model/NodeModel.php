@@ -6,7 +6,7 @@ class NodeModel
 
     public function indexPage($id)
     {
-        $dbc = Connect::getConnection();
+        $dbc = Connect_db::getConnection();
         $sql = "SELECT * FROM  pages WHERE id= :id";
         $placeholders = array(
             'id' => $id
@@ -18,5 +18,7 @@ class NodeModel
         }
         return $data;
     }
+
+
 
 }

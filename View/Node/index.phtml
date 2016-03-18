@@ -1,3 +1,8 @@
 <h1><?= $node_data['title'] ?></h1>
 
 <p><?= $node_data['text'] ?></p>
+
+<?php if($error_data['error_code'] && $error_data['error_message']): ?>
+    <p> Код ошибки: <?= $error_data['error_code']  ?> </p>
+    <p> Сообщение об ошибке: <?= $error_data['error_message']  ?> </p>
+<?php endif; ?>

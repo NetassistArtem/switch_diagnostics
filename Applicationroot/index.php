@@ -6,6 +6,12 @@ try {
 
     $request = new Request();
     $content = Router::get_content_by_url($request->server('REQUEST_URI'));
+} catch (SNMPException $e) {
+    IndexController::errorAction($e);
+    NodeController::writeErrorData($e);
+
+    $content = Router::get_content_by_url('/error_SNMP');
+
 } catch (PDOException $e) {
     IndexController::errorAction($e);
 

@@ -7,6 +7,7 @@ class IndexController extends Controller
 
     public function indexAction()
     {
+
         $nodeModel = new NodeModel();
         $node_data = $nodeModel->indexPage(4);
 
@@ -25,9 +26,17 @@ class IndexController extends Controller
 
     public function snmpDataAction($account_id = null, $tpl = null)
     {
+
+      //  $test = new helperModel();
+      //  $test->insertMac(489, "99:f6:ac:6a:ac:99", "10.4.0.113");
+
         $indexModel = new IndexModel();
         $id = $account_id ? $account_id : Router::getAccountId();
-        $data = $indexModel->snmpData($id);
+
+
+
+
+        $data = $indexModel->snmpData($id, "iso.3.6.1.2.1.1.4.0");
 
         if (!$data) {
             throw new Exception(" SNMP data is not found", 404);

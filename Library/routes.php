@@ -43,6 +43,14 @@
              'id' => 3
          )
      ),
+     'error_SNMP' => array(
+         'pattern' => '/error_SNMP',
+         'controller' => 'Node',
+         'action' => 'index',
+         'params' => array(
+             'id' => 5
+         )
+     ),
 
 
 
