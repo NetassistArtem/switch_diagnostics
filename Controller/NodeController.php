@@ -17,6 +17,7 @@ class NodeController extends Controller {
         $nodeModel = new NodeModel();
         $node_data = $nodeModel->indexPage(Router::getId());
 
+
      //   if(self::$error_code && self::$error_message){
             $error_data = array(
                 'error_code' => self::$error_code,

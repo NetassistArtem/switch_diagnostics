@@ -4,7 +4,8 @@
 class Connect_db {
 
 
-    private static $connection;
+    private static $connection1;
+    private static $connection2;
     private $PDO;
     private function __clone(){}
     private function __wakeup(){}
@@ -21,10 +22,23 @@ class Connect_db {
     {
 
         $db_data = Config::get('db_'.$db_number);
-        if(!self::$connection){
-            self::$connection = new Connect_db($db_data['dsn'], $db_data['user'], $db_data['pass']);
+
+        if($db_number == 1){
+            if(!self::$connection1){
+                self::$connection1 = new Connect_db($db_data['dsn'], $db_data['user'], $db_data['pass']);
+            }
+            return self::$connection1;
+
+        }elseif($db_number == 2){
+            if(!self::$connection2){
+                self::$connection2 = new Connect_db($db_data['dsn'], $db_data['user'], $db_data['pass']);
+            }
+            return self::$connection2;
+        }else{
+            return null;
         }
-        return self::$connection;
+
+
     }
     public function getDate($sql, array $placeholders=array())
     {
@@ -36,9 +50,11 @@ class Connect_db {
 
         $sth->execute($placeholders);
         $date = $sth->fetchAll(PDO::FETCH_ASSOC);
+
         return $date;
 
     }
+
 
     public function getPDO()
     {

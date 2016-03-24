@@ -51,6 +51,14 @@
              'id' => 5
          )
      ),
+     'error_mac_switch' => array(
+         'pattern' => '/error_mac_switch',
+         'controller' => 'Node',
+         'action' => 'index',
+         'params' => array(
+             'id' => 6
+         )
+     ),
 
 
 

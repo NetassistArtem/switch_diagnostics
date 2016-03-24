@@ -10,7 +10,7 @@ try {
     IndexController::errorAction($e);
     NodeController::writeErrorData($e);
 
-    $content = Router::get_content_by_url('/error_SNMP');
+    $content = $e->getMessage(); // Router::get_content_by_url('/error_SNMP');
 
 } catch (PDOException $e) {
     IndexController::errorAction($e);
@@ -21,9 +21,16 @@ try {
     IndexController::errorAction($e);
     if ($e->getCode() == 403) {
         $content = Router::get_content_by_url('/error_403');
+    }
+    if ($e->getCode() == 1) {
+
+        $content = $e->getMessage(); //Router::get_content_by_url('/error_mac_switch');
+
     } else {
-        $content =  Router::get_content_by_url('/error_404');
+        $content = Router::get_content_by_url('/error_404');
     }
 }
+
+
 echo $content;
 

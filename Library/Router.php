@@ -37,7 +37,7 @@ abstract class Router
 
                 self::$controller = $item['controller'];
                 self::$action = $item['action'];
-                self::$id = isset($item['params']['id'])? $item['params']['id'] : '';
+                self::$id = isset($item['params']['id']) ? $item['params']['id'] : '';
 
                 if ($item['action'] == 'snmpData') {
                     $url_array = explode('/', $url);
@@ -55,6 +55,7 @@ abstract class Router
 
     public static function get_content_by_url($url)
     {
+
         self::parse($url);
         $request = new Request();
         $_controller = self::getController() . 'Controller';
@@ -64,7 +65,15 @@ abstract class Router
         if (!method_exists($_controller_object, $_action)) {
             throw new Exception("{$_action} not found", 404);
         }
+
+        // echo $_controller.PHP_EOL;
+        // echo $_action.PHP_EOL;
+
+
+
         $content = $_controller_object->$_action();
+
+
         return $content;
     }
 
@@ -104,8 +113,6 @@ abstract class Router
     {
         return self::$id;
     }
-
-
 
 
 }

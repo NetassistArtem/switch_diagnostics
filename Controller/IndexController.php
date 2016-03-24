@@ -3,18 +3,143 @@
 
 class IndexController extends Controller
 {
+    public $account_id;
+
+    private function findPattern($data_switch)
+    {
+        $patternModel = new patternModel($this->account_id);
+        if ($data_switch) {
+            $switch = $patternModel->switchData();
+          //  Debugger::PrintR($switch);
+            // Debugger::PrintR($data_switch);
+
+            $switch_manufacturer = array();
+            $switch_model = array();
+            $switch_soft_version = array();
+            $switch_data_result = array();
+            foreach ($switch as $v) {
+                $switch_manufacturer[] = $v['manufacturer'];
+            }
+            $switch_manufacturer = array_unique($switch_manufacturer);
+
+
+            foreach ($switch_manufacturer as $val) {
+
+                if (stripos($data_switch['key'], $val) !== false) {
+                    $switch_data_result['manufacturer'] = $val;
+                }
+
+            }
+
+
+            foreach ($switch as $v) {
+                $switch_model[] = $v['model_name'];
+            }
+            $switch_model = array_unique($switch_model);
+
+
+            foreach ($switch_model as $val) {
+
+                if (stripos($data_switch['key'], $val) !== false) {
+
+                    $switch_data_result['model_name'] = $val;
+                }
+            }
+
+
+            foreach ($switch as $v) {
+                if ($v['model_name'] == $switch_data_result['model_name']) {
+                    $switch_soft_version[] = $v['firmware'];
+                }
+            }
+            if (!empty($switch_soft_version)) {
+                foreach ($switch_soft_version as $val) {
+
+                    if (stripos($data_switch['key'], $val) !== false) {
+                        $switch_data_result['soft_version'] = $val;
+                    }
+
+                }
+            }
+
+            if(!empty($switch_data_result)){
+                if(!$switch_data_result['manufacturer']){
+                    Session::setFlash('В полученных со свича данных отсутствует информация о производители свича.');
+                }
+                if(!$switch_data_result['soft_version']){
+                    Session::setFlash('В полученных со свича данных отсутствует информация о версии прошивки свича.');
+                    $patterns_array = array();
+                    foreach($switch as $v){
+                        if($switch_data_result['model_name'] == $v['model_name']){
+                            $patterns_array[] = $v['pattern_id'];
+                        }
+                    }
+                    $patterns_array = array_unique($patterns_array);
+                    if($patterns_array[1]){
+                        Session::setFlash('Сущствует несколько шаблонов для данного свича! Использован первый из имеющихся
+                         шаблонов');
+                    }
+                    return $patterns_array[0];
+                }
+                if($switch_data_result['manufacturer'] || $switch_data_result['soft_version'] || $switch_data_result['model_name']){
+                    foreach($switch as $v){
+                        if($switch_data_result['manufacturer'] == $v['manufacturer'] && $switch_data_result['model_name'] == $v['model_name'] && $switch_data_result['soft_version'] == $v['firmware']){
+                            return $v['pattern_id'];
+                        }
+                    }
+                }
+
+
+            } else{
+                Session::setFlash('Данные со свича не содержат информацию о производители, наименовании и версии прошивки свича.
+                 Для определения ID шаблона использованны данные о
+            модели и прошивки из базы данных биллинга');
+                $pattern_number = $patternModel->getPatternUserData();
+                if ($pattern_number['pattern_id']) {
+                    return $pattern_number['pattern_id'];
+                } else {
+                    Session::setFlash('ДДанные со свича не содержат информацию о производители, наименовании и версии
+                    прошивки свича. Информация о модели свича в базе данных билинга для
+                 запрашиваемого пользователя отсутствуют');
+                }
+
+            }
+
+
+        } else {
+
+            Session::setFlash('Данные со свича не были полученны. Для определения ID шаблона использованны данные о
+            модели и прошивки из базы данных биллинга');
+            $pattern_number = $patternModel->getPatternUserData();
+            if ($pattern_number['pattern_id']) {
+                return $pattern_number['pattern_id'];
+            } else {
+                Session::setFlash('Данные со свича не были получены. Информация о модели свича в базе данных билинга для
+                 запрашиваемого пользователя отсутствуют');
+            }
+
+        }
+      
+        return null;
+    }
 
 
     public function indexAction()
     {
 
+
         $nodeModel = new NodeModel();
         $node_data = $nodeModel->indexPage(4);
+        $indexModel = new IndexModel();
 
-        $request =new Request();
-        if($request->isPost()){
-          //  добавить другие проверки - есть ли такой пользователь допустим
-        return  $this->snmpDataAction($request->post('account_id'), 'snmpData');
+        $request = new Request();
+        if ($request->isPost()) {
+
+
+            return $this->snmpDataAction($request->post('account_id'), 'snmpData');
+
+            //  добавить другие проверки - есть ли такой пользователь допустим
+
         }
         $args = array(
             'node_data' => $node_data[0]
@@ -27,23 +152,27 @@ class IndexController extends Controller
     public function snmpDataAction($account_id = null, $tpl = null)
     {
 
-      //  $test = new helperModel();
-      //  $test->insertMac(489, "99:f6:ac:6a:ac:99", "10.4.0.113");
+        //  $test = new helperModel();
+        //  $test->insertMac(489, "99:f6:ac:6a:ac:99", "10.4.0.113");
 
         $indexModel = new IndexModel();
-        $id = $account_id ? $account_id : Router::getAccountId();
+        $this->account_id = $account_id ? $account_id : Router::getAccountId();
 
 
+        $data = $indexModel->snmpData($this->account_id, Config::get('oid_swith_model'));
+      $test = $this->findPattern($data);
+        echo $test;
 
 
-        $data = $indexModel->snmpData($id, "iso.3.6.1.2.1.1.4.0");
+        //  if (!$data) {
+        //      throw new Exception(" SNMP data is not found", 404);
 
-        if (!$data) {
-            throw new Exception(" SNMP data is not found", 404);
+        // }
+        $args = array(
+            'data' => $data
+        );
 
-        }
-
-        return $this->render($data, $tpl);
+        return $this->render($args, $tpl);
 
     }
 
