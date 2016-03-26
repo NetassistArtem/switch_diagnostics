@@ -15,13 +15,17 @@ class IndexModel
         $data = array(
 
             'key' => $switch_data,
+            'switch_ip' => $switch_mac['switch_ip'],
+            'mac' => $switch_mac['mac'],
+            'port' => $switch_mac['port']
+
 
         );
 
         return $data;
     }
 
-    private function getDataByID($account_id, $switch_ip = null, $mac = null)
+    private function getDataByID($account_id, $switch_ip = null, $mac = null, $port = null)
     {
         $dbc = Connect_db::getConnection(2);
         $sql = "SELECT `switch_ip`, `mac`, `port` FROM `users` WHERE `id`= :account_id";
@@ -30,30 +34,32 @@ class IndexModel
         );
         $d = $dbc->getDate($sql, $placeholders);
 
-
-        if (!isset($d['0']['switch_ip']) || !isset($d['0']['mac'])) {
-            $message = '';
-            if (!isset($d['0']['switch_ip']) && !isset($d['0']['mac'])) {
-                $message = 'Not found in data base switch_ip and mac-adress for user with account id = ' . $account_id;
-            }
-            elseif(!isset($d['0']['switch_ip'])){
-                $message = 'Not found in data base switch_ip for user with account id = ' . $account_id;
-            }
-            elseif(!isset($d['0']['mac'])){
-                $message = 'Not found in data base mac-adress for user with account id = ' . $account_id;
-            }
-            throw new Exception($message, 1);
-        }
-
         $switch_ip_read = long2ip($d['0']['switch_ip']);
         $mac_read = base_convert($d['0']['mac'], 10, 16);
 
         $data = array(
             'switch_ip' => $switch_ip ? $switch_ip : $switch_ip_read,
             'mac' => $mac ? $mac : $mac_read,
-            'port' => $d['0']['port']
+            'port' => $port ? $port : $d['0']['port']
         );
 
+
+        if (!$data['port'] || !$data['switch_ip']) {
+            $message = '';
+            if (!$data['port'] || !$data['switch_ip']) {
+                $message = 'Not found  switch_ip and switch port for user with account id = ' . $account_id;
+            }
+            elseif(!$data['switch_ip']){
+                $message = 'Not found  switch_ip for user with account id = ' . $account_id;
+            }
+            elseif(!$data['port']){
+                $message = 'Not found switch port for user with account id = ' . $account_id;
+            }
+            throw new Exception($message, 1);
+        }
+        if(!$data['mac']){
+            Session::setFlash('Not found in data base mac-adress for user with account id = '.$account_id.'.');
+        }
 
             return $data;
 

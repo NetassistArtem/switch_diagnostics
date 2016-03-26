@@ -1,9 +1,39 @@
+
+<h1> Пользователь <?= $account_id ?></h1>
 <div>
     <p>
-        <?=  $test_text . $account_id. PHP_EOL ?>
-        <?= $key ?>
+
         <?= Session::getFlash(); ?>
 
 
     </p>
 </div>
+
+<table border="1">
+    <tr>
+        <td colspan="2">Данные полученные со свича</td>
+    </tr>
+    <tr>
+        <td>Состояние порта</td>
+        <td><?= $data_switch['port_status']? $data_switch['port_status'] : 'Нет данных' ?></td>
+    </tr>
+    <tr>
+        <td>счетчик, байт</td>
+        <td><?= $data_switch['counter_byte']?  $data_switch['counter_byte'] : 'Нет данных' ?></td>
+    </tr>
+    <tr>
+        <td colspan="2">Данные полученные из базы данных билинга</td>
+    </tr>
+    <tr>
+        <td>ip свича</td>
+        <td><?= $data_db['switch_ip']? $data_db['switch_ip'] : 'Нет данных' ?></td>
+    </tr>
+    <tr>
+        <td>Мак адрес пользователя</td>
+        <td><?= $data_db['mac']? $data_db['mac'] : 'Нет данных'?></td>
+    </tr>
+    <tr>
+        <td>Порт</td>
+        <td><?= $data_db['port']? $data_db['port'] : 'Нет данных'?></td>
+    </tr>
+</table>

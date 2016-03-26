@@ -119,7 +119,7 @@ class IndexController extends Controller
             }
 
         }
-      
+
         return null;
     }
 
@@ -159,17 +159,42 @@ class IndexController extends Controller
         $this->account_id = $account_id ? $account_id : Router::getAccountId();
 
 
-        $data = $indexModel->snmpData($this->account_id, Config::get('oid_swith_model'));
-      $test = $this->findPattern($data);
-        echo $test;
+        $d = $indexModel->snmpData($this->account_id, Config::get('oid_switch_model'));
+      $pattern_id = $this->findPattern($d);
+        $patternModel = new patternModel($this->account_id);
 
+        $pattern_data = $patternModel->PatternData($d['port'], $pattern_id);
+
+        $oids = array();
+        foreach($pattern_data as $k => $v){
+            if($k != 'id' && $k != 'port_coefficient'){
+                $oids[$k] =  $v;
+            }
+        }
+
+        $data = $indexModel->snmpData($this->account_id, $oids);
+
+
+        $oids = array_flip($oids);
+        $data_switch = array_combine($oids, $data['key']);
+
+        if($data_switch['port_status'] == 1){
+            $data_switch['port_status'] = 'ON';
+        }else {
+            $data_switch['port_status'] = 'OFF';
+        }
+       // Debugger::PrintR($data_switch);
+        unset($data['key']);
+    //    Debugger::PrintR($data);
 
         //  if (!$data) {
         //      throw new Exception(" SNMP data is not found", 404);
 
         // }
         $args = array(
-            'data' => $data
+            'data_switch' => $data_switch,
+            'data_db' => $data,
+            'account_id'=> $this->account_id
         );
 
         return $this->render($args, $tpl);
