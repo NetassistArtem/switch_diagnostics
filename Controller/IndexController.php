@@ -153,7 +153,7 @@ class IndexController extends Controller
     {
 
         //  $test = new helperModel();
-        //  $test->insertMac(489, "99:f6:ac:6a:ac:99", "10.4.0.113");
+        //  $test->insertMac(290, "99:f6:ac:4a:f6:ac", "10.4.0.113", 4, "S2326TP-EI", "Version 5.70");
 
         $indexModel = new IndexModel();
         $this->account_id = $account_id ? $account_id : Router::getAccountId();
@@ -172,6 +172,7 @@ class IndexController extends Controller
             }
         }
 
+
         $data = $indexModel->snmpData($this->account_id, $oids);
 
 
@@ -183,6 +184,8 @@ class IndexController extends Controller
         }else {
             $data_switch['port_status'] = 'OFF';
         }
+
+        $data_switch['last_change'] = date(' Y-m-d h:i:m', mktime(0,0,-($data_switch['last_change'])));
        // Debugger::PrintR($data_switch);
         unset($data['key']);
     //    Debugger::PrintR($data);
@@ -191,6 +194,7 @@ class IndexController extends Controller
         //      throw new Exception(" SNMP data is not found", 404);
 
         // }
+
         $args = array(
             'data_switch' => $data_switch,
             'data_db' => $data,

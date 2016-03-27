@@ -72,13 +72,32 @@ class patternModel
         );
         $data = $dbc->getDate($sql, $placeholders);
         $port = $port_number + $data[0]['port_coefficient'];
+
+
+        foreach ($data[0] as $k => $v) {
+            if ($k != 'id' && $k != 'port_coefficient' ) {
+                $data[0][$k] = $data[0][$k] . $port;
+                if(empty($v)){
+                    unset($data[0][$k]);
+                }
+
+            }
+        }
+
+        /*
         if ($data[0]['port_status']) {
             $data[0]['port_status'] = $data[0]['port_status'] . $port;
         }
-        if ($data[0]['counter_byte']) {
-            $data[0]['counter_byte'] = $data[0]['counter_byte'] . $port;
+        if ($data[0]['counter_byte_in']) {
+            $data[0]['counter_byte_in'] = $data[0]['counter_byte_in'] . $port;
         }
-
+        if ($data[0]['counter_byte_out']) {
+            $data[0]['counter_byte_out'] = $data[0]['counter_byte_out'] . $port;
+        }
+        if ($data[0]['counter_pkts_out']) {
+            $data[0]['counter_pkts_out'] = $data[0]['counter_pkts_out'] . $port;
+        }
+*/
         return $data[0];
 
     }

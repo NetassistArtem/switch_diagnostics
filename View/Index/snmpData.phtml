@@ -15,11 +15,32 @@
     </tr>
     <tr>
         <td>Состояние порта</td>
-        <td><?= $data_switch['port_status']? $data_switch['port_status'] : 'Нет данных' ?></td>
+        <td><?= isset($data_switch['port_status'])? $data_switch['port_status'] : 'Нет данных' ?></td>
     </tr>
     <tr>
-        <td>счетчик, байт</td>
-        <td><?= $data_switch['counter_byte']?  $data_switch['counter_byte'] : 'Нет данных' ?></td>
+        <td>счетчик(in), байт</td>
+        <td><?= isset($data_switch['counter_byte_in'])?  $data_switch['counter_byte_in'] : 'Нет данных' ?></td>
+    </tr>
+
+    <tr>
+        <td>счетчик(out), байт</td>
+        <td><?= isset($data_switch['counter_byte_out'])?  $data_switch['counter_byte_out'] : 'Нет данных' ?></td>
+    </tr>
+    <tr>
+        <td>счетчик пакетов</td>
+        <td><?= isset($data_switch['counter_pkts_out'])?  $data_switch['counter_pkts_out'] : 'Нет данных' ?></td>
+    </tr>
+    <tr>
+        <td>Ошибки</td>
+        <td><?= isset($data_switch['error'])?  $data_switch['error'] : 'Нет данных' ?></td>
+    </tr>
+    <tr>
+        <td>Скорость</td>
+        <td><?= isset($data_switch['speed'])?  $data_switch['speed'] : 'Нет данных' ?></td>
+    </tr>
+    <tr>
+        <td>Время последнего изменения порта</td>
+        <td><?= isset($data_switch['last_change'])?  $data_switch['last_change'] : 'Нет данных' ?></td>
     </tr>
     <tr>
         <td colspan="2">Данные полученные из базы данных билинга</td>
