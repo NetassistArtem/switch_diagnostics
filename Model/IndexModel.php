@@ -17,7 +17,11 @@ class IndexModel
             'key' => $switch_data,
             'switch_ip' => $switch_mac['switch_ip'],
             'mac' => $switch_mac['mac'],
-            'port' => $switch_mac['port']
+            'port' => $switch_mac['port'],
+            'switch_model'  => $switch_mac['switch_model'],
+            'firmware'  => $switch_mac['firmware']
+
+
 
 
         );
@@ -25,23 +29,31 @@ class IndexModel
         return $data;
     }
 
-    private function getDataByID($account_id, $switch_ip = null, $mac = null, $port = null)
+    private function getDataByID($account_id, $switch_ip = null, $mac = null, $port = null, $switch_model = null,$firmware = null)
     {
         $dbc = Connect_db::getConnection(2);
-        $sql = "SELECT `switch_ip`, `mac`, `port` FROM `users` WHERE `id`= :account_id";
+        $sql = "SELECT `switch_ip`, `mac`, `port` ,`switch_model`, `firmware` FROM `users` WHERE `id`= :account_id";
         $placeholders = array(
             'account_id' => $account_id
         );
         $d = $dbc->getDate($sql, $placeholders);
 
         $switch_ip_read = long2ip($d['0']['switch_ip']);
-        $mac_read = base_convert($d['0']['mac'], 10, 16);
+
+        $mac_r = base_convert($d['0']['mac'], 10, 16);
+
+        $mac_read = implode(":", str_split($mac_r, 2));
+
+
 
         $data = array(
             'switch_ip' => $switch_ip ? $switch_ip : $switch_ip_read,
             'mac' => $mac ? $mac : $mac_read,
-            'port' => $port ? $port : $d['0']['port']
+            'port' => $port ? $port : $d['0']['port'],
+            'switch_model'  => $switch_model ? $switch_model : $d['0']['switch_model'],
+            'firmware'  => $firmware ? $firmware : $d['0']['firmware']
         );
+
 
 
         if (!$data['port'] || !$data['switch_ip']) {

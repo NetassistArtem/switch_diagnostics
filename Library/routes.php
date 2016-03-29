@@ -59,6 +59,21 @@
              'id' => 6
          )
      ),
+     'account_test_id_history' => array(
+         'pattern' => '/account_test/history/{account_id}',
+         'controller' => 'Index',
+         'action' => 'history',
+         'params' => array(
+             'account_id' => '[1-9][0-9]*',
+
+         )
+     ),
+     'account_test_history' => array(
+         'pattern' => '/account_test/history',
+         'controller' => 'Index',
+         'action' => 'historySelect',
+
+     ),
 
 
 

@@ -10,7 +10,7 @@ class IndexController extends Controller
         $patternModel = new patternModel($this->account_id);
         if ($data_switch) {
             $switch = $patternModel->switchData();
-          //  Debugger::PrintR($switch);
+            //  Debugger::PrintR($switch);
             // Debugger::PrintR($data_switch);
 
             $switch_manufacturer = array();
@@ -62,35 +62,35 @@ class IndexController extends Controller
                 }
             }
 
-            if(!empty($switch_data_result)){
-                if(!$switch_data_result['manufacturer']){
+            if (!empty($switch_data_result)) {
+                if (!$switch_data_result['manufacturer']) {
                     Session::setFlash('В полученных со свича данных отсутствует информация о производители свича.');
                 }
-                if(!$switch_data_result['soft_version']){
+                if (!$switch_data_result['soft_version']) {
                     Session::setFlash('В полученных со свича данных отсутствует информация о версии прошивки свича.');
                     $patterns_array = array();
-                    foreach($switch as $v){
-                        if($switch_data_result['model_name'] == $v['model_name']){
+                    foreach ($switch as $v) {
+                        if ($switch_data_result['model_name'] == $v['model_name']) {
                             $patterns_array[] = $v['pattern_id'];
                         }
                     }
                     $patterns_array = array_unique($patterns_array);
-                    if($patterns_array[1]){
+                    if ($patterns_array[1]) {
                         Session::setFlash('Сущствует несколько шаблонов для данного свича! Использован первый из имеющихся
                          шаблонов');
                     }
                     return $patterns_array[0];
                 }
-                if($switch_data_result['manufacturer'] || $switch_data_result['soft_version'] || $switch_data_result['model_name']){
-                    foreach($switch as $v){
-                        if($switch_data_result['manufacturer'] == $v['manufacturer'] && $switch_data_result['model_name'] == $v['model_name'] && $switch_data_result['soft_version'] == $v['firmware']){
+                if ($switch_data_result['manufacturer'] || $switch_data_result['soft_version'] || $switch_data_result['model_name']) {
+                    foreach ($switch as $v) {
+                        if ($switch_data_result['manufacturer'] == $v['manufacturer'] && $switch_data_result['model_name'] == $v['model_name'] && $switch_data_result['soft_version'] == $v['firmware']) {
                             return $v['pattern_id'];
                         }
                     }
                 }
 
 
-            } else{
+            } else {
                 Session::setFlash('Данные со свича не содержат информацию о производители, наименовании и версии прошивки свича.
                  Для определения ID шаблона использованны данные о
             модели и прошивки из базы данных биллинга');
@@ -154,21 +154,23 @@ class IndexController extends Controller
 
         //  $test = new helperModel();
         //  $test->insertMac(290, "99:f6:ac:4a:f6:ac", "10.4.0.113", 4, "S2326TP-EI", "Version 5.70");
+        $historyModel = new historyModel();
+$historyModel->cleanHistory();
 
         $indexModel = new IndexModel();
         $this->account_id = $account_id ? $account_id : Router::getAccountId();
 
 
         $d = $indexModel->snmpData($this->account_id, Config::get('oid_switch_model'));
-      $pattern_id = $this->findPattern($d);
+        $pattern_id = $this->findPattern($d);
         $patternModel = new patternModel($this->account_id);
 
         $pattern_data = $patternModel->PatternData($d['port'], $pattern_id);
 
         $oids = array();
-        foreach($pattern_data as $k => $v){
-            if($k != 'id' && $k != 'port_coefficient'){
-                $oids[$k] =  $v;
+        foreach ($pattern_data as $k => $v) {
+            if ($k != 'id' && $k != 'port_coefficient') {
+                $oids[$k] = $v;
             }
         }
 
@@ -179,31 +181,104 @@ class IndexController extends Controller
         $oids = array_flip($oids);
         $data_switch = array_combine($oids, $data['key']);
 
-        if($data_switch['port_status'] == 1){
+
+
+        if ($data_switch['port_status'] == 1) {
             $data_switch['port_status'] = 'ON';
-        }else {
+        } else {
             $data_switch['port_status'] = 'OFF';
         }
+        if (isset($data_switch['last_change'])) {
 
-        $data_switch['last_change'] = date(' Y-m-d h:i:m', mktime(0,0,-($data_switch['last_change'])));
-       // Debugger::PrintR($data_switch);
+            $data_switch['last_change'] = date(' Y-m-d h:i:m', mktime(0, 0, -($data_switch['last_change'])));
+        }
+         if(isset($data_switch['speed'])){
+
+             $data_switch['speed'] = $data_switch['speed']/1000000;
+         }
+
+        // Debugger::PrintR($data_switch);
         unset($data['key']);
-    //    Debugger::PrintR($data);
+        //    Debugger::PrintR($data);
 
         //  if (!$data) {
         //      throw new Exception(" SNMP data is not found", 404);
 
         // }
-
+        $test_2 = new historyModel();
+        $test_2->insertData($this->account_id, $data_switch, $data);
         $args = array(
             'data_switch' => $data_switch,
             'data_db' => $data,
-            'account_id'=> $this->account_id
+            'account_id' => $this->account_id
         );
+
+
 
         return $this->render($args, $tpl);
 
     }
+
+    public function historyAction($account_id = NULL, $tpl = null)
+    {
+
+
+        $this->account_id = $account_id ? $account_id : Router::getAccountId();
+        $historyModel = new historyModel();
+
+        $historyModel->cleanHistory();
+
+
+        $data_history = $historyModel->selectData($this->account_id);
+
+        $data_history = array_reverse($data_history);
+
+
+        foreach($data_history as $k => $v){
+
+            $data_history[$k]['switch_ip'] = long2ip($v['switch_ip']);
+            $mac = base_convert($v['mac'], 10, 16);
+            $data_history[$k]['mac'] = implode(":", str_split($mac, 2));
+            $data_history[$k]['date_time'] = date('Y-m-d h:i:s', $v['date_time']);
+        }
+
+
+
+        if (!$data_history) {
+                  throw new Exception(" History data for user $this->account_id not found", 404);
+
+             }
+
+        $args = array(
+            'data_history' => $data_history,
+            'account_id' => $this->account_id
+        );
+        return $this->render($args, $tpl);
+
+    }
+
+    public function historySelectAction()
+    {
+        $nodeModel = new NodeModel();
+        $node_data = $nodeModel->indexPage(7);
+
+
+        $request = new Request();
+        if ($request->isPost()) {
+
+
+            return $this->historyAction($request->post('account_id'), 'history');
+
+            //  добавить другие проверки - есть ли такой пользователь допустим
+
+        }
+        $args = array(
+            'node_data' => $node_data[0]
+        );
+
+        return $this->render($args);
+    }
+
 
     public static function rewrite_file($file_path, $mode, $date)
     {

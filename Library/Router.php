@@ -39,8 +39,9 @@ abstract class Router
                 self::$action = $item['action'];
                 self::$id = isset($item['params']['id']) ? $item['params']['id'] : '';
 
-                if ($item['action'] == 'snmpData') {
+                if ($item['action'] == 'snmpData' || $item['action'] == 'history') {
                     $url_array = explode('/', $url);
+
 
                     self::$account_id = array_pop($url_array);
                 }

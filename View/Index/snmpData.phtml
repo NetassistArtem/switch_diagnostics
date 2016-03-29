@@ -35,7 +35,7 @@
         <td><?= isset($data_switch['error'])?  $data_switch['error'] : 'Нет данных' ?></td>
     </tr>
     <tr>
-        <td>Скорость</td>
+        <td>Скорость мб/с</td>
         <td><?= isset($data_switch['speed'])?  $data_switch['speed'] : 'Нет данных' ?></td>
     </tr>
     <tr>
@@ -57,4 +57,14 @@
         <td>Порт</td>
         <td><?= $data_db['port']? $data_db['port'] : 'Нет данных'?></td>
     </tr>
+    <tr>
+        <td>Модель свича</td>
+        <td><?= $data_db['switch_model']? $data_db['switch_model'] : 'Нет данных'?></td>
+    </tr>
+    <tr>
+        <td>Прошивка свича</td>
+        <td><?= $data_db['firmware']? $data_db['firmware'] : 'Нет данных'?></td>
+    </tr>
 </table>
+
+<div><a href="/account_test/history/<?= $account_id ?>" target="_blank">История пользователя</a></div>
