@@ -4,9 +4,12 @@
 class IndexController extends Controller
 {
     public $account_id;
+  //  private $repetition;
 
     private function findPattern($data_switch)
     {
+
+
         $patternModel = new patternModel($this->account_id);
         if ($data_switch) {
             $switch = $patternModel->switchData();
@@ -57,10 +60,26 @@ class IndexController extends Controller
 
                     if (stripos($data_switch['key'], $val) !== false) {
                         $switch_data_result['soft_version'] = $val;
+                    } elseif (strtoupper($data_switch['manufacturer']) == 'ELTEX') {
+
+
+                        $indexModel = new IndexModel();
+
+
+                        $soft_ver_array = $indexModel->snmpByKey($this->account_id, '1.3.6.1.4.1.89.2.4');
+
+
+                        foreach ($soft_ver_array as $v) {
+
+                            $switch_data_result['soft_version'] = 'Version ' . $v;
+                        }
+
+
                     }
 
                 }
             }
+
 
             if (!empty($switch_data_result)) {
                 if (!$switch_data_result['manufacturer']) {
@@ -79,14 +98,29 @@ class IndexController extends Controller
                         Session::setFlash('Сущствует несколько шаблонов для данного свича! Использован первый из имеющихся
                          шаблонов');
                     }
+
                     return $patterns_array[0];
                 }
+
                 if ($switch_data_result['manufacturer'] || $switch_data_result['soft_version'] || $switch_data_result['model_name']) {
+
+
                     foreach ($switch as $v) {
+
                         if ($switch_data_result['manufacturer'] == $v['manufacturer'] && $switch_data_result['model_name'] == $v['model_name'] && $switch_data_result['soft_version'] == $v['firmware']) {
                             return $v['pattern_id'];
+                        } elseif ($switch_data_result['model_name'] == $v['model_name'] && $switch_data_result['soft_version'] == $v['firmware']) {
+
+                            Session::setFlash('Данные со свича не содержат информации о производители свича');
+                            return $v['pattern_id'];
+                        } elseif ($switch_data_result['model_name'] == $v['model_name']) {
+
+                            Session::setFlash('Данные со свича не содержат информации о производители свича м версии прошивки');
+                            return $v['pattern_id'];
                         }
+
                     }
+
                 }
 
 
@@ -152,35 +186,98 @@ class IndexController extends Controller
     public function snmpDataAction($account_id = null, $tpl = null)
     {
 
-        //  $test = new helperModel();
-        //  $test->insertMac(290, "99:f6:ac:4a:f6:ac", "10.4.0.113", 4, "S2326TP-EI", "Version 5.70");
+        //   $test = new helperModel();
+        // $test->insertMac(400, "f0:de:f1:40:75:f1", "10.4.0.114", 2, "MES1124MB", "Version 1.1.44", "ELTEX");
+
+    //    $indexModel = new IndexModel();
+      //  $indexModel->testConnect();
+
+        require LIB_DIR . 'cableStatus.php';
+
         $historyModel = new historyModel();
-$historyModel->cleanHistory();
+        $historyModel->cleanHistory();
 
         $indexModel = new IndexModel();
         $this->account_id = $account_id ? $account_id : Router::getAccountId();
 
 
         $d = $indexModel->snmpData($this->account_id, Config::get('oid_switch_model'));
+        // Debugger::PrintR($d);
         $pattern_id = $this->findPattern($d);
+
+
         $patternModel = new patternModel($this->account_id);
 
-        $pattern_data = $patternModel->PatternData($d['port'], $pattern_id);
+        $port_coefficient = $patternModel->getPortCoefficient($pattern_id)['port_coefficient'];
 
-        $oids = array();
-        foreach ($pattern_data as $k => $v) {
-            if ($k != 'id' && $k != 'port_coefficient') {
-                $oids[$k] = $v;
+
+        $mac_port_array = $indexModel->getAllMac($this->account_id, $pattern_id, $port_coefficient);
+      //  Debugger::PrintR($mac_port_array);
+
+
+
+        if ($d['mac']) {
+            if (array_key_exists($d['mac'], $mac_port_array)) {
+                $port_db = $d['port'] + $port_coefficient;
+
+                $port_switch = $mac_port_array[$d['mac']];
+
+
+
+                $p_s = $port_switch - $port_coefficient;
+
+                if ($port_switch != $port_db) {
+                    // echo $port_switch.PHP_EOL;
+                    // echo $port_db;
+
+                    Session::setFlash("В базе данных билинга указан не правильный порт! В базе данных порт
+                    - " . $d['port'] . " По данным свича - $p_s Для получения данных исползуется порт $p_s");
+                    $d['port'] = $p_s;
+
+                }
+
+            } else {
+                Session::setFlash("Мак адрес пользователя $this->account_id  указанный в базе даных билинга не обнаружен в данных свича");
             }
+
+        } else {
+            Session::setFlash("Мак адрес в базе даных билинга для пользователя $this->account_id отсутствует");
         }
 
 
-        $data = $indexModel->snmpData($this->account_id, $oids);
+        $indexModel->cableTest($this->account_id, $pattern_id, $d['port'], $d['manufacturer']);
+        $pattern_data = $patternModel->PatternData($d['port'], $pattern_id);
 
+
+        $oids = array();
+        foreach ($pattern_data as $k => $v) {
+            if ($k != 'id' && $k != 'port_coefficient' && $k != 'mac_all' && $k != 'macs_ports') {
+                $oids[$k] = $v;
+            }
+        }
+      //  Debugger::PrintR($oids);
+
+        if ($d['manufacturer'] == 'ELTEX') {
+            $oids['cable_status'] = $oids['cable_status'] . '.2';
+            $oids['cable_lenght'] = $oids['cable_lenght'] . '.3';
+
+        }
+
+      //  die('ups');
+        $data = $indexModel->snmpData($this->account_id, $oids);
 
         $oids = array_flip($oids);
         $data_switch = array_combine($oids, $data['key']);
 
+        $mac_arr = array();
+        foreach ($mac_port_array as $k => $v) {
+            $val = $v - $port_coefficient;
+
+            if ($val == $d['port']) {
+                $mac_arr[] = $k;
+            }
+        }
+        $data_switch['mac'] = $mac_arr;
 
 
         if ($data_switch['port_status'] == 1) {
@@ -192,27 +289,62 @@ $historyModel->cleanHistory();
 
             $data_switch['last_change'] = date(' Y-m-d h:i:m', mktime(0, 0, -($data_switch['last_change'])));
         }
-         if(isset($data_switch['speed'])){
+        if (isset($data_switch['speed'])) {
 
-             $data_switch['speed'] = $data_switch['speed']/1000000;
-         }
+            $data_switch['speed'] = $data_switch['speed'] / 1000000;
+        }
+        if (isset($data_switch['cable_status'])) {
+            $data_switch['cable_status'] = $cable_status[$d['manufacturer']][$data_switch['cable_status']];
+
+            /*
+            switch ($data_switch['cable_status']) {
+                case 1:
+                    $data_switch['cable_status'] = 'normal';
+                    break;
+                case 2:
+                    $data_switch['cable_status'] = 'обрыв';
+                    break;
+                case 3:
+                    $data_switch['cable_status'] = 'замыкание';
+                    break;
+                case 4:
+                    $data_switch['cable_status'] = 'замыкание или обрыв';
+                    break;
+                case 5:
+                    $data_switch['cable_status'] = 'перепутаны пары';
+                    break;
+                case 6:
+                    $data_switch['cable_status'] = 'неизвестно';
+                    break;
+                case 7:
+                    $data_switch['cable_status'] = 'не поддерживается';
+                    break;
+
+            }*/
+
+        };
 
         // Debugger::PrintR($data_switch);
         unset($data['key']);
-        //    Debugger::PrintR($data);
 
+        $data['port'] = $d['port'];
+        //Debugger::PrintR($data);
         //  if (!$data) {
         //      throw new Exception(" SNMP data is not found", 404);
 
         // }
-        $test_2 = new historyModel();
-        $test_2->insertData($this->account_id, $data_switch, $data);
+        $historyModel->insertData($this->account_id, $data_switch, $data);
+
         $args = array(
             'data_switch' => $data_switch,
             'data_db' => $data,
             'account_id' => $this->account_id
         );
-
+       // Debugger::PrintR($data_switch);
+      //  if($this->repetition != 1){
+      //      $this->repetition = 1;
+      //      $this->snmpDataAction();
+      //  }
 
 
         return $this->render($args, $tpl);
@@ -234,7 +366,7 @@ $historyModel->cleanHistory();
         $data_history = array_reverse($data_history);
 
 
-        foreach($data_history as $k => $v){
+        foreach ($data_history as $k => $v) {
 
             $data_history[$k]['switch_ip'] = long2ip($v['switch_ip']);
             $mac = base_convert($v['mac'], 10, 16);
@@ -243,11 +375,10 @@ $historyModel->cleanHistory();
         }
 
 
-
         if (!$data_history) {
-                  throw new Exception(" History data for user $this->account_id not found", 404);
+            throw new Exception(" History data for user $this->account_id not found", 404);
 
-             }
+        }
 
         $args = array(
             'data_history' => $data_history,

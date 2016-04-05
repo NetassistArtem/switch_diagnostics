@@ -18,6 +18,7 @@ class patternModel
         $data = $dbc->getDate($sql, $placeholders);
 
 
+
         if (!$data) {
             throw new Exception(" Switch models data is missing", 404);
         }
@@ -75,8 +76,10 @@ class patternModel
 
 
         foreach ($data[0] as $k => $v) {
-            if ($k != 'id' && $k != 'port_coefficient' ) {
+            if ($k != 'id' && $k != 'port_coefficient'&& $k != 'mac_all'&& $k != 'macs_ports' ) {
+
                 $data[0][$k] = $data[0][$k] . $port;
+
                 if(empty($v)){
                     unset($data[0][$k]);
                 }
@@ -84,22 +87,33 @@ class patternModel
             }
         }
 
-        /*
-        if ($data[0]['port_status']) {
-            $data[0]['port_status'] = $data[0]['port_status'] . $port;
-        }
-        if ($data[0]['counter_byte_in']) {
-            $data[0]['counter_byte_in'] = $data[0]['counter_byte_in'] . $port;
-        }
-        if ($data[0]['counter_byte_out']) {
-            $data[0]['counter_byte_out'] = $data[0]['counter_byte_out'] . $port;
-        }
-        if ($data[0]['counter_pkts_out']) {
-            $data[0]['counter_pkts_out'] = $data[0]['counter_pkts_out'] . $port;
-        }
-*/
+Debugger::PrintR($data);
         return $data[0];
 
+    }
+    public function macData($pattern_id)
+    {
+        $dbc = Connect_db::getConnection();
+        $sql = "SELECT `mac_all` FROM `patterns` WHERE  `id`= :pattern_id";
+        $placeholders = array(
+            'pattern_id' => $pattern_id
+        );
+        $data = $dbc->getDate($sql, $placeholders);
+
+        return $data[0];
+    }
+
+    public function getPortCoefficient($pattern_id){
+
+
+        $dbc = Connect_db::getConnection();
+        $sql = "SELECT `port_coefficient` FROM `patterns` WHERE  `id`= :pattern_id";
+        $placeholders = array(
+            'pattern_id' => $pattern_id
+        );
+        $data = $dbc->getDate($sql, $placeholders);
+
+        return $data[0];
     }
 
 

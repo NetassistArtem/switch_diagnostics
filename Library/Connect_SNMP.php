@@ -5,12 +5,22 @@ class Connect_SNMP
 {
     private $snmp_session;
     private $version = SNMP::VERSION_2c;
-    private $community;
+    private $community_read;
+    private $community_write;
 
-    public function __construct($switch_ip)
+
+    public function __construct($switch_ip, $wr_rd = 'r')
     {
-        $this->community = Config::get('community');
-        $this->snmp_session = new SNMP($this->version, $switch_ip, $this->community);
+        $this->community_read = Config::get('community_read');
+        $this->community_write = Config::get('community_write');
+        if($wr_rd == 'w'){
+            $community = $this->community_write;
+        }elseif($wr_rd == 'r'){
+            $community = $this->community_read;
+        }else{
+            throw new Exception('Wrong community flag', 500);
+        }
+        $this->snmp_session = new SNMP($this->version, $switch_ip, $community);
         $this->snmp_session->exceptions_enabled = SNMP::ERRNO_ANY;
         $this->snmp_session->valueretrieval = SNMP_VALUE_PLAIN;
     }
@@ -31,7 +41,16 @@ class Connect_SNMP
     public function setData($object_id,$type,$value)
     {
         $this->snmp_session->set($object_id,$type,$value);
+        $this->close_session();
 
+    }
+
+    public function walkByKey($key)
+    {
+       $data = $this->snmp_session->walk($key);
+        $this->close_session();
+
+        return $data;
     }
 
     /**
@@ -41,6 +60,8 @@ class Connect_SNMP
     {
         return $this->snmp_session;
     }
+
+
 
 
 
