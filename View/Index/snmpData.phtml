@@ -1,11 +1,15 @@
 <h1> Пользователь <?= $account_id ?></h1>
 <div>
-    <p>
-
-        <?= Session::getFlash(); ?>
 
 
-    </p>
+
+        <?php foreach(Session::getFlash() as $v): ?>
+
+            <p> <?= $v; ?></p>
+        <?php endforeach; ?>
+
+
+
 </div>
 
 <table border="1">
@@ -39,11 +43,11 @@
     </tr>
     <tr>
         <td>Состояние кабеля</td>
-        <td><?= isset($data_switch['cable_status']) ? $data_switch['cable_status'] : 'Нет данных' ?></td>
+        <td><?= (isset($data_switch['cable_status']) && Config::get('cabletest_on_off')== 'on') ? $data_switch['cable_status'] : 'Нет данных' ?></td>
     </tr>
     <tr>
         <td>Длина кабеля</td>
-        <td><?= isset($data_switch['cable_lenght']) ? $data_switch['cable_lenght'] : 'Нет данных' ?></td>
+        <td><?= (isset($data_switch['cable_lenght']) && Config::get('cabletest_on_off')== 'on') ? $data_switch['cable_lenght'] : 'Нет данных' ?></td>
     </tr>
     <tr>
         <td>Время последнего изменения порта</td>
@@ -91,6 +95,11 @@
         <td>Прошивка свича</td>
         <td><?= $data_db['firmware'] ? $data_db['firmware'] : 'Нет данных' ?></td>
     </tr>
+    <tr>
+        <td>Время отработки свича, с</td>
+        <td><?=  microtime(true)-$GLOBALS['start_time']; ?></td>
+    </tr>
 </table>
 
 <div><a href="/account_test/history/<?= $account_id ?>" target="_blank">История пользователя</a></div>
+

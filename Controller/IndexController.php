@@ -4,7 +4,8 @@
 class IndexController extends Controller
 {
     public $account_id;
-  //  private $repetition;
+
+    //  private $repetition;
 
     private function findPattern($data_switch)
     {
@@ -132,7 +133,7 @@ class IndexController extends Controller
                 if ($pattern_number['pattern_id']) {
                     return $pattern_number['pattern_id'];
                 } else {
-                    Session::setFlash('ДДанные со свича не содержат информацию о производители, наименовании и версии
+                    Session::setFlash('Данные со свича не содержат информацию о производители, наименовании и версии
                     прошивки свича. Информация о модели свича в базе данных билинга для
                  запрашиваемого пользователя отсутствуют');
                 }
@@ -186,11 +187,12 @@ class IndexController extends Controller
     public function snmpDataAction($account_id = null, $tpl = null)
     {
 
-        //   $test = new helperModel();
-        // $test->insertMac(400, "f0:de:f1:40:75:f1", "10.4.0.114", 2, "MES1124MB", "Version 1.1.44", "ELTEX");
 
-    //    $indexModel = new IndexModel();
-      //  $indexModel->testConnect();
+      // $test = new helperModel();
+       // $test->insertMac(501, "88:ae:1d:c9:78:78", "10.4.0.100", 7, "DES-1210-28/ME", "6.02.011", "D-Link");
+
+        //    $indexModel = new IndexModel();
+        //  $indexModel->testConnect();
 
         require LIB_DIR . 'cableStatus.php';
 
@@ -212,8 +214,7 @@ class IndexController extends Controller
 
 
         $mac_port_array = $indexModel->getAllMac($this->account_id, $pattern_id, $port_coefficient);
-      //  Debugger::PrintR($mac_port_array);
-
+        //  Debugger::PrintR($mac_port_array);
 
 
         if ($d['mac']) {
@@ -221,7 +222,6 @@ class IndexController extends Controller
                 $port_db = $d['port'] + $port_coefficient;
 
                 $port_switch = $mac_port_array[$d['mac']];
-
 
 
                 $p_s = $port_switch - $port_coefficient;
@@ -244,8 +244,11 @@ class IndexController extends Controller
             Session::setFlash("Мак адрес в базе даных билинга для пользователя $this->account_id отсутствует");
         }
 
+        if (Config::get('cabletest_on_off') == 'on') {
 
-        $indexModel->cableTest($this->account_id, $pattern_id, $d['port'], $d['manufacturer']);
+            $indexModel->cableTest($this->account_id, $pattern_id, $d['port'], $d['manufacturer']);
+        }
+
         $pattern_data = $patternModel->PatternData($d['port'], $pattern_id);
 
 
@@ -255,7 +258,7 @@ class IndexController extends Controller
                 $oids[$k] = $v;
             }
         }
-      //  Debugger::PrintR($oids);
+        //  Debugger::PrintR($oids);
 
         if ($d['manufacturer'] == 'ELTEX') {
             $oids['cable_status'] = $oids['cable_status'] . '.2';
@@ -263,7 +266,7 @@ class IndexController extends Controller
 
         }
 
-      //  die('ups');
+        //  die('ups');
         $data = $indexModel->snmpData($this->account_id, $oids);
 
         $oids = array_flip($oids);
@@ -340,11 +343,11 @@ class IndexController extends Controller
             'data_db' => $data,
             'account_id' => $this->account_id
         );
-       // Debugger::PrintR($data_switch);
-      //  if($this->repetition != 1){
-      //      $this->repetition = 1;
-      //      $this->snmpDataAction();
-      //  }
+        // Debugger::PrintR($data_switch);
+        //  if($this->repetition != 1){
+        //      $this->repetition = 1;
+        //      $this->snmpDataAction();
+        //  }
 
 
         return $this->render($args, $tpl);

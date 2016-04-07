@@ -5,14 +5,34 @@ class IndexModel
 {
     private $switch_mac;
 
-  /*
-    public function testConnect()
+    /*
+      public function testConnect()
+      {
+          $snmp = new Connect_SNMP($this->switch_mac['switch_ip']);
+        //  $snmp->getByKey(Config::get('oid_switch_model'));
+      }
+
+  */
+    private function dlinkMacAll($mac_data, $port_coefficient)
     {
-        $snmp = new Connect_SNMP($this->switch_mac['switch_ip']);
-      //  $snmp->getByKey(Config::get('oid_switch_model'));
+        $mac_port_array = array();
+        foreach ($mac_data as $k => $v) {
+            if (strpos($k, 'iso.3.6.1.2.1.17.7.1.2.2.1.2.1.') !== false) {
+                $mac_10 = str_replace('iso.3.6.1.2.1.17.7.1.2.2.1.2.1.', '', $k);
+                $mac_parts_array = explode('.', $mac_10);
+                $mac_16 = '';
+                foreach ($mac_parts_array as $val) {
+                    $mac_16 .= dechex($val) . ':';
+                }
+                $mac_16 = trim($mac_16, ':');
+                $mac_port_array[$mac_16] = str_replace('INTEGER: ', '', $v) + $port_coefficient;;
+            }
+        }
+        //$mac_data = array_flip($mac_data);
+        Debugger::PrintR($mac_port_array);
+        return $mac_port_array;
     }
 
-*/
     public function snmpData($account_id, $key)
     {
         if (!$this->switch_mac) {
@@ -31,7 +51,7 @@ class IndexModel
             'port' => $this->switch_mac['port'],
             'switch_model' => $this->switch_mac['switch_model'],
             'firmware' => $this->switch_mac['firmware'],
-            'manufacturer'  => $this->switch_mac['manufacturer']
+            'manufacturer' => $this->switch_mac['manufacturer']
 
 
         );
@@ -95,62 +115,65 @@ class IndexModel
         $mac_port['mac_all'] = '.' . trim($mac_port['mac_all'], '.');
         //$mac_port['macs_ports'] = '.' . trim($mac_port['macs_ports'], '.');
         $snmp->getSnmpSession()->valueretrieval = SNMP_VALUE_LIBRARY;
-      //  Debugger::PrintR($mac_port);
+        //  Debugger::PrintR($mac_port);
 
         $mac_data = $snmp->walkByKey($mac_port['mac_all']);
 
-        $reg = "/([0-9a-fA-F]{2}([:-\s]|$)){6}$|([0-9a-fA-F]{4}([.]|$)){3}/";
+        if ($this->switch_mac['manufacturer'] == 'D-Link') {
+          return  $this->dlinkMacAll($mac_data, $port_coefficient);
 
-        $mac_array = array();
-        $port_array = array();
-        foreach ($mac_data as  $v) {
-            if (preg_match($reg, $v, $matches)) {
+        } else {
 
-                $mac_array[] = $matches[0];
-            }else{
 
-                $port_array[] = str_replace('INTEGER: ', '', $v) + $port_coefficient;
+            $reg = "/([0-9a-fA-F]{2}([:-\s]|$)){6}$|([0-9a-fA-F]{4}([.]|$)){3}/";
+
+            $mac_array = array();
+            $port_array = array();
+            foreach ($mac_data as $v) {
+                if (preg_match($reg, $v, $matches)) {
+
+                    $mac_array[] = $matches[0];
+                } else {
+
+                    $port_array[] = str_replace('INTEGER: ', '', $v) + $port_coefficient;
+                }
             }
+            $aray_count = count($mac_array);
+            //  Debugger::PrintR($mac_array);
+
+
+            $port_array = array_slice($port_array, 0, $aray_count);
+
+            // Debugger::PrintR($port_array);
+
+
+            //  $snmp->getSnmpSession()->valueretrieval = SNMP_VALUE_PLAIN;
+
+            //$mac_port_data = $snmp->walkByKey($mac_port['macs_ports']);
+
+            //  Debugger::PrintR($mac_port_data);
+
+            //    $port_array = array_slice($mac_port_data,0, $aray_count);
+
+            // Debugger::PrintR($port_array);
+
+            $mac_port_a = array_combine($mac_array, $port_array);
+            $mac_port_array = array();
+            foreach ($mac_port_a as $k => $v) {
+                $k = strtolower(trim($k));
+                if ($v != 0) {
+                    if (strpos($k, ' ')) {
+                        $mac_port_array[str_replace(' ', ':', $k)] = $v;
+                    }
+                    if (strpos($k, '-')) {
+                        $mac_port_array[str_replace('-', ':', $k)] = $v;
+                    }
+                }
+            }
+            Debugger::PrintR($mac_port_array);
         }
-        $aray_count = count($mac_array);
-      //  Debugger::PrintR($mac_array);
 
-
-
-
-
-        $port_array = array_slice($port_array,0, $aray_count);
-
-       // Debugger::PrintR($port_array);
-
-
-
-
-
-      //  $snmp->getSnmpSession()->valueretrieval = SNMP_VALUE_PLAIN;
-
-        //$mac_port_data = $snmp->walkByKey($mac_port['macs_ports']);
-
-      //  Debugger::PrintR($mac_port_data);
-
-    //    $port_array = array_slice($mac_port_data,0, $aray_count);
-
-       // Debugger::PrintR($port_array);
-
-        $mac_port_a = array_combine($mac_array,$port_array);
-        $mac_port_array = array();
-        foreach($mac_port_a as $k=>$v){
-            $k = strtolower(trim($k));
-            if(strpos($k,' ')){
-                $mac_port_array[str_replace(' ',':', $k)] = $v;
-            }
-            if(strpos($k,'-')){
-                $mac_port_array[str_replace('-',':', $k)] = $v;
-            }
-        }
-        Debugger::PrintR($mac_port_array);
-
-          return $mac_port_array;
+        return $mac_port_array;
 
     }
 
@@ -159,20 +182,24 @@ class IndexModel
         if (!$this->switch_mac) {
             $this->switch_mac = $this->getDataByID($account_id);
         }
-        $snmp = new Connect_SNMP($this->switch_mac['switch_ip'], 'w');
+        Debugger::PrintR($this->switch_mac);
+
 
         $patternModel = new patternModel($account_id);
         $object_id = $patternModel->PatternData($port, $pattern_id)['cable_test_start'];
+        if ($object_id) {
+            $write_test = 1;
+            if (strtoupper($switch_manufacturer) == 'ELTEX') {
+                $write_test = 2;
+            }
 
+            $snmp = new Connect_SNMP($this->switch_mac['switch_ip'], 'w');
+            $snmp->setData($object_id, 'i', $write_test);
 
-
-        $write_test = 1;
-        if(strtoupper($switch_manufacturer) == 'ELTEX'){
-            $write_test = 2;
+            sleep(Config::get('timeout_cabletest')[$switch_manufacturer]);
+        } else {
+            Session::setFlash('Тест кабеля для свича ' . $this->switch_mac['switch_model'] . ' ' . $this->switch_mac['manufacturer'] . ' ' . $this->switch_mac['firmware'] . ' на данный момент не доступен (отсутствует необходимый OID)');
         }
-
-
-        $snmp->setData($object_id, 'i', $write_test);
     }
 
     public function indexPage($id)
@@ -186,7 +213,9 @@ class IndexModel
 
         return $data;
     }
-    public function snmpByKey($account_id,$key){
+
+    public function snmpByKey($account_id, $key)
+    {
         if (!$this->switch_mac) {
             $this->switch_mac = $this->getDataByID($account_id);
         }

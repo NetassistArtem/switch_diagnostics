@@ -1,5 +1,8 @@
 <?php
 
+$GLOBALS['start_time'] = microtime(true);
+
+
 require_once '../Applicationroot/init.php';
 Session::start();
 try {

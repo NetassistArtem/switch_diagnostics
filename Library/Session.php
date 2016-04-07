@@ -3,6 +3,7 @@
 
 class Session
 {
+    public static $flash_messages = array();
 
     public static function has($key)
     {
@@ -51,14 +52,15 @@ class Session
 
     public static function setFlash($message)
     {
-        $_SESSION['flash'] = $message;
+        self::$flash_messages[] = $message;
+        $_SESSION['flash'] = self::$flash_messages;
     }
 
     public static function getFlash()
     {
         $message = self::get('flash');
         self::remove('flash');
-        return (string)$message;
+        return $message;
 
     }
 
