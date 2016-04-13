@@ -6,6 +6,7 @@ class Connect_db {
 
     private static $connection1;
     private static $connection2;
+    private static $connection3;
     private $PDO;
     private function __clone(){}
     private function __wakeup(){}
@@ -34,6 +35,12 @@ class Connect_db {
                 self::$connection2 = new Connect_db($db_data['dsn'], $db_data['user'], $db_data['pass']);
             }
             return self::$connection2;
+
+        }elseif($db_number == 3){
+            if(!self::$connection3){
+                self::$connection3 = new Connect_db($db_data['dsn'], $db_data['user'], $db_data['pass']);
+            }
+            return self::$connection3;
         }else{
             return null;
         }

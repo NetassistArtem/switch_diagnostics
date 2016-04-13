@@ -29,8 +29,18 @@ class IndexModel
             }
         }
         //$mac_data = array_flip($mac_data);
-        Debugger::PrintR($mac_port_array);
+
         return $mac_port_array;
+    }
+
+    private function switchData()
+    {
+        $dbc = Connect_db::getConnection();
+        $sql = "SELECT * FROM  `switches`";
+        $placeholders = array();
+        $data = $dbc->getDate($sql, $placeholders);
+        return $data;
+
     }
 
     public function snmpData($account_id, $key)
@@ -61,8 +71,82 @@ class IndexModel
 
     private function getDataByID($account_id, $switch_ip = null, $mac = null, $port = null, $switch_model = null, $firmware = null, $manufacturer = null)
     {
+        if(Config::get('mode') == 'test'){
+            return $this->getDataByIDtest($account_id, $switch_ip, $mac, $port, $switch_model, $firmware, $manufacturer);
+        }else{
+            return $this->getDataByIDprod($account_id, $switch_ip, $mac, $port, $switch_model, $firmware, $manufacturer);
+        }
+    }
+
+
+
+
+
+    private function getDataByIDprod($account_id, $switch_ip = null, $mac = null, $port = null, $switch_model = null, $firmware = null, $manufacturer = null)
+    {
+
+        $dbc = Connect_db::getConnection(3);
+
+
+        $sql = "SELECT pl.sw_id, pl.port_id AS port, sl.sw_ip AS switch_ip, sl.sw_model AS switch_mod_manuf, ul.user_mac AS mac FROM port_list pl JOIN sw_list sl
+JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl.ref_user_id = ul.user_id";
+        $placeholders = array(
+            'account_id' => $account_id
+        );
+
+        $d = $dbc->getDate($sql, $placeholders);
+
+        $switch_data_db = $this->switchData();
+        $switch_mod_manuf = strtolower($d[0]['switch_mod_manuf']);
+
+        foreach ($switch_data_db as $v){
+
+            if(strpos($switch_mod_manuf, strtolower($v['model_name']) )!== false){
+                $d[0]['switch_model'] = $v['model_name'];
+                $d[0]['manufacturer']= $v['manufacturer'];
+                $d[0]['firmware']= $v['firmware'];
+            }
+        }
+        if(!$d[0]['switch_model']){
+            throw new Exception('Модель свича отсутсвтует в базе данных. Введите модель свича и соответствующий ей шаблон SNMP запросов (ссылка на добавление свича)',1);
+        }
+
+        $data = array(
+            'switch_ip' => $switch_ip ? $switch_ip : $d['0']['switch_ip'],
+            'mac' => $mac ? $mac : $d['0']['mac'],
+            'port' => $port ? $port : $d['0']['port'],
+            'switch_model' => $switch_model ? $switch_model : $d['0']['switch_model'],
+            'firmware' => $firmware ? $firmware : $d['0']['firmware'],
+            'manufacturer' => $manufacturer ? $manufacturer : $d['0']['manufacturer']
+        );
+
+
+        if (!$data['port'] || !$data['switch_ip']) {
+            $message = '';
+            if (!$data['port'] || !$data['switch_ip']) {
+                $message = 'Not found  switch_ip and switch port for user with account id = ' . $account_id;
+            } elseif (!$data['switch_ip']) {
+                $message = 'Not found  switch_ip for user with account id = ' . $account_id;
+            } elseif (!$data['port']) {
+                $message = 'Not found switch port for user with account id = ' . $account_id;
+            }
+            throw new Exception($message, 1);
+        }
+        if (!$data['mac']) {
+            Session::setFlash('Not found in data base mac-adress for user with account id = ' . $account_id . '.');
+        }
+
+        return $data;
+    }
+
+
+
+
+    private function getDataByIDtest($account_id, $switch_ip = null, $mac = null, $port = null, $switch_model = null, $firmware = null, $manufacturer = null)
+    {
         $dbc = Connect_db::getConnection(2);
-        $sql = "SELECT `switch_ip`, `mac`, `port` ,`switch_model`, `firmware`, `manufacturer` FROM `users` WHERE `id`= :account_id";
+          $sql = "SELECT `switch_ip`, `mac`, `port` ,`switch_model`, `firmware`, `manufacturer` FROM `users` WHERE `id`= :account_id";
+
         $placeholders = array(
             'account_id' => $account_id
         );
@@ -101,9 +185,16 @@ class IndexModel
         }
 
         return $data;
-
-
     }
+
+
+
+
+
+
+
+
+
 
     public function getAllMac($account_id, $pattern_id, $port_coefficient)
     {
@@ -170,7 +261,7 @@ class IndexModel
                     }
                 }
             }
-            Debugger::PrintR($mac_port_array);
+
         }
 
         return $mac_port_array;
@@ -182,7 +273,7 @@ class IndexModel
         if (!$this->switch_mac) {
             $this->switch_mac = $this->getDataByID($account_id);
         }
-        Debugger::PrintR($this->switch_mac);
+
 
 
         $patternModel = new patternModel($account_id);

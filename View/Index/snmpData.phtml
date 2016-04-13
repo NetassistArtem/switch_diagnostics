@@ -1,14 +1,31 @@
+<div>
+    <nav>
+        <p>
+            <a href="#">Вернуться в билинг</a>
+        </p>
+        <p>
+            <a href="/account_test">Вернуться на главную</a>
+        </p>
+    </nav>
+</div>
 <h1> Пользователь <?= $account_id ?></h1>
 <div>
 
 
 
-        <?php foreach(Session::getFlash() as $v): ?>
+        <?php foreach(Session::getFlash( $account_id) as $v): ?>
 
-            <p> <?= $v; ?></p>
+            <p class="<?= $v['warning_class']; ?>"><?= $v['warning_class']; ?>: <?= $v['message']; ?></p>
         <?php endforeach; ?>
 
-
+<div>
+    <p>
+        <a href="/account_test/<?= $account_id ?>?cabletest=on">Кабель тест</a>
+    </p>
+    <p>
+        <a href="/account_test/insert_cable_length/<?= $account_id ?>">Записать длинну кабеля</a>
+    </p>
+</div>
 
 </div>
 
@@ -42,12 +59,16 @@
         <td><?= isset($data_switch['speed']) ? $data_switch['speed'] : 'Нет данных' ?></td>
     </tr>
     <tr>
-        <td>Состояние кабеля</td>
-        <td><?= (isset($data_switch['cable_status']) && Config::get('cabletest_on_off')== 'on') ? $data_switch['cable_status'] : 'Нет данных' ?></td>
+        <td>Дуплекс</td>
+        <td><?= isset($data_switch['duplex']) ? $data_switch['duplex'] : 'Нет данных' ?></td>
     </tr>
     <tr>
+        <td>Состояние кабеля</td>
+        <td><?= (isset($cabletest_start) && $cabletest_start == 'yes') ? $data_switch['cable_status'] : 'Нет данных' ?></td>
+    </tr>
+    <tr class = "<?= $cable_length_status ?>">
         <td>Длина кабеля</td>
-        <td><?= (isset($data_switch['cable_lenght']) && Config::get('cabletest_on_off')== 'on') ? $data_switch['cable_lenght'] : 'Нет данных' ?></td>
+        <td><?= (isset($cabletest_start) && $cabletest_start == 'yes') ? $data_switch['cable_lenght'] : 'Нет данных' ?></td>
     </tr>
     <tr>
         <td>Время последнего изменения порта</td>
@@ -86,6 +107,10 @@
     <tr>
         <td>Порт</td>
         <td><?= $data_db['port'] ? $data_db['port'] : 'Нет данных' ?></td>
+    </tr>
+    <tr>
+        <td>Производитель свича</td>
+        <td><?= $data_db['manufacturer'] ? $data_db['manufacturer'] : 'Нет данных' ?></td>
     </tr>
     <tr>
         <td>Модель свича</td>

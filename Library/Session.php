@@ -50,15 +50,22 @@ class Session
         session_destroy();
     }
 
-    public static function setFlash($message)
+    public static function setFlash($message, $warning_class = null)
     {
-        self::$flash_messages[] = $message;
+        self::$flash_messages[] = array(
+            'message' => $message,
+            'warning_class' => $warning_class
+        );
         $_SESSION['flash'] = self::$flash_messages;
     }
 
-    public static function getFlash()
+    public static function getFlash($account_id = null)
     {
         $message = self::get('flash');
+
+        $errorModel = new errorModel($account_id);
+        $errorModel->writeError($message);
+
         self::remove('flash');
         return $message;
 

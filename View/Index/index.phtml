@@ -3,7 +3,28 @@
     <p><?= $node_data['text'] ?></p>
 
 <form action=""method="post">
+    <ul>
+        <li>
+            <input type="radio" name="info_type" value="history" id="history">
+            <label for="history">История пользователя</label>
+        </li>
+        <li>
+            <input type="radio" name="info_type" value="with_cabletest" id="with_cabletest">
+            <label for="with_cabletest">Диагностика с тестом кабеля</label>
+        </li>
+        <li>
+            <input type="radio" name="info_type" value="without_cabletest" id="without_cabletest">
+            <label for="without_cabletest">Диагностика без теста кабеля</label>
+        </li>
+    </ul>
     <label for="account_id"></label>
     <input name="account_id" id ="account_id" type="number" required min = 1/>
     <input type="submit"/>
 </form>
+<div>
+    <a href="/account_test/user_error">Все ошибки при заросе пользователей</a>
+</div>
+
+<div>
+    <a href="/account_test/user_error?errors_date=<?= $date ?>">Ошибки при заросе пользователей за сегодня</a>
+</div>

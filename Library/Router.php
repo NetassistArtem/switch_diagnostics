@@ -19,6 +19,7 @@ abstract class Router
         $arr = explode('?', $url);
         $url = rtrim($arr[0], '/');
 
+
         if (!$url) {
             self::$controller = 'Index';
             self::$action = 'index';
@@ -39,7 +40,7 @@ abstract class Router
                 self::$action = $item['action'];
                 self::$id = isset($item['params']['id']) ? $item['params']['id'] : '';
 
-                if ($item['action'] == 'snmpData' || $item['action'] == 'history') {
+                if ($item['action'] == 'snmpData' || $item['action'] == 'history' ||  $item['action'] == 'insertCableLength') {
                     $url_array = explode('/', $url);
 
 

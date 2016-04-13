@@ -1,0 +1,21 @@
+<h1> Ошибки возникающие при запросе информации о пользователях.</h1>
+
+<table border="1">
+    <tr>
+        <td>Дата</td>
+        <td>Время</td>
+        <td>id пользователя</td>
+        <td>Ошибки</td>
+    </tr>
+    <?php foreach($data_error as $v ): ?>
+
+
+        <tr>
+            <td><?= $v['date'] ?></td>
+            <td><?= $v['time'] ?></td>
+            <td><?= $v['user_id'] ?></td>
+            <td><?= $v['error'] ?></td>
+        </tr>
+    <?php endforeach; ?>
+
+</table>

@@ -74,6 +74,22 @@
          'action' => 'historySelect',
 
      ),
+     'error_user' => array(
+         'pattern' => '/account_test/user_error',
+         'controller' => 'Index',
+         'action' => 'errorUser',
+
+     ),
+     'insert_cable_length' => array(
+         'pattern' => '/account_test/insert_cable_length/{account_id}',
+         'controller' => 'Index',
+         'action' => 'insertCableLength',
+         'params' => array(
+             'account_id' => '[1-9][0-9]*',
+
+         )
+
+     ),
 
 
 

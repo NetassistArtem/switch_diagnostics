@@ -1,0 +1,14 @@
+
+ul, li {
+    list-style-type: none;
+}
+
+.warning {
+    color: red;
+}
+.notice {
+    color: #0000FF;
+}
+.information {
+    color: #00cc00;
+}
