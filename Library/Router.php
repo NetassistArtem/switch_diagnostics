@@ -8,6 +8,7 @@ abstract class Router
     private static $action;
     private static $account_id = null;
     private static $id;
+    private static $switch_id = null;
 
     /**
      * @param $url
@@ -45,6 +46,10 @@ abstract class Router
 
 
                     self::$account_id = array_pop($url_array);
+                }
+                if($item['action'] == 'editSwitch'|| $item['action'] == 'deleteSwitch'){
+                    $url_array = explode('/', $url);
+                    self::$switch_id = array_pop($url_array);
                 }
             }
         }
@@ -114,6 +119,14 @@ abstract class Router
     public static function getId()
     {
         return self::$id;
+    }
+
+    /**
+     * @return null
+     */
+    public static function getSwitchId()
+    {
+        return self::$switch_id;
     }
 
 

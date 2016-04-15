@@ -11834,4 +11834,979 @@
 /./ Page (/favicon.ico) not found
 /./ /home/artem/public_html/test01/Library/Router.php
 /./ 54
+///2016-04-13 10:58:14
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-13 11:18:20
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-13 13:44:58
+/./ 4
+/./ No response from 10.4.0.114
+/./ /home/artem/public_html/test01/Library/Connect_SNMP.php
+/./ 35
+///2016-04-13 13:44:58
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-13 13:45:05
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-13 16:24:24
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-13 16:36:02
+/./ 404
+/./ Page (/Library/test.php) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-13 16:36:03
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-13 16:53:11
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-13 17:15:57
+/./ 404
+/./ Page (/Library/test.php) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-13 17:16:14
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-13 17:21:44
+/./ 404
+/./ Page (/Library/test.php) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-13 18:10:49
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 14:23:21
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 14:25:29
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 14:42:52
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 14:43:27
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 14:48:34
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 14:49:23
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 14:50:56
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 14:51:48
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 14:53:37
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 14:57:19
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 14:57:29
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 14:58:26
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 14:59:21
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 14:59:46
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:01:08
+/./ 23000
+/./ SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'user_id' cannot be null
+/./ /home/artem/public_html/test01/Model/errorModel.php
+/./ 41
+///2016-04-14 15:01:08
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:01:17
+/./ 23000
+/./ SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'user_id' cannot be null
+/./ /home/artem/public_html/test01/Model/errorModel.php
+/./ 41
+///2016-04-14 15:01:17
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:02:12
+/./ 23000
+/./ SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'user_id' cannot be null
+/./ /home/artem/public_html/test01/Model/errorModel.php
+/./ 41
+///2016-04-14 15:02:13
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:04:41
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:04:54
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:05:43
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:33:08
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:35:17
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:36:03
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:36:42
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:37:30
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:38:27
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:44:51
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:45:03
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:47:05
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:55:11
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:57:56
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:57:57
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 15:59:13
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 16:03:12
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 16:22:00
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 16:22:25
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 16:22:50
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 16:23:12
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 16:24:57
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 16:25:24
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 16:53:08
+/./ 404
+/./ Page (/account_test/admin) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 16:53:08
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 16:55:30
+/./ 404
+/./ /home/artem/public_html/test01/View/Admin/index.phtml not found
+/./ /home/artem/public_html/test01/Library/Controller.php
+/./ 22
+///2016-04-14 16:55:30
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 16:57:43
+/./ 404
+/./ /home/artem/public_html/test01/View/Admin/index.phtml not found
+/./ /home/artem/public_html/test01/Library/Controller.php
+/./ 22
+///2016-04-14 16:57:43
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 17:04:58
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 17:05:05
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 17:06:23
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 17:06:29
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 17:07:09
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 17:07:22
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 17:08:17
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 17:34:01
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 17:34:04
+/./ 23000
+/./ SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'user_id' cannot be null
+/./ /home/artem/public_html/test01/Model/errorModel.php
+/./ 41
+///2016-04-14 17:34:05
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 17:42:33
+/./ 23000
+/./ SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'user_id' cannot be null
+/./ /home/artem/public_html/test01/Model/errorModel.php
+/./ 41
+///2016-04-14 17:42:34
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 17:44:21
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-14 17:46:07
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 54
+///2016-04-15 11:14:02
+/./ 404
+/./ editSwitchAction not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 73
+///2016-04-15 11:14:04
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 11:16:38
+/./ 404
+/./ Page (/account_test/admin/switch_edit) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 11:16:38
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 11:17:56
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 11:17:58
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 11:18:14
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 11:18:30
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 11:18:49
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 11:23:08
+/./ 404
+/./ editSwitchAction not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 73
+///2016-04-15 11:23:08
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 11:24:26
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 11:25:36
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 11:27:46
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 11:57:53
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:01:31
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:08:01
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:08:23
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:09:01
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:18:17
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:18:23
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:20:37
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:20:46
+/./ 404
+/./ Page (/admin/switch_list) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:20:46
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:21:35
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:21:50
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:25:44
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:25:56
+/./ 404
+/./ Page (/admin/switch_list) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:25:56
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:26:02
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:26:37
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:26:46
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:27:08
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:29:19
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:29:54
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:29:57
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:30:11
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:30:23
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:30:34
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:40:41
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:41:21
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:41:24
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:41:39
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:41:44
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:43:18
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:43:24
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:43:45
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:43:50
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:44:39
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 12:44:41
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 14:58:23
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 14:59:23
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 14:59:39
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 14:59:44
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:08:38
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:27:15
+/./ 23000
+/./ SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'user_id' cannot be null
+/./ /home/artem/public_html/test01/Model/errorModel.php
+/./ 41
+///2016-04-15 15:27:15
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:27:22
+/./ 23000
+/./ SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'user_id' cannot be null
+/./ /home/artem/public_html/test01/Model/errorModel.php
+/./ 41
+///2016-04-15 15:27:22
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:30:16
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:30:30
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:30:41
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:30:47
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:31:01
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:31:44
+/./ 404
+/./ Page no found.Switch with id = 10  is absent in data base
+/./ /home/artem/public_html/test01/Controller/AdminController.php
+/./ 112
+///2016-04-15 15:31:44
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:32:03
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:33:15
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:33:23
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:33:48
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:33:51
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:33:53
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:35:06
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:37:46
+/./ 404
+/./ Page (/account_test/account_test/admin) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:37:46
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:37:55
+/./ 404
+/./ Page (/account_test/account_test/account_test/admin) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:37:55
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:37:59
+/./ 404
+/./ Page (/account_test/account_test/account_test/account_test/admin) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:37:59
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:38:05
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:38:07
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:38:09
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:38:10
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:38:18
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:38:21
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:38:37
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:38:51
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:39:43
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:39:47
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:42:04
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:42:05
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:42:15
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:42:39
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:46:16
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:46:23
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:47:30
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:47:40
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:48:13
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:48:36
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:49:35
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:51:37
+/./ 404
+/./ Page no found.Switch with id = 15  is absent in data base
+/./ /home/artem/public_html/test01/Controller/AdminController.php
+/./ 108
+///2016-04-15 15:51:37
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 15:51:44
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 16:09:35
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 16:09:58
+/./ 4
+/./ No response from 10.4.0.100
+/./ /home/artem/public_html/test01/Library/Connect_SNMP.php
+/./ 35
+///2016-04-15 16:09:59
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 16:10:15
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 16:14:10
+/./ 4
+/./ No response from 10.4.0.100
+/./ /home/artem/public_html/test01/Library/Connect_SNMP.php
+/./ 35
+///2016-04-15 16:14:10
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 16:20:36
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 16:20:44
+/./ 4
+/./ No response from 10.4.0.100
+/./ /home/artem/public_html/test01/Library/Connect_SNMP.php
+/./ 35
+///2016-04-15 16:20:44
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 16:34:41
+/./ 4
+/./ No response from 10.4.0.100
+/./ /home/artem/public_html/test01/Library/Connect_SNMP.php
+/./ 35
+///2016-04-15 16:34:41
+/./ 404
+/./  History data for user 400 not found
+/./ /home/artem/public_html/test01/Controller/IndexController.php
+/./ 484
+///2016-04-15 16:34:42
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 16:34:42
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
+///2016-04-15 16:34:44
+/./ 4
+/./ No response from 10.4.0.114
+/./ /home/artem/public_html/test01/Library/Connect_SNMP.php
+/./ 35
+///2016-04-15 16:34:52
+/./ 4
+/./ No response from 10.4.0.114
+/./ /home/artem/public_html/test01/Library/Connect_SNMP.php
+/./ 35
+///2016-04-15 16:34:53
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 59
 ///

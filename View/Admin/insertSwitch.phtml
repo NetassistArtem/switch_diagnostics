@@ -1,0 +1,58 @@
+<h1> Добавление свича </h1>
+
+<div>
+    <p><?= Session::getFlash() ?></p>
+</div>
+
+
+<form  method="post">
+
+    <ul>
+        <li>
+            <p>
+                <label for="switch_manufacturer">Производитель свича</label>
+                <select name="switch_manufacturer" id="switch_manufacturer" required>
+                    <option disabled selected>Выберите производителя</option>
+                    <?php foreach ($manufacturer as $v): ?>
+                        <option value="<?= $v ?>"><?= $v ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </p>
+
+        </li>
+        <li>
+            <p>
+                <label for="model_name">Модель свича</label>
+                <input name="model_name" id ="model_name" type="text" required />
+            </p>
+
+        </li>
+        <li>
+            <p>
+                <label for="firmware">Версия пошивки свича</label>
+                <input name="firmware" id ="firmware" type="text" required />
+            </p>
+
+        </li>
+        <li>
+            <p>
+
+                <label for="pattern_id">Шаблон</label>
+                <select name="pattern_id" id="pattern_id" required>
+                    <option disabled selected>Выберите шаблон</option>
+                    <?php foreach ($patterns_id as $v): ?>
+                        <option value="<?= $v['id'] ?>"><?= $v['id'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </p>
+
+        </li>
+        <li>
+            <p>
+                <input type="submit"/>
+            </p>
+
+        </li>
+    </ul>
+
+</form>

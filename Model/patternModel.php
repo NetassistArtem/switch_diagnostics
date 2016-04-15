@@ -87,7 +87,7 @@ class patternModel
             }
         }
 
-Debugger::PrintR($data);
+
         return $data[0];
 
     }
@@ -114,6 +114,16 @@ Debugger::PrintR($data);
         $data = $dbc->getDate($sql, $placeholders);
 
         return $data[0];
+    }
+
+    public function patternsId()
+    {
+        $dbc = Connect_db::getConnection();
+        $sql = "SELECT `id` FROM `patterns`";
+        $placeholders = array();
+        $data = $dbc->getDate($sql, $placeholders);
+
+        return $data;
     }
 
 

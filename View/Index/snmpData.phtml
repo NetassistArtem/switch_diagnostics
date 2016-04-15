@@ -1,13 +1,4 @@
-<div>
-    <nav>
-        <p>
-            <a href="#">Вернуться в билинг</a>
-        </p>
-        <p>
-            <a href="/account_test">Вернуться на главную</a>
-        </p>
-    </nav>
-</div>
+
 <h1> Пользователь <?= $account_id ?></h1>
 <div>
 
@@ -24,6 +15,9 @@
     </p>
     <p>
         <a href="/account_test/insert_cable_length/<?= $account_id ?>">Записать длинну кабеля</a>
+    </p>
+    <p>
+    <a href="/account_test/history/<?= $account_id ?>" target="_blank">История пользователя</a>
     </p>
 </div>
 
@@ -126,5 +120,5 @@
     </tr>
 </table>
 
-<div><a href="/account_test/history/<?= $account_id ?>" target="_blank">История пользователя</a></div>
+
 

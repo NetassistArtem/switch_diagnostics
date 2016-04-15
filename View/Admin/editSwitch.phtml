@@ -1,0 +1,58 @@
+<h1> Редактирование свича <?= $switch_data['manufacturer'] ?>  <?= $switch_data['model_name'] ?></h1>
+
+<div>
+    <?php foreach(Session::getFlash( $account_id) as $v): ?>
+
+        <p class="<?= $v['warning_class']; ?>"><?= $v['warning_class']; ?>: <?= $v['message']; ?></p>
+    <?php endforeach; ?>
+</div>
+
+<form  method="post">
+
+    <ul>
+        <li>
+            <p>
+                <label for="switch_manufacturer">Производитель свича</label>
+                <select name="switch_manufacturer" id="switch_manufacturer" required>
+                    <?php foreach ($manufacturer as $v): ?>
+                        <option <?= $v== $switch_data['manufacturer'] ? 'selected' : '' ?> value="<?= $v ?>"><?= $v ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </p>
+
+        </li>
+        <li>
+            <p>
+                <label for="model_name">Модель свича</label>
+                <input name="model_name" id ="model_name" value= "<?= isset($switch_data['model_name']) ? $switch_data['model_name'] : 'нет данных' ?>" type="text" required />
+            </p>
+
+        </li>
+        <li>
+            <p>
+                <label for="firmware">Версия пошивки свича</label>
+                <input name="firmware" id ="firmware" type="text" value= "<?= isset($switch_data['firmware']) ?  $switch_data['firmware'] : 'нет данных' ?>" required />
+            </p>
+
+        </li>
+        <li>
+            <p>
+
+                <label for="pattern_id">Шаблон</label>
+                <select name="pattern_id" id="pattern_id" required>
+                    <?php foreach ($patterns_id as $v): ?>
+                        <option <?= $v== $switch_data['patterns_id'] ? 'selected' : '' ?> value="<?= $v['id'] ?>"><?= $v['id'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </p>
+
+        </li>
+        <li>
+            <p>
+                <input type="submit"/>
+            </p>
+
+        </li>
+    </ul>
+
+</form>

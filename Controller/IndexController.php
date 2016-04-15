@@ -241,7 +241,9 @@ class IndexController extends Controller
         $indexModel = new IndexModel();
 
         $request = new Request();
+
         if ($request->isPost()) {
+
             switch ($request->post('info_type')) {
                 case "with_cabletest":
                     $this->redirect("/account_test/" . $request->post('account_id') . "?cabletest=on");

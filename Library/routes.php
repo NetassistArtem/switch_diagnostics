@@ -90,6 +90,43 @@
          )
 
      ),
+     'admin_insert_switch' => array(
+         'pattern' => '/account_test/admin/insert_switch',
+         'controller' => 'Admin',
+         'action' => 'insertSwitch',
+     ),
+
+     'admin' => array(
+         'pattern' => '/account_test/admin',
+         'controller' => 'Admin',
+         'action' => 'index',
+     ),
+
+     'admin_switch' => array(
+         'pattern' => '/account_test/admin/switch_list',
+         'controller' => 'Admin',
+         'action' => 'switchList',
+     ),
+
+     'admin_switch_edit' => array(
+         'pattern' => '/account_test/admin/switch_edit/{switch_id}',
+         'controller' => 'Admin',
+         'action' => 'editSwitch',
+         'params' => array(
+             'switch_id' => '[1-9][0-9]*',
+
+         )
+     ),
+
+     'admin_switch_delete' => array(
+         'pattern' => '/account_test/admin/switch_delete/{switch_id}',
+         'controller' => 'Admin',
+         'action' => 'deleteSwitch',
+         'params' => array(
+             'switch_id' => '[1-9][0-9]*',
+
+         )
+     ),
 
 
 

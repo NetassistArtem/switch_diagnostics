@@ -41,6 +41,22 @@ abstract class Controller
         return ob_get_clean();
     }
 
+    protected function render_admin(array $args = array(), $tpl = null)
+    {
+        extract($args);
+
+        ob_start();
+        require $this->file_path($tpl); //$templateFile;
+        $content = ob_get_clean();
+
+
+
+
+        // ob_start();
+        require VIEW_DIR . 'layout_admin.phtml';
+        return ob_get_clean();
+    }
+
 
     public static function redirect($url)
     {
@@ -48,6 +64,8 @@ abstract class Controller
         die;
         // exit;
     }
+
+
 
 
 

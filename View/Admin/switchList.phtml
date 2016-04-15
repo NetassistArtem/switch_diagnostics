@@ -1,0 +1,34 @@
+<h1> Список свичей </h1>
+
+<div>
+    <?php foreach(Session::getFlash( $account_id) as $v): ?>
+
+        <p class="<?= $v['warning_class']; ?>"><?= $v['warning_class']; ?>: <?= $v['message']; ?></p>
+    <?php endforeach; ?>
+</div>
+
+<table border="1">
+    <tr>
+        <td>id</td>
+        <td>Производитель</td>
+        <td>Модель свича</td>
+        <td>Версия прошивки</td>
+        <td>id Шаблона</td>
+        <td>Редактировать</td>
+        <td>Удалить</td>
+    </tr>
+    <?php foreach ($switch_data as $v): ?>
+
+
+        <tr>
+            <td><?= $v['id'] ?></td>
+            <td><?= $v['model_name'] ?></td>
+            <td><?= $v['manufacturer'] ?></td>
+            <td><?= $v['firmware'] ?></td>
+            <td><?= $v['pattern_id'] ?></td>
+            <td><a href="/account_test/admin/switch_edit/<?= $v['id'] ?>">Редактировать</a></td>
+            <td><a href="/account_test/admin/switch_delete/<?= $v['id'] ?>">Удалить</a></td>
+        </tr>
+    <?php endforeach; ?>
+
+</table>
