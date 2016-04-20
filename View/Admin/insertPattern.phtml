@@ -1,0 +1,53 @@
+<h1> Добавление шаблона </h1>
+
+<div>
+    <?php foreach(Session::getFlash( $account_id) as $v): ?>
+
+        <p class="<?= $v['warning_class']; ?>"><?= $v['warning_class']; ?>: <?= $v['message']; ?></p>
+    <?php endforeach; ?>
+</div>
+
+
+<form method="post">
+
+    <div class=pattern_form>
+        <table>
+        <?php foreach ($patterns_fields as $v):
+            if ($v != 'id'): ?>
+                <tr>
+                    <td>
+                        <label for="<?= $v ?>"><?= $v ?></label>
+                    </td>
+                    <td>
+                        <input name="<?= $v ?>" id="<?= $v ?>" type="text" value="<?= $pattern_post_data[$v] ?>" <?= $v=='port_coefficient' ? 'required' : '' ?> />
+                    </td>
+                    <td>
+                        <?php if ($v != 'port_coefficient'): ?>
+                       <p> oid отсутствует</p>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <?php if ($v != 'port_coefficient'): ?>
+                        <p>
+                            <input name="absent_<?= $v ?>" type="checkbox" value="absent_<?= $v ?>"/>
+                        </p>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+
+            <?php endif; ?>
+        <?php endforeach; ?>
+
+            <tr>
+
+                <td colspan="4" align="center">
+                    <p>
+                        <input type="submit"/>
+                    </p>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+</form>

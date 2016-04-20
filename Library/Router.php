@@ -8,7 +8,7 @@ abstract class Router
     private static $action;
     private static $account_id = null;
     private static $id;
-    private static $switch_id = null;
+    private static $switch_pattern_id = null;
 
     /**
      * @param $url
@@ -44,12 +44,11 @@ abstract class Router
                 if ($item['action'] == 'snmpData' || $item['action'] == 'history' ||  $item['action'] == 'insertCableLength') {
                     $url_array = explode('/', $url);
 
-
                     self::$account_id = array_pop($url_array);
                 }
-                if($item['action'] == 'editSwitch'|| $item['action'] == 'deleteSwitch'){
+                if($item['action'] == 'editSwitch'|| $item['action'] == 'deleteSwitch' || $item['action'] == 'editPattern'|| $item['action'] == 'deletePattern'){
                     $url_array = explode('/', $url);
-                    self::$switch_id = array_pop($url_array);
+                    self::$switch_pattern_id = array_pop($url_array);
                 }
             }
         }
@@ -124,9 +123,9 @@ abstract class Router
     /**
      * @return null
      */
-    public static function getSwitchId()
+    public static function getSwitchPatternId()
     {
-        return self::$switch_id;
+        return self::$switch_pattern_id;
     }
 
 

@@ -1,0 +1,65 @@
+<h1> Список шаблонов </h1>
+
+<div>
+    <?php foreach (Session::getFlash($account_id) as $v): ?>
+
+        <p class="<?= $v['warning_class']; ?>"><?= $v['warning_class']; ?>: <?= $v['message']; ?></p>
+    <?php endforeach; ?>
+</div>
+
+
+<table border="1">
+    <tr>
+        <td>Используется для свичей</td>
+        <?php foreach ($pattern_data as $key => $val): ?>
+            <td>
+                <table border="1">
+                    <?php foreach ($switch_data as $k => $v):
+                        if ($v['pattern_id'] == $val['id']): ?>
+                            <tr>
+                                <td><?= $v['manufacturer'] ?></td>
+                                <td><?= $v['model_name'] ?></td>
+                                <td><?= $v['firmware'] ?></td>
+                            </tr>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </table>
+            </td>
+        <?php endforeach; ?>
+    </tr>
+
+
+    <?php foreach ($pattern_data[0] as $k => $v): ?>
+        <tr>
+            <td><?= $k ?></td>
+            <?php foreach ($pattern_data as $key => $val): ?>
+                <td>
+                    <?= $val[$k] ?>
+                </td>
+            <?php endforeach; ?>
+        </tr>
+
+
+    <?php endforeach; ?>
+    <tr>
+        <td>Редактировать</td>
+        <?php foreach ($pattern_data as $key => $val): ?>
+            <td>
+                <a href="/account_test/admin/pattern_edit/<?= $val['id'] ?>">Редактировать</a>
+            </td>
+        <?php endforeach; ?>
+    </tr>
+    <tr>
+        <td>Удалить</td>
+        <?php foreach ($pattern_data as $key => $val): ?>
+            <td>
+                <a href="/account_test/admin/pattern_delete/<?= $val['id'] ?>"
+                   onclick="return confirm('Вы уверены что хотите удалить шаблон c id = <?= $val['id'] ?> ?')">Удалить</a>
+            </td>
+        <?php endforeach; ?>
+    </tr>
+
+</table>
+
+
+

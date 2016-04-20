@@ -377,6 +377,10 @@ class IndexController extends Controller
             $oids['cable_lenght'] = $oids['cable_lenght'] . '.3';
 
         }
+        if($cabletest_start == 'no'){
+            unset($oids['cable_status']);
+            unset($oids['cable_lenght']);
+        }
 
         //  die('ups');
         $data = $indexModel->snmpData($this->account_id, $oids);

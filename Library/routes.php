@@ -128,6 +128,36 @@
          )
      ),
 
+     'admin_pattern' => array(
+         'pattern' => '/account_test/admin/pattern_list',
+         'controller' => 'Admin',
+         'action' => 'patternList',
+     ),
+     'admin_insert_pattern' => array(
+         'pattern' => '/account_test/admin/insert_pattern',
+         'controller' => 'Admin',
+         'action' => 'insertPattern',
+     ),
+
+     'admin_pattern_edit' => array(
+         'pattern' => '/account_test/admin/pattern_edit/{pattern_id}',
+         'controller' => 'Admin',
+         'action' => 'editPattern',
+         'params' => array(
+             'pattern_id' => '[1-9][0-9]*',
+
+         )
+     ),
+     'admin_pattern_delete' => array(
+         'pattern' => '/account_test/admin/switch_delete/{pattern_id}',
+         'controller' => 'Admin',
+         'action' => 'deletePattern',
+         'params' => array(
+             'pattern_id' => '[1-9][0-9]*',
+
+         )
+     ),
+
 
 
 );

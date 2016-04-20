@@ -1,6 +1,8 @@
 <h1> Список свичей </h1>
 
 <div>
+
+
     <?php foreach(Session::getFlash( $account_id) as $v): ?>
 
         <p class="<?= $v['warning_class']; ?>"><?= $v['warning_class']; ?>: <?= $v['message']; ?></p>
@@ -27,7 +29,7 @@
             <td><?= $v['firmware'] ?></td>
             <td><?= $v['pattern_id'] ?></td>
             <td><a href="/account_test/admin/switch_edit/<?= $v['id'] ?>">Редактировать</a></td>
-            <td><a href="/account_test/admin/switch_delete/<?= $v['id'] ?>">Удалить</a></td>
+            <td><a href="/account_test/admin/switch_delete/<?= $v['id'] ?>" onclick="return confirm('Вы уверены что хотите удалить информацию о свиче <?= $v['manufacturer'] ?> <?= $v['model_name'] ?> ?')">Удалить</a></td>
         </tr>
     <?php endforeach; ?>
 

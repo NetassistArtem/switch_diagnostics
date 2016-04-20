@@ -126,5 +126,31 @@ class patternModel
         return $data;
     }
 
+    public function allPatternData()
+    {
+        $dbc = Connect_db::getConnection();
+        $sql = "SELECT * FROM `patterns`";
+        $placeholders = array();
+        $data = $dbc->getDate($sql, $placeholders);
+
+        return $data;
+
+    }
+
+    public function patternFieldsName()
+    {
+        $dbc = Connect_db::getConnection();
+        $sql = "SHOW FIELDS FROM patterns";
+        $placeholders = array();
+        $d = $dbc->getDate($sql, $placeholders);
+        $data = array();
+
+        foreach($d as $k => $v){
+            $data[] = $v['Field'];
+        }
+
+        return $data;
+    }
+
 
 }
