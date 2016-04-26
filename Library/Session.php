@@ -61,10 +61,11 @@ class Session
 
     public static function getFlash($account_id = null)
     {
-        $message = self::get('flash');
+        $message = self::get('flash') ? self::get('flash') :array();
 
-        $errorModel = new errorModel($account_id);
-        $errorModel->writeError($message);
+
+        //$errorModel = new errorModel($account_id);
+        //$errorModel->writeError($message);
 
         self::remove('flash');
         return $message;

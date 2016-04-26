@@ -11,6 +11,7 @@ try {
 
     $request = new Request();
     $content = Router::get_content_by_url($url = $request->server('REQUEST_URI'));
+
 } catch (SNMPException $e) {
     IndexController::errorAction($e);
     NodeController::writeErrorData($e);
@@ -24,6 +25,7 @@ try {
 
 } catch (Exception $e) {
     IndexController::errorAction($e);
+    NodeController::writeErrorData($e);
     if ($e->getCode() == 403) {
         $content = Router::get_content_by_url('/error_403');
     }

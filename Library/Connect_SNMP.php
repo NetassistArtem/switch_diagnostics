@@ -11,18 +11,25 @@ class Connect_SNMP
 
     public function __construct($switch_ip, $wr_rd = 'r')
     {
-        $this->community_read = Config::get('community_read');
-        $this->community_write = Config::get('community_write');
-        if($wr_rd == 'w'){
-            $community = $this->community_write;
-        }elseif($wr_rd == 'r'){
-            $community = $this->community_read;
+        $indexModel = new IndexModel();
+        $community_billing = $indexModel->getCommunity();
+        if($community_billing['use_snmp']){
+            $this->community_read = $community_billing['snmp_auth'] ? $community_billing['snmp_auth'] : Config::get('community_read_default');
+            $this->community_write = Config::get('community_write_default');
+            if($wr_rd == 'w'){
+                $community = $this->community_write;
+            }elseif($wr_rd == 'r'){
+                $community = $this->community_read;
+            }else{
+                throw new Exception('Wrong community flag', 500);
+            }
+            $this->snmp_session = new SNMP($this->version, $switch_ip, $community);
+            $this->snmp_session->exceptions_enabled = SNMP::ERRNO_ANY;
+            $this->snmp_session->valueretrieval = SNMP_VALUE_PLAIN;
         }else{
-            throw new Exception('Wrong community flag', 500);
+            throw new Exception('SNMP off in this switch', 1);
         }
-        $this->snmp_session = new SNMP($this->version, $switch_ip, $community);
-        $this->snmp_session->exceptions_enabled = SNMP::ERRNO_ANY;
-        $this->snmp_session->valueretrieval = SNMP_VALUE_PLAIN;
+
     }
 
     public function close_session()

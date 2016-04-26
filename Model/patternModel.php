@@ -64,19 +64,48 @@ class patternModel
         return $data[0];
     }
 
-    public function PatternData($port_number, $pattern_id)
+    public function getSwitchDataByName($switch_model)
     {
         $dbc = Connect_db::getConnection();
+
+
+        $sql = "SELECT * FROM `switches` WHERE `model_name`= :model_name";
+        $placeholders = array(
+            'model_name' => $switch_model,
+
+        );
+        $data_switch = $dbc->getDate($sql, $placeholders);
+
+        return $data_switch;
+
+    }
+
+    public function PatternData($port_number, $pattern_id, $switch_model)
+    {
+
+        $data_switch = $this->getSwitchDataByName($switch_model);
+
+        $dbc = Connect_db::getConnection();
+
         $sql = "SELECT * FROM `patterns` WHERE `id`= :pattern_id";
         $placeholders = array(
             'pattern_id' => $pattern_id
         );
         $data = $dbc->getDate($sql, $placeholders);
-        $port = $port_number + $data[0]['port_coefficient'];
+        if($port_number <= $data_switch[0]['simple_port']){
+
+            $port = $port_number + $data[0]['port_coefficient'];
+        }else{
+            $port = $port_number + $data[0]['gig_port_coefficient'];
+        }
+
+
+
+
 
 
         foreach ($data[0] as $k => $v) {
-            if ($k != 'id' && $k != 'port_coefficient'&& $k != 'mac_all'&& $k != 'macs_ports' ) {
+            if ($k != 'id' && $k != 'port_coefficient'&& $k != 'mac_all'&& $k != 'macs_ports'&&  $k != 'gig_port_coefficient') {
 
                 $data[0][$k] = $data[0][$k] . $port;
 
@@ -103,15 +132,26 @@ class patternModel
         return $data[0];
     }
 
-    public function getPortCoefficient($pattern_id){
+    public function getPortCoefficient($pattern_id,$port_number, $switch_model)
+    {
 
+        $data_switch = $this->getSwitchDataByName($switch_model);
 
         $dbc = Connect_db::getConnection();
-        $sql = "SELECT `port_coefficient` FROM `patterns` WHERE  `id`= :pattern_id";
+
+        $sql = "SELECT `port_coefficient`, `gig_port_coefficient` FROM `patterns` WHERE  `id`= :pattern_id";
         $placeholders = array(
             'pattern_id' => $pattern_id
         );
         $data = $dbc->getDate($sql, $placeholders);
+
+        if($port_number <= $data_switch[0]['simple_port']){
+
+            $data[0]['port_coefficient_simple_gig'] = $data[0]['port_coefficient'];
+        }else{
+
+            $data[0]['port_coefficient_simple_gig'] = $data[0]['gig_port_coefficient'];
+        }
 
         return $data[0];
     }

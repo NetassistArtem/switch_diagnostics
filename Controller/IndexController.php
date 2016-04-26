@@ -8,7 +8,6 @@ class IndexController extends Controller
     //  private $repetition;
 
 
-
     private function findPattern($data_switch)
     {
 
@@ -89,7 +88,7 @@ class IndexController extends Controller
                     Session::setFlash('В полученных со свича данных отсутствует информация о производители свича.', 'information');
                 }
                 if (!$switch_data_result['soft_version']) {
-                    Session::setFlash('В полученных со свича данных отсутствует информация о версии прошивки свича.','information');
+                    Session::setFlash('В полученных со свича данных отсутствует информация о версии прошивки свича.', 'information');
                     $patterns_array = array();
                     foreach ($switch as $v) {
                         if ($switch_data_result['model_name'] == $v['model_name']) {
@@ -165,45 +164,45 @@ class IndexController extends Controller
 
         $request = new Request();
 
-        if(!$this->account_id){
+        if (!$this->account_id) {
             $this->account_id = Router::getAccountId();
         }
- /*
+        /*
 
-        $cable_lenght = $request->get('cable_length') ? $request->get('cable_length') : false;
+               $cable_lenght = $request->get('cable_length') ? $request->get('cable_length') : false;
 
 
-        if($cable_lenght){
-            $cableLengthModel = new cableLengthModel();
-            $cableLengthModel ->insertCableLength($this->account_id, $cable_lenght);
-        }else{
+               if($cable_lenght){
+                   $cableLengthModel = new cableLengthModel();
+                   $cableLengthModel ->insertCableLength($this->account_id, $cable_lenght);
+               }else{
 
-            Session::setFlash("Длинна кабеля не известна и не может быть записана. Порт пользователя должен быть в статусе 'open cable'.");
-        }
-        */
-        $this->redirect("/account_test/".$this->account_id."?cable_length=write");
-     //$this->snmpDataAction($this->account_id, 'snmpData');
+                   Session::setFlash("Длинна кабеля не известна и не может быть записана. Порт пользователя должен быть в статусе 'open cable'.");
+               }
+               */
+        $this->redirect("/account_test/" . $this->account_id . "?cable_length=write");
+        //$this->snmpDataAction($this->account_id, 'snmpData');
 
     }
 
     private function cableLengthWrite($cable_length)
     {
-        if($cable_length){
+        if ($cable_length) {
 
             $cableLengthModel = new cableLengthModel();
 
-            if(empty($cableLengthModel ->cableLength($this->account_id))){
+            if (empty($cableLengthModel->cableLength($this->account_id))) {
 
-                $cableLengthModel ->insertCableLength($this->account_id, $cable_length);
+                $cableLengthModel->insertCableLength($this->account_id, $cable_length);
 
-                Session::setFlash("Длинна кабеля для пользователя ".$this->account_id." успешно записанна.", "information");
-            }else{
-                $cableLengthModel ->updataCableLength($this->account_id, $cable_length);
-                Session::setFlash("Длинна кабеля для пользователя ".$this->account_id." успешно перезаписана.", "information");
+                Session::setFlash("Длинна кабеля для пользователя " . $this->account_id . " успешно записанна.", "information");
+            } else {
+                $cableLengthModel->updataCableLength($this->account_id, $cable_length);
+                Session::setFlash("Длинна кабеля для пользователя " . $this->account_id . " успешно перезаписана.", "information");
 
             }
 
-        }else{
+        } else {
 
             Session::setFlash("Длинна кабеля не известна и не может быть записана. Порт пользователя должен быть в статусе 'open cable'.", 'notice');
         }
@@ -213,21 +212,23 @@ class IndexController extends Controller
     {
         $cableLengthModel = new cableLengthModel();
 
-        if(empty($cableLengthModel ->cableLength($this->account_id))){
-            Session::setFlash("Для пользователя ".$this->account_id." не записанна длинна кабеля. Для записи длинны кабеля, пользователь
-            должен отключить кабель после чего необходимо нажать 'Записать длинну кабеля'","notice");
+        if (empty($cableLengthModel->cableLength($this->account_id))) {
+            Session::setFlash("Для пользователя " . $this->account_id . " не записанна длинна кабеля. Для записи длинны кабеля, пользователь
+            должен отключить кабель после чего необходимо нажать 'Записать длинну кабеля'", "notice");
             return "notice";
-        }else{
-            $saved_cable_length = $cableLengthModel ->cableLength($this->account_id)[0]['cable_lenght'];
+        } else {
+            $saved_cable_length = $cableLengthModel->cableLength($this->account_id)[0]['cable_lenght'];
             $max_cable_lenght = $saved_cable_length + Config::get('delta_cable_langth');
             $min_cable_lenght = $saved_cable_length - Config::get('delta_cable_langth');
-            if($new_cable_length > $max_cable_lenght || $new_cable_length < $min_cable_lenght){
-                Session::setFlash("Длинна кабеля не правильная! Записанная ранее длинна ".$saved_cable_length."м. ,
-                полученная со свича длинна ".$new_cable_length."м.", "warning" );
-                return "warning";
+            if ($new_cable_length) {
+                if ($new_cable_length > $max_cable_lenght || $new_cable_length < $min_cable_lenght) {
+                    Session::setFlash("Длинна кабеля не правильная! Записанная ранее длинна " . $saved_cable_length . "м. ,
+                полученная со свича длинна " . $new_cable_length . "м.", "warning");
+                    return "warning";
+                }
             }
         }
-        return  '';//'information';
+        return '';//'information';
 
     }
 
@@ -299,11 +300,13 @@ class IndexController extends Controller
 
         $patternModel = new patternModel($this->account_id);
 
-        $port_coefficient = $patternModel->getPortCoefficient($pattern_id)['port_coefficient'];
+       // $port_coefficient = $patternModel->getPortCoefficient($pattern_id, $d['port'], $d['switch_model'])['port_coefficient_simple_gig'];
+        $port_coefficient_array = $patternModel->getPortCoefficient($pattern_id, $d['port'], $d['switch_model']);
+        $port_coefficient = $port_coefficient_array['port_coefficient_simple_gig'];
 
 
-        $mac_port_array = $indexModel->getAllMac($this->account_id, $pattern_id, $port_coefficient);
-        //  Debugger::PrintR($mac_port_array);
+        $mac_port_array = $indexModel->getAllMac($this->account_id, $pattern_id, $port_coefficient_array);
+      //    Debugger::PrintR($mac_port_array);
 
 
         if ($d['mac']) {
@@ -333,16 +336,17 @@ class IndexController extends Controller
             Session::setFlash("Мак адрес в базе даных билинга для пользователя $this->account_id отсутствует", "warning");
         }
 
-        $pattern_data = $patternModel->PatternData($d['port'], $pattern_id);
+        $pattern_data = $patternModel->PatternData($d['port'], $pattern_id, $d['switch_model']);
+        //  Debugger::PrintR($d);
 
-       // Debugger::PrintR($pattern_data);
+        //  Debugger::PrintR($pattern_data);
 
-        $oid_port_status = Config::get('port_status') . "." . ($d['port'] + $pattern_data['port_coefficient']);
+        $oid_port_status = Config::get('port_status') . "." . ($d['port'] + $port_coefficient);
 
 
         $data_status = $indexModel->snmpByKey($this->account_id, $oid_port_status);
         $data_status = array_flip($data_status);
-      //  Debugger::PrintR($data_status);
+        //  Debugger::PrintR($data_status);
 
         $cabletest_start = '';
         switch (Config::get('cabletest_on_off')) {
@@ -357,7 +361,7 @@ class IndexController extends Controller
                 if (isset($data_status[2])) {
                     $indexModel->cableTest($this->account_id, $pattern_id, $d['port'], $d['manufacturer']);
                     $cabletest_start = "yes";
-                }else{
+                } else {
                     $cabletest_start = "no";
                 }
                 break;
@@ -366,37 +370,49 @@ class IndexController extends Controller
 
         $oids = array();
         foreach ($pattern_data as $k => $v) {
-            if ($k != 'id' && $k != 'port_coefficient' && $k != 'mac_all' && $k != 'macs_ports') {
+            if ($k != 'id' && $k != 'port_coefficient' && $k != 'mac_all' && $k != 'macs_ports' && $k != 'gig_port_coefficient') {
                 $oids[$k] = $v;
             }
         }
         //  Debugger::PrintR($oids);
+        // $manufacturer = strtolower($d['manufacturer']);
 
-        if ($d['manufacturer'] == 'ELTEX') {
+        if ($d['manufacturer'] == 'Eltex') {
             $oids['cable_status'] = $oids['cable_status'] . '.2';
             $oids['cable_lenght'] = $oids['cable_lenght'] . '.3';
 
         }
-        if($cabletest_start == 'no'){
+        // Debugger::PrintR($oids);
+
+        if ($cabletest_start == 'no') {
+            unset($oids['cable_test_start']);
             unset($oids['cable_status']);
             unset($oids['cable_lenght']);
         }
 
         //  die('ups');
+       //   Debugger::PrintR($oids);
+
         $data = $indexModel->snmpData($this->account_id, $oids);
 
         $oids = array_flip($oids);
         $data_switch = array_combine($oids, $data['key']);
 
+
         $mac_arr = array();
+      //   Debugger::PrintR($mac_port_array);
+
         foreach ($mac_port_array as $k => $v) {
-            $val = $v - $port_coefficient;
+            $val = $v;//- $port_coefficient;
 
             if ($val == $d['port']) {
                 $mac_arr[] = $k;
             }
         }
         $data_switch['mac'] = $mac_arr;
+        //Debugger::PrintR($data_switch['mac']);
+
+        //   Debugger::PrintR($data_switch);
 
 
         if ($data_switch['port_status'] == 1) {
@@ -413,7 +429,12 @@ class IndexController extends Controller
             $data_switch['speed'] = $data_switch['speed'] / 1000000;
         }
         if (isset($data_switch['cable_status'])) {
+            echo $data_switch['cable_status'];
+
             $data_switch['cable_status'] = $cable_test[$d['manufacturer']][$data_switch['cable_status']];
+            //  Debugger::PrintR($cable_test[$d['manufacturer']]);
+            echo $d['manufacturer'];
+
         };
         if ($data_switch['duplex']) {
             $data_switch['duplex'] = $duplex[$data_switch['duplex']];
@@ -434,7 +455,7 @@ class IndexController extends Controller
 
         $request = new Request();
 
-        if($request->get('cable_length') == 'write'){
+        if ($request->get('cable_length') == 'write') {
 
             $this->cableLengthWrite($data_switch['cable_lenght']);
         }
@@ -449,6 +470,8 @@ class IndexController extends Controller
             'cabletest_start' => $cabletest_start,
             'cable_length_status' => $cable_length_status
         );
+
+
         // Debugger::PrintR($data_switch);
         // Debugger::PrintR($data_switch);
         //  if($this->repetition != 1){
@@ -536,8 +559,6 @@ class IndexController extends Controller
         return $this->render($args);
 
     }
-
-
 
 
     public static function rewrite_file($file_path, $mode, $date)

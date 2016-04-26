@@ -1,7 +1,8 @@
 <?php
 $cable_test = array(
 
-    'ELTEX' => array(
+    'Eltex' => array(
+        0 => 'unknown',
         1 => '4_pair_cable',
         2 => '2_pair_cable',
         3 => 'no_cable',
@@ -10,7 +11,7 @@ $cable_test = array(
         6 => 'bad_cable',
         7 => 'impedance_mismatch',
     ),
-    'Huawei Technologies'=> array(
+    'Huawei'=> array(
         1 => 'normal',//'normal',
         2 => 'abnormalOpen',//'обрыв',
         3 => 'abnormalShort',//'замыкание',

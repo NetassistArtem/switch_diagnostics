@@ -1,8 +1,6 @@
 <h1> Список свичей </h1>
 
 <div>
-
-
     <?php foreach(Session::getFlash( $account_id) as $v): ?>
 
         <p class="<?= $v['warning_class']; ?>"><?= $v['warning_class']; ?>: <?= $v['message']; ?></p>

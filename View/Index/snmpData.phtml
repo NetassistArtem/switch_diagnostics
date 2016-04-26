@@ -69,7 +69,7 @@
         <td><?= isset($data_switch['last_change']) ? $data_switch['last_change'] : 'Нет данных' ?></td>
     </tr>
     <?php
-    if (isset($data_switch['last_change'])):
+    if (!empty($data_switch['mac'])):
         foreach ($data_switch['mac'] as $k => $v): ?>
 
             <tr>
