@@ -44,16 +44,24 @@ class IndexModel
                 }
                 $mac_16 = trim($mac_16, ':');
                 $port = str_replace('INTEGER: ', '', $v);
-                //только у ELTEX указание портов для макадресов идут с коэфициентом (не путать с именованиями портов для формирования всех остальных оидов)
+
+                // у ELTEX и у hawei для старой версии прошивки, указание портов для макадресов идут с коэфициентом (не путать с именованиями портов для формирования всех остальных оидов)
                 if(strtolower($this->switch_mac['manufacturer'])=='eltex'|| strtolower($this->switch_mac['manufacturer'])=='huawei' ){
-                    $port_coef = ($port <= $data_switch['simple_port'] || $port == 0) ? $port_coefficient['port_coefficient'] : $port_coefficient['gig_port_coefficient'];
+                    $port_coef = ($port <= $data_switch[0]['simple_port'] || $port == 0) ? $port_coefficient['port_coefficient'] : $port_coefficient['gig_port_coefficient'];
+
                 }else{
+
+
                     $port_coef ='';
+
                 }
 
                 //(strtolower($this->switch_mac['manufacturer'])=='eltex') ? $port_coefficient :'';
-                $mac_port_array[$mac_16] = $port - $port_coef;
 
+
+
+                $mac_port_array[$mac_16] = $port - $port_coef;
+              //  echo $port;
             }
         }
 
@@ -269,7 +277,7 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
     {
 
         $dbc = Connect_db::getConnection(3);
-        $sql = 'SELECT sw.snmp_auth, sw.use_snmp FROM sw_list sw JOIN port_list pl ON sw.sw_id = pl.sw_id AND pl.ref_user_id = 2637';
+        $sql = 'SELECT sw.snmp_auth, sw.use_snmp FROM sw_list sw JOIN port_list pl ON sw.sw_id = pl.sw_id AND pl.ref_user_id = :account_id';
         $placeholders = array(
             'account_id'=> Router::getAccountId()
         );
@@ -298,6 +306,20 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
         $snmp = new Connect_SNMP($this->switch_mac['switch_ip']);
         $data = $snmp->walkByKey($key);
         return $data;
+    }
+    public function userIdByPort($port, $switch_id)
+    {
+        $dbc = Connect_db::getConnection(3);
+        $sql = 'SELECT `ref_user_id` FROM `port_list` WHERE `sw_id`= :switch_id AND `port_id`=:port_id';
+        $placeholders = array(
+            'port_id'=> $port,
+            'switch_id' => $switch_id
+        );
+        $data = $dbc->getDate($sql, $placeholders);
+
+
+        return $data[0]['ref_user_id'];
+
     }
 
 

@@ -9,6 +9,8 @@ abstract class Router
     private static $account_id = null;
     private static $id;
     private static $switch_pattern_id = null;
+    private static $billing = null;
+
 
     /**
      * @param $url
@@ -17,8 +19,58 @@ abstract class Router
     public static function parse($url)
     {
         require LIB_DIR . 'routes.php';
+        $request = new Request();
+
+
+
         $arr = explode('?', $url);
         $url = rtrim($arr[0], '/');
+
+        $url_a = explode('/', $url);
+        if($url_a[1]=='bl'){
+
+
+            self::$billing = 1;
+          //  Session::set('billing',1);
+
+           // echo $request->get('billing');
+            unset($url_a[1]);
+            $switch_id = $request->get('switch');
+            $port_id = $request->get('port');
+
+            if($switch_id && $port_id){
+
+                $indexModel = new IndexModel();
+
+                $user_id = (int)$indexModel->userIdByPort($port_id,$switch_id);
+
+
+                if($user_id  !== -1 && isset($user_id)){
+
+
+                    $url_a[] = $user_id;
+                    $url = implode("/",$url_a);
+                    $cabletest = $request->get('cabletest');
+                    $link = $request->get('link');
+
+                    $warning = $request->get('warning');
+                    $notice = $request->get('notice');
+                    $information = $request->get('information');
+                    $cable_length = $request->get('cable_length');
+                    $switch_data = $request->get('switch_data');
+                    Controller::redirect($url."?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data");
+                }else{
+                    throw new Exception("В базе данных билинга не обнаружен пользователь с switch_id = $switch_id и port_id = $port_id ",1);
+                }
+
+
+
+            }
+
+        }
+        $url = implode("/",$url_a);
+       // $url = rtrim($url, '/');
+
 
 
         if (!$url) {
@@ -26,6 +78,7 @@ abstract class Router
             self::$action = 'index';
             return;
         }
+
 
         foreach ($routes as $route => $item) {
 
@@ -54,7 +107,7 @@ abstract class Router
         }
 
         if (is_null(self::$controller) || is_null(self::$action)) {
-            $request = new Request();
+
             throw new Exception('Page (' . $request->server('REQUEST_URI') . ') not found', 404);
         }
     }
@@ -126,6 +179,14 @@ abstract class Router
     public static function getSwitchPatternId()
     {
         return self::$switch_pattern_id;
+    }
+
+    /**
+     * @return null
+     */
+    public static function getBilling()
+    {
+        return self::$billing;
     }
 
 

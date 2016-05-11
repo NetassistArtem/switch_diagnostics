@@ -13,7 +13,7 @@ class Connect_SNMP
     {
         $indexModel = new IndexModel();
         $community_billing = $indexModel->getCommunity();
-        if($community_billing['use_snmp']){
+        if($community_billing['use_snmp'] || Config::get('mode') == 'test'){
             $this->community_read = $community_billing['snmp_auth'] ? $community_billing['snmp_auth'] : Config::get('community_read_default');
             $this->community_write = Config::get('community_write_default');
             if($wr_rd == 'w'){

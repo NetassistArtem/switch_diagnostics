@@ -4,6 +4,13 @@
 class IndexController extends Controller
 {
     public $account_id;
+    public $style_class = array();
+
+    public function __construct()
+    {
+        $this->style_class = Config::get('style_class');
+
+    }
 
     //  private $repetition;
 
@@ -85,10 +92,10 @@ class IndexController extends Controller
 
             if (!empty($switch_data_result)) {
                 if (!$switch_data_result['manufacturer']) {
-                    Session::setFlash('В полученных со свича данных отсутствует информация о производители свича.', 'information');
+                    Session::setFlash('В полученных со свича данных отсутствует информация о производители свича.', $this->style_class['information']);
                 }
                 if (!$switch_data_result['soft_version']) {
-                    Session::setFlash('В полученных со свича данных отсутствует информация о версии прошивки свича.', 'information');
+                    Session::setFlash('В полученных со свича данных отсутствует информация о версии прошивки свича.', $this->style_class['information']);
                     $patterns_array = array();
                     foreach ($switch as $v) {
                         if ($switch_data_result['model_name'] == $v['model_name']) {
@@ -98,7 +105,7 @@ class IndexController extends Controller
                     $patterns_array = array_unique($patterns_array);
                     if ($patterns_array[1]) {
                         Session::setFlash('Сущствует несколько шаблонов для данного свича! Использован первый из имеющихся
-                         шаблонов', 'warning');
+                         шаблонов', $this->style_class['warning']);
                     }
 
                     return $patterns_array[0];
@@ -117,7 +124,7 @@ class IndexController extends Controller
                             return $v['pattern_id'];
                         } elseif ($switch_data_result['model_name'] == $v['model_name']) {
 
-                            Session::setFlash('Данные со свича не содержат информации о производители свича м версии прошивки', 'information');
+                            Session::setFlash('Данные со свича не содержат информации о производители свича м версии прошивки', $this->style_class['information']);
                             return $v['pattern_id'];
                         }
 
@@ -129,14 +136,14 @@ class IndexController extends Controller
             } else {
                 Session::setFlash('Данные со свича не содержат информацию о производители, наименовании и версии прошивки свича.
                  Для определения ID шаблона использованны данные о
-            модели и прошивки из базы данных биллинга', 'notice');
+            модели и прошивки из базы данных биллинга', $this->style_class['notice']);
                 $pattern_number = $patternModel->getPatternUserData();
                 if ($pattern_number['pattern_id']) {
                     return $pattern_number['pattern_id'];
                 } else {
                     Session::setFlash('Данные со свича не содержат информацию о производители, наименовании и версии
                     прошивки свича. Информация о модели свича в базе данных билинга для
-                 запрашиваемого пользователя отсутствуют', 'warning');
+                 запрашиваемого пользователя отсутствуют', $this->style_class['warning']);
                 }
 
             }
@@ -145,13 +152,13 @@ class IndexController extends Controller
         } else {
 
             Session::setFlash('Данные со свича не были полученны. Для определения ID шаблона использованны данные о
-            модели и прошивки из базы данных биллинга', 'notice');
+            модели и прошивки из базы данных биллинга', $this->style_class['notice']);
             $pattern_number = $patternModel->getPatternUserData();
             if ($pattern_number['pattern_id']) {
                 return $pattern_number['pattern_id'];
             } else {
                 Session::setFlash('Данные со свича не были получены. Информация о модели свича в базе данных билинга для
-                 запрашиваемого пользователя отсутствуют', 'warning');
+                 запрашиваемого пользователя отсутствуют', $this->style_class['warning']);
             }
 
         }
@@ -195,16 +202,16 @@ class IndexController extends Controller
 
                 $cableLengthModel->insertCableLength($this->account_id, $cable_length);
 
-                Session::setFlash("Длинна кабеля для пользователя " . $this->account_id . " успешно записанна.", "information");
+                Session::setFlash("Длинна кабеля для пользователя " . $this->account_id . " успешно записанна.", $this->style_class['information']);
             } else {
                 $cableLengthModel->updataCableLength($this->account_id, $cable_length);
-                Session::setFlash("Длинна кабеля для пользователя " . $this->account_id . " успешно перезаписана.", "information");
+                Session::setFlash("Длинна кабеля для пользователя " . $this->account_id . " успешно перезаписана.", $this->style_class['information']);
 
             }
 
         } else {
 
-            Session::setFlash("Длинна кабеля не известна и не может быть записана. Порт пользователя должен быть в статусе 'open cable'.", 'notice');
+            Session::setFlash("Длинна кабеля не известна и не может быть записана. Порт пользователя должен быть в статусе 'open cable'.", $this->style_class['notice']);
         }
     }
 
@@ -214,8 +221,8 @@ class IndexController extends Controller
 
         if (empty($cableLengthModel->cableLength($this->account_id))) {
             Session::setFlash("Для пользователя " . $this->account_id . " не записанна длинна кабеля. Для записи длинны кабеля, пользователь
-            должен отключить кабель после чего необходимо нажать 'Записать длинну кабеля'", "notice");
-            return "notice";
+            должен отключить кабель после чего необходимо нажать 'Записать длинну кабеля'", $this->style_class['notice']);
+            return $this->style_class['notice'];
         } else {
             $saved_cable_length = $cableLengthModel->cableLength($this->account_id)[0]['cable_lenght'];
             $max_cable_lenght = $saved_cable_length + Config::get('delta_cable_langth');
@@ -223,8 +230,8 @@ class IndexController extends Controller
             if ($new_cable_length) {
                 if ($new_cable_length > $max_cable_lenght || $new_cable_length < $min_cable_lenght) {
                     Session::setFlash("Длинна кабеля не правильная! Записанная ранее длинна " . $saved_cable_length . "м. ,
-                полученная со свича длинна " . $new_cable_length . "м.", "warning");
-                    return "warning";
+                полученная со свича длинна " . $new_cable_length . "м.", $this->style_class['warning']);
+                    return $this->style_class['warning'];
                 }
             }
         }
@@ -251,6 +258,9 @@ class IndexController extends Controller
                     break;
                 case 'without_cabletest':
                     $this->redirect("/account_test/" . $request->post('account_id') . "?cabletest=off");
+                    break;
+                case 'standart_cabletest':
+                    $this->redirect("/account_test/" . $request->post('account_id') . "?cabletest=onoff");
                     break;
                 case "history":
                     $this->redirect("/account_test/history/" . $request->post('account_id'));
@@ -294,6 +304,7 @@ class IndexController extends Controller
 
         $d = $indexModel->snmpData($this->account_id, Config::get('oid_switch_model'));
 
+
         //Debugger::PrintR($d);
         $pattern_id = $this->findPattern($d);
 
@@ -306,34 +317,36 @@ class IndexController extends Controller
 
 
         $mac_port_array = $indexModel->getAllMac($this->account_id, $pattern_id, $port_coefficient_array);
-      //    Debugger::PrintR($mac_port_array);
+       // Debugger::PrintR($mac_port_array);
+
 
 
         if ($d['mac']) {
             if (array_key_exists($d['mac'], $mac_port_array)) {
-                $port_db = $d['port'] + $port_coefficient;
+                $port_db = $d['port'];// + $port_coefficient;
 
                 $port_switch = $mac_port_array[$d['mac']];
 
 
-                $p_s = $port_switch - $port_coefficient;
+                $p_s = $port_switch;// - $port_coefficient;
 
                 if ($port_switch != $port_db) {
                     // echo $port_switch.PHP_EOL;
                     // echo $port_db;
 
                     Session::setFlash("В базе данных билинга указан не правильный порт! В базе данных порт
-                    - " . $d['port'] . " По данным свича - $p_s Для получения данных исползуется порт $p_s", "warning");
+                    - " . $d['port'] . " По данным свича - $p_s Для получения данных исползуется порт $p_s", $this->style_class['warning']);
+
                     $d['port'] = $p_s;
 
                 }
 
             } else {
-                Session::setFlash("Мак адрес пользователя $this->account_id  указанный в базе даных билинга не обнаружен в данных свича", "warning");
+                Session::setFlash("Мак адрес пользователя $this->account_id  указанный в базе даных билинга не обнаружен в данных свича", $this->style_class['warning']);
             }
 
         } else {
-            Session::setFlash("Мак адрес в базе даных билинга для пользователя $this->account_id отсутствует", "warning");
+            Session::setFlash("Мак адрес в базе даных билинга для пользователя $this->account_id отсутствует", $this->style_class['warning']);
         }
 
         $pattern_data = $patternModel->PatternData($d['port'], $pattern_id, $d['switch_model']);
@@ -341,7 +354,9 @@ class IndexController extends Controller
 
         //  Debugger::PrintR($pattern_data);
 
+
         $oid_port_status = Config::get('port_status') . "." . ($d['port'] + $port_coefficient);
+
 
 
         $data_status = $indexModel->snmpByKey($this->account_id, $oid_port_status);
@@ -424,10 +439,7 @@ class IndexController extends Controller
 
             $data_switch['last_change'] = date(' Y-m-d h:i:m', mktime(0, 0, -($data_switch['last_change'])));
         }
-        if (isset($data_switch['speed'])) {
-
-            $data_switch['speed'] = $data_switch['speed'] / 1000000;
-        }
+        
         if (isset($data_switch['cable_status'])) {
             echo $data_switch['cable_status'];
 
@@ -463,12 +475,17 @@ class IndexController extends Controller
         $data_switch['speed'] = $data_switch['port_status'] == 'OFF' ? 0 : $data_switch['speed'];
         $historyModel->insertData($this->account_id, $data_switch, $data);
 
+        $link_on_off = $request->get('link');//Параметр необходимый для отключения ссылок в шаблоне
+        $switch_data_on_off = $request->get('switch_data'); // Параметр необходимый для отключения вывода данный о свиче (только snmp данные)
+
         $args = array(
             'data_switch' => $data_switch,
             'data_db' => $data,
             'account_id' => $this->account_id,
             'cabletest_start' => $cabletest_start,
-            'cable_length_status' => $cable_length_status
+            'cable_length_status' => $cable_length_status,
+            'link_on_off' => isset($link_on_off) ? $request->get('link') : null,
+            'switch_data_on_off' => isset($switch_data_on_off) ? $request->get('switch_data') : 1
         );
 
 

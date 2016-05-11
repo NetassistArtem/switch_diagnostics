@@ -1,25 +1,29 @@
-
-<h1> Пользователь <?= $account_id ?></h1>
+<h2> Пользователь <?= $account_id ?></h2>
 <div>
+    <?php foreach (Session::getFlash($account_id) as $v): ?>
 
+        <p class="<?= $v['warning_class']; ?>"><?= $v['warning_level']; ?>: <?= $v['message']; ?></p>
+    <?php endforeach; ?>
+    <?php if (!$link_on_off): ?>
 
+        <div>
+            <p>
+                <a href="<?= Config::get('host_for_link') ?>/account_test/<?= $account_id ?>?cabletest=on">Кабель
+                    тест</a>
+            </p>
+            <p>
+                <a href="<?= Config::get('host_for_link') ?>/account_test/insert_cable_length/<?= $account_id ?>">Записать
+                    длинну кабеля</a>
+            </p>
+            <p>
+                <a href="<?= Config::get('host_for_link') ?>/account_test/history/<?= $account_id ?>">История
+                    пользователя</a>
+            </p>
 
-        <?php foreach(Session::getFlash( $account_id) as $v): ?>
+        </div>
 
-            <p class="<?= $v['warning_class']; ?>"><?= $v['warning_class']; ?>: <?= $v['message']; ?></p>
-        <?php endforeach; ?>
+    <?php endif; ?>
 
-<div>
-    <p>
-        <a href="/account_test/<?= $account_id ?>?cabletest=on">Кабель тест</a>
-    </p>
-    <p>
-        <a href="/account_test/insert_cable_length/<?= $account_id ?>">Записать длинну кабеля</a>
-    </p>
-    <p>
-    <a href="/account_test/history/<?= $account_id ?>" target="_blank">История пользователя</a>
-    </p>
-</div>
 
 </div>
 
@@ -48,19 +52,30 @@
         <td>Ошибки</td>
         <td><?= isset($data_switch['error']) ? $data_switch['error'] : 'Нет данных' ?></td>
     </tr>
-    <tr>
-        <td>Скорость мб/с</td>
-        <td><?= isset($data_switch['speed']) ? $data_switch['speed'] : 'Нет данных' ?></td>
-    </tr>
-    <tr>
-        <td>Дуплекс</td>
-        <td><?= isset($data_switch['duplex']) ? $data_switch['duplex'] : 'Нет данных' ?></td>
-    </tr>
+    <?php if (Config::get('duplex_speed_view') == 'string'): ?>
+        <tr>
+            <td>Дуплекс, Скорость мб/с</td>
+            <td>
+                <?= isset($data_switch['duplex']) ? $data_switch['duplex'] : '' ?>
+                <?= isset($data_switch['speed']) ? $data_switch['speed'] : '' ?>
+            </td>
+        </tr>
+    <?php endif; ?>
+    <?php if (Config::get('duplex_speed_view') == 'table'): ?>
+        <tr>
+            <td>Скорость мб/с</td>
+            <td><?= isset($data_switch['speed']) ? $data_switch['speed'] : 'Нет данных' ?></td>
+        </tr>
+        <tr>
+            <td>Дуплекс</td>
+            <td><?= isset($data_switch['duplex']) ? $data_switch['duplex'] : 'Нет данных' ?></td>
+        </tr>
+    <?php endif; ?>
     <tr>
         <td>Состояние кабеля</td>
         <td><?= (isset($cabletest_start) && $cabletest_start == 'yes') ? $data_switch['cable_status'] : 'Нет данных' ?></td>
     </tr>
-    <tr class = "<?= $cable_length_status ?>">
+    <tr class="<?= $cable_length_status ?>">
         <td>Длина кабеля</td>
         <td><?= (isset($cabletest_start) && $cabletest_start == 'yes') ? $data_switch['cable_lenght'] : 'Нет данных' ?></td>
     </tr>
@@ -85,39 +100,57 @@
             <td>Нет данных</td>
         </tr>
 
-        <?php endif; ?>
+    <?php endif; ?>
 
-    <tr>
-        <td colspan="2">Данные полученные из базы данных билинга</td>
-    </tr>
-    <tr>
-        <td>ip свича</td>
-        <td><?= $data_db['switch_ip'] ? $data_db['switch_ip'] : 'Нет данных' ?></td>
-    </tr>
-    <tr>
-        <td>Мак адрес пользователя</td>
-        <td><?= $data_db['mac'] ? $data_db['mac'] : 'Нет данных' ?></td>
-    </tr>
-    <tr>
-        <td>Порт</td>
-        <td><?= $data_db['port'] ? $data_db['port'] : 'Нет данных' ?></td>
-    </tr>
-    <tr>
-        <td>Производитель свича</td>
-        <td><?= $data_db['manufacturer'] ? $data_db['manufacturer'] : 'Нет данных' ?></td>
-    </tr>
-    <tr>
-        <td>Модель свича</td>
-        <td><?= $data_db['switch_model'] ? $data_db['switch_model'] : 'Нет данных' ?></td>
-    </tr>
-    <tr>
-        <td>Прошивка свича</td>
-        <td><?= $data_db['firmware'] ? $data_db['firmware'] : 'Нет данных' ?></td>
-    </tr>
-    <tr>
-        <td>Время отработки свича, с</td>
-        <td><?=  microtime(true)-$GLOBALS['start_time']; ?></td>
-    </tr>
+    <?php if ($switch_data_on_off == 1): ?>
+
+        <tr>
+            <td colspan="2">Данные полученные из базы данных билинга</td>
+        </tr>
+        <tr>
+            <td>ip свича</td>
+            <td><?= $data_db['switch_ip'] ? $data_db['switch_ip'] : 'Нет данных' ?></td>
+        </tr>
+        <tr>
+            <td>Мак адрес пользователя</td>
+            <td><?= $data_db['mac'] ? $data_db['mac'] : 'Нет данных' ?></td>
+        </tr>
+        <tr>
+            <td>Порт</td>
+            <td><?= $data_db['port'] ? $data_db['port'] : 'Нет данных' ?></td>
+        </tr>
+        <?php if (Config::get('switch_info_view') == 'string'): ?>
+            <tr>
+                <td>Свич</td>
+                <td>
+                    <?= $data_db['manufacturer'] ? $data_db['manufacturer'] : '' ?>
+                    <?= $data_db['switch_model'] ? $data_db['switch_model'] : '' ?>
+                    <?= $data_db['firmware'] ? $data_db['firmware'] : '' ?>
+                </td>
+            </tr>
+        <?php endif ?>
+        <?php if (Config::get('switch_info_view') == 'table'): ?>
+            <tr>
+                <td>Производитель свича</td>
+                <td><?= $data_db['manufacturer'] ? $data_db['manufacturer'] : 'Нет данных' ?></td>
+            </tr>
+            <tr>
+                <td>Модель свича</td>
+                <td><?= $data_db['switch_model'] ? $data_db['switch_model'] : 'Нет данных' ?></td>
+            </tr>
+            <tr>
+                <td>Прошивка свича</td>
+                <td><?= $data_db['firmware'] ? $data_db['firmware'] : 'Нет данных' ?></td>
+            </tr>
+        <?php endif ?>
+        <?php if (Config::get('time_switch_response') == 'on'): ?>
+            <tr>
+                <td>Время отработки свича, с</td>
+                <td><?= microtime(true) - $GLOBALS['start_time']; ?></td>
+            </tr>
+        <?php endif ?>
+
+    <?php endif; ?>
 </table>
 
 

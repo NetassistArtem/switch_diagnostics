@@ -3,7 +3,7 @@
 <div>
     <?php foreach(Session::getFlash( $account_id) as $v): ?>
 
-        <p class="<?= $v['warning_class']; ?>"><?= $v['warning_class']; ?>: <?= $v['message']; ?></p>
+        <p class="<?= $v['warning_class']; ?>"><?= $v['warning_level']; ?>: <?= $v['message']; ?></p>
     <?php endforeach; ?>
 </div>
 

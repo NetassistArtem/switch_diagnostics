@@ -3,6 +3,13 @@
 
 class AdminController extends Controller
 {
+    public $style_class = array();
+
+    public function __construct()
+    {
+        $this->style_class = Config::get('style_class');
+    }
+
     private function issetSwitch()
     {
         $request = new Request();
@@ -39,14 +46,14 @@ class AdminController extends Controller
                 if (!$this->issetSwitch()) {
 
                     $adminModel->insertSwitch();
-                    Session::setFlash('Информация о новом свиче успешно добавленна!', 'information');
+                    Session::setFlash('Информация о новом свиче успешно добавленна!', $this->style_class['information']);
                     $this->redirect('/account_test/admin/switch_list');
 
                 } else {
-                    Session::setFlash('Свич с таким именем уже существует в базе данных', 'warning');
+                    Session::setFlash('Свич с таким именем уже существует в базе данных', $this->style_class['warning']);
                 }
             } else {
-                Session::setFlash('Заполните все поля!', 'warning');
+                Session::setFlash('Заполните все поля!', $this->style_class['warning']);
             }
         }
 
@@ -81,20 +88,20 @@ class AdminController extends Controller
                     if ($adminModel->checkInsertOidData()) {
                         if ($adminModel->checkInsertPortCoefficient()) {
                             $adminModel->insertPattern();
-                            Session::setFlash('Новый шаблон успешно добавленн!', 'information');
+                            Session::setFlash('Новый шаблон успешно добавленн!', $this->style_class['information']);
                             $this->redirect('/account_test/admin/pattern_list');
 
                         } else {
-                            Session::setFlash('Поле port_coefficient должно содержать только цифры', 'warning');
+                            Session::setFlash('Поле port_coefficient должно содержать только цифры', $this->style_class['warning']);
                         }
                     } else {
-                        Session::setFlash('Поля для ввода oid должны содержать только цифры и точки и начинатся и заканчиваться точкой', 'warning');
+                        Session::setFlash('Поля для ввода oid должны содержать только цифры и точки и начинатся и заканчиваться точкой', $this->style_class['warning']);
                     }
                 } else {
-                    Session::setFlash('Заполните поля ввода oid или поставте галочку подтверждающую их отсутствие', 'warning');
+                    Session::setFlash('Заполните поля ввода oid или поставте галочку подтверждающую их отсутствие', $this->style_class['warning']);
                 }
             } else {
-                Session::setFlash('Заполните обязательные поля', 'warning');
+                Session::setFlash('Заполните обязательные поля', $this->style_class['warning']);
 
             }
 
@@ -154,12 +161,12 @@ class AdminController extends Controller
 
 
                     $adminModel->editSwitch($switch_pattern_id);
-                    Session::setFlash('Информация о свиче изменена!', 'information');
+                    Session::setFlash('Информация о свиче изменена!', $this->style_class['information']);
                     //$this->redirect('/account_test/admin/switch_list');
 
 
                 } else {
-                    Session::setFlash('Заполните все поля!', 'warning');
+                    Session::setFlash('Заполните все поля!', $this->style_class['warning']);
                 }
 
             }
@@ -241,22 +248,6 @@ class AdminController extends Controller
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public function deleteSwitchAction()
     {
         $request = new Request();
@@ -264,7 +255,7 @@ class AdminController extends Controller
         $adminModel = new adminModel($request);
         if ($this->issetSwitchId($switch_id)) {
             $adminModel->deleteSwitch($switch_id);
-            Session::setFlash('Информация о свиче с id = "' . $switch_id . '" успешно удалена.', 'information');
+            Session::setFlash('Информация о свиче с id = "' . $switch_id . '" успешно удалена.', $this->style_class['information']);
             $this->redirect('/account_test/admin/switch_list');
         } else {
             throw new Exception('Page no found.Switch with id = ' . Router::getSwitchId() . "  is absent in data base", 404);

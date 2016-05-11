@@ -1,11 +1,9 @@
-<h1> История пользователя <?= $account_id ?></h1>
+<h2> История пользователя <?= $account_id ?></h2>
 <div>
-    <p>
+    <?php foreach (Session::getFlash($account_id) as $v): ?>
 
-        <?= Session::getFlash(); ?>
-
-
-    </p>
+        <p class="<?= $v['warning_class']; ?>"><?= $v['warning_level']; ?>: <?= $v['message']; ?></p>
+    <?php endforeach; ?>
 </div>
 
 <table border="1">

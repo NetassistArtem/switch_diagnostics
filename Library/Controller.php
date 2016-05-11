@@ -11,6 +11,13 @@
 abstract class Controller
 {
 
+/*
+    public static function test()
+{
+    $t = "http://test.naic.29632.as/bl/account_test/6048?bl=1";
+    return $t;
+}
+*/
     private function file_path($tpl = null)
     {
 
@@ -19,6 +26,7 @@ abstract class Controller
 
         $templateFile = VIEW_DIR . $tplDir . DS . $tplName . '.phtml';
         if (!file_exists($templateFile)) {
+
             throw new Exception("{$templateFile} not found", 404);
         }
 
@@ -36,8 +44,14 @@ abstract class Controller
 
 
 
-       // ob_start();
-        require VIEW_DIR . 'layout.phtml';
+      //  ob_start();
+        $request = new Request();
+        if($request->get('bl')){//Router::getBilling()){
+            require VIEW_DIR . 'layout_billing.phtml';
+        }else{
+            require VIEW_DIR . 'layout.phtml';
+        }
+
         return ob_get_clean();
     }
 

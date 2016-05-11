@@ -1,7 +1,8 @@
 <?php
 
 
-class NodeController extends Controller {
+class NodeController extends Controller
+{
 
     private static $error_code = null;
     private static $error_message = null;
