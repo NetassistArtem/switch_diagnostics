@@ -25,12 +25,12 @@
                         <input name="<?= $v ?>" id="<?= $v ?>" type="text" value="<?= $pattern_post_data[$v] ?>" <?= $v=='port_coefficient' ? 'required' : '' ?> />
                     </td>
                     <td>
-                        <?php if ($v != 'port_coefficient'): ?>
+                        <?php if ($v != 'port_coefficient' && $v != 'gig_port_coefficient'): ?>
                        <p> oid отсутствует</p>
                         <?php endif; ?>
                     </td>
                     <td>
-                        <?php if ($v != 'port_coefficient'): ?>
+                        <?php if ($v != 'port_coefficient' && $v != 'gig_port_coefficient'): ?>
                         <p>
                             <input name="absent_<?= $v ?>" type="checkbox" value="absent_<?= $v ?>"/>
                         </p>
@@ -45,7 +45,7 @@
 
                 <td colspan="4" align="center">
                     <p>
-                        <input type="submit"/>
+                        <input type="submit" value="сохранить"/>
                     </p>
                 </td>
             </tr>

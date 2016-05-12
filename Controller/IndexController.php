@@ -439,7 +439,7 @@ class IndexController extends Controller
 
             $data_switch['last_change'] = date(' Y-m-d h:i:m', mktime(0, 0, -($data_switch['last_change'])));
         }
-        
+
         if (isset($data_switch['cable_status'])) {
             echo $data_switch['cable_status'];
 
@@ -578,25 +578,25 @@ class IndexController extends Controller
     }
 
 
-    public static function rewrite_file($file_path, $mode, $date)
+    public static function rewrite_file($file_path, $mode, $data)
     {
-        $f = fopen($file_path, $mode);
-        fwrite($f, $date);
+       $f = fopen($file_path, $mode);
+       fwrite($f, $data);
         fclose($f);
     }
 
 
     public static function errorAction(Exception $e)
     {
-        $date = date('Y-m-d H:i:s') . PHP_EOL;
-        $date .= '/./ ' . $e->getCode() . PHP_EOL;
-        $date .= '/./ ' . $e->getMessage() . PHP_EOL;
-        $date .= '/./ ' . $e->getFile() . PHP_EOL;
-        $date .= '/./ ' . $e->getLine() . PHP_EOL;
-        $date .= '///';
+        $data = date('Y-m-d H:i:s') . PHP_EOL;
+        $data .= '/./ ' . $e->getCode() . PHP_EOL;
+        $data .= '/./ ' . $e->getMessage() . PHP_EOL;
+        $data .= '/./ ' . $e->getFile() . PHP_EOL;
+        $data .= '/./ ' . $e->getLine() . PHP_EOL;
+        $data .= '///';
 
 
-        self::rewrite_file(APPROOT_DIR . 'log.txt', 'a', $date);
+        self::rewrite_file(APPROOT_DIR . 'log.txt', 'a', $data);
     }
 
 }

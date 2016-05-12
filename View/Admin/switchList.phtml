@@ -13,6 +13,8 @@
         <td>Производитель</td>
         <td>Модель свича</td>
         <td>Версия прошивки</td>
+        <td>Количество портов (обычые)</td>
+        <td>Количество портов (гигабитные)</td>
         <td>id Шаблона</td>
         <td>Редактировать</td>
         <td>Удалить</td>
@@ -25,6 +27,8 @@
             <td><?= $v['model_name'] ?></td>
             <td><?= $v['manufacturer'] ?></td>
             <td><?= $v['firmware'] ?></td>
+            <td><?= $v['simple_port'] ?></td>
+            <td><?= $v['gig_port'] ?></td>
             <td><?= $v['pattern_id'] ?></td>
             <td><a href="/account_test/admin/switch_edit/<?= $v['id'] ?>">Редактировать</a></td>
             <td><a href="/account_test/admin/switch_delete/<?= $v['id'] ?>" onclick="return confirm('Вы уверены что хотите удалить информацию о свиче <?= $v['manufacturer'] ?> <?= $v['model_name'] ?> ?')">Удалить</a></td>

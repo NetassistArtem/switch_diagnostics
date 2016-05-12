@@ -149,7 +149,7 @@
          )
      ),
      'admin_pattern_delete' => array(
-         'pattern' => '/account_test/admin/switch_delete/{pattern_id}',
+         'pattern' => '/account_test/admin/pattern_delete/{pattern_id}',
          'controller' => 'Admin',
          'action' => 'deletePattern',
          'params' => array(

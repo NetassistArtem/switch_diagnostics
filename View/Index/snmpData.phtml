@@ -45,13 +45,22 @@
         <td><?= isset($data_switch['counter_byte_out']) ? $data_switch['counter_byte_out'] : 'Нет данных' ?></td>
     </tr>
     <tr>
-        <td>счетчик пакетов</td>
-        <td><?= isset($data_switch['counter_pkts_out']) ? $data_switch['counter_pkts_out'] : 'Нет данных' ?></td>
+        <td>счетчик пакетов(unicast,in)</td>
+        <td><?= isset($data_switch['counter_pkts_unicast_in']) ? $data_switch['counter_pkts_unicast_in'] : 'Нет данных' ?></td>
     </tr>
     <tr>
-        <td>Ошибки</td>
-        <td><?= isset($data_switch['error']) ? $data_switch['error'] : 'Нет данных' ?></td>
+        <td>счетчик пакетов(unicast,out)</td>
+        <td><?= isset($data_switch['counter_pkts_unicast_out']) ? $data_switch['counter_pkts_unicast_out'] : 'Нет данных' ?></td>
     </tr>
+    <tr>
+        <td>Ошибки(in)</td>
+        <td><?= isset($data_switch['error_in']) ? $data_switch['error_in'] : 'Нет данных' ?></td>
+    </tr>
+    <tr>
+        <td>Ошибки(out)</td>
+        <td><?= isset($data_switch['error_out']) ? $data_switch['error_out'] : 'Нет данных' ?></td>
+    </tr>
+
     <?php if (Config::get('duplex_speed_view') == 'string'): ?>
         <tr>
             <td>Дуплекс, Скорость мб/с</td>
