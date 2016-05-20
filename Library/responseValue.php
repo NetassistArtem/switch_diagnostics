@@ -27,3 +27,7 @@ $duplex = array(
     2 => 'halfDuplex',
     3 => 'fullDuplex'
 );
+$tp_link = array(
+    '8 Giga + 1 SFP ports managed switch w/WebView' => 'TP-Link TL-SG3109',
+    '24-Port Managed 10/100 Switch w/WebView' => 'TP-Link TL-SL3428'
+);

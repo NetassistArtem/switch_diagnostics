@@ -17,7 +17,7 @@
                 <select name="switch_manufacturer" id="switch_manufacturer" required>
                     <option disabled selected>Выберите производителя</option>
                     <?php foreach ($manufacturer as $v): ?>
-                        <option value="<?= $v ?>"><?= $v ?></option>
+                        <option <?= $v== $switch_data['manufacturer'] ? 'selected' : '' ?> value="<?= $v ?>"><?= $v ?></option>
                     <?php endforeach; ?>
                 </select>
             </p>
@@ -26,14 +26,14 @@
         <li>
             <p>
                 <label for="model_name">Модель свича</label>
-                <input name="model_name" id ="model_name" type="text" required />
+                <input name="model_name" id ="model_name" value= "<?= isset($switch_data['model_name']) ? $switch_data['model_name'] : ''?>" type="text" required />
             </p>
 
         </li>
         <li>
             <p>
                 <label for="firmware">Версия пошивки свича</label>
-                <input name="firmware" id ="firmware" type="text" required />
+                <input name="firmware" id ="firmware" value= "<?= isset($switch_data['firmware']) ?  $switch_data['firmware'] : '' ?>" type="text" required />
             </p>
 
         </li>
@@ -41,7 +41,7 @@
         <li>
             <p>
                 <label for="simple_port">Количество портов (обычные)</label>
-                <input name="simple_port" id ="simple_port" type="number"  required />
+                <input name="simple_port" id ="simple_port" value= "<?= isset($switch_data['simple_port']) ?  $switch_data['simple_port'] : '' ?>" type="number"  required />
             </p>
 
         </li>
@@ -49,7 +49,7 @@
         <li>
             <p>
                 <label for="gig_port">Количество портов (гигабитные)</label>
-                <input name="gig_port" id ="gig_port" type="number"  required />
+                <input name="gig_port" id ="gig_port" value= "<?= isset($switch_data['gig_port']) ?  $switch_data['gig_port'] : '' ?>" type="number"  required />
             </p>
 
         </li>
@@ -59,10 +59,11 @@
             <p>
 
                 <label for="pattern_id">Шаблон</label>
+
                 <select name="pattern_id" id="pattern_id" required>
                     <option disabled selected>Выберите шаблон</option>
                     <?php foreach ($patterns_id as $v): ?>
-                        <option value="<?= $v['id'] ?>"><?= $v['id'] ?></option>
+                        <option <?= $v== $switch_data['pattern_id'] ? 'selected' : '' ?> value="<?= $v['id'] ?>"><?= $v['id'] ?></option>
                     <?php endforeach; ?>
                 </select>
             </p>

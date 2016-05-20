@@ -4,6 +4,7 @@
 class IndexModel
 {
     private $switch_mac;
+    private static $port_coeff = array();
 
     /*
       public function testConnect()
@@ -13,25 +14,25 @@ class IndexModel
       }
 
   */
-    private function extractMac($mac_data, array $port_coefficient,$mac_oid)
+    private function extractMac($mac_data, array $port_coefficient, $mac_oid)
     {
         $mac_port_array = array();
-        $mac_oid = trim($mac_oid,'.');
+        $mac_oid = trim($mac_oid, '.');
         $mac_oid = substr_replace($mac_oid, 'iso', 0, 1);
 
 
         $patternModel = new patternModel(null);
         $data_switch = $patternModel->getSwitchDataByName($this->switch_mac['switch_model']);
-       // Debugger::PrintR($port_coefficient);
+        // Debugger::PrintR($port_coefficient);
 
 
         foreach ($mac_data as $k => $v) {
             if (strpos($k, $mac_oid) !== false) {
 
-                $mac_p = array_reverse(explode('.',$k));
+                $mac_p = array_reverse(explode('.', $k));
 
-                $mac_parts_array =array();
-                for($i=0;$i<6;$i++){
+                $mac_parts_array = array();
+                for ($i = 0; $i < 6; $i++) {
                     $mac_parts_array[] = $mac_p[$i];
                 }
 
@@ -39,29 +40,28 @@ class IndexModel
                 $mac_parts_array = array_reverse($mac_parts_array);
 
                 foreach ($mac_parts_array as $val) {
-                    $number = str_pad(dechex($val),2,'0', STR_PAD_LEFT);
-                    $mac_16 .=  $number . ':';
+                    $number = str_pad(dechex($val), 2, '0', STR_PAD_LEFT);
+                    $mac_16 .= $number . ':';
                 }
                 $mac_16 = trim($mac_16, ':');
                 $port = str_replace('INTEGER: ', '', $v);
 
                 // у ELTEX и у hawei для старой версии прошивки, указание портов для макадресов идут с коэфициентом (не путать с именованиями портов для формирования всех остальных оидов)
-                if(strtolower($this->switch_mac['manufacturer'])=='eltex'|| strtolower($this->switch_mac['manufacturer'])=='huawei' ){
+                if (strtolower($this->switch_mac['manufacturer']) == 'eltex' || strtolower($this->switch_mac['manufacturer']) == 'huawei') {
                     $port_coef = ($port <= $data_switch[0]['simple_port'] || $port == 0) ? $port_coefficient['port_coefficient'] : $port_coefficient['gig_port_coefficient'];
 
-                }else{
+                } else {
 
 
-                    $port_coef ='';
+                    $port_coef = '';
 
                 }
 
                 //(strtolower($this->switch_mac['manufacturer'])=='eltex') ? $port_coefficient :'';
 
 
-
                 $mac_port_array[$mac_16] = $port - $port_coef;
-              //  echo $port;
+                //  echo $port;
             }
         }
 
@@ -79,7 +79,7 @@ class IndexModel
 
     }
 
-    public function snmpData($account_id, $key)
+    public function snmpData($account_id, $key, $variable=null)
     {
         if (!$this->switch_mac) {
             $this->switch_mac = $this->getDataByID($account_id);
@@ -89,6 +89,10 @@ class IndexModel
 
         $switch_data = $snmp->getByKey($key);
 
+
+        if($variable[$switch_data]){
+            $switch_data = $variable[$switch_data];
+        }
 
 
         $data = array(
@@ -109,9 +113,9 @@ class IndexModel
 
     private function getDataByID($account_id, $switch_ip = null, $mac = null, $port = null, $switch_model = null, $firmware = null, $manufacturer = null)
     {
-        if(Config::get('mode') == 'test'){
+        if (Config::get('mode') == 'test') {
             return $this->getDataByIDtest($account_id, $switch_ip, $mac, $port, $switch_model, $firmware, $manufacturer);
-        }else{
+        } else {
             return $this->getDataByIDprod($account_id, $switch_ip, $mac, $port, $switch_model, $firmware, $manufacturer);
         }
     }
@@ -122,7 +126,7 @@ class IndexModel
         $dbc = Connect_db::getConnection(3);
 
 
-        $sql = "SELECT pl.sw_id, pl.port_id AS port, sl.sw_ip AS switch_ip, sl.sw_model AS switch_mod_manuf, ul.user_mac AS mac FROM port_list pl JOIN sw_list sl
+        $sql = "SELECT pl.sw_id, pl.port_id AS port, sl.sw_ip AS switch_ip,  sl.sw_model  AS switch_mod_manuf, ul.user_mac AS mac FROM port_list pl JOIN sw_list sl
 JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl.ref_user_id = ul.user_id";
         $placeholders = array(
             'account_id' => $account_id
@@ -130,22 +134,29 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
 
         $d = $dbc->getDate($sql, $placeholders);
 
+        // $d[0]['switch_mod_manuf'] = iconv('latin1','utf8', $d[0]['switch_mod_manuf']);
+        //временный костыль
+        $d[0]['switch_mod_manuf'] = str_replace(" ", "", $d[0]['switch_mod_manuf']);
+        $d[0]['switch_mod_manuf'] = str_replace('å', 'E', $d[0]['switch_mod_manuf']);
+        //окончание временного костыля
+      //  Debugger::PrintR($d);
 
         $switch_data_db = $this->switchData();
         $switch_mod_manuf = strtolower($d[0]['switch_mod_manuf']);
 
-        foreach ($switch_data_db as $v){
+        foreach ($switch_data_db as $v) {
 
-            if(strpos($switch_mod_manuf, strtolower($v['model_name']) )!== false){
+            if (strpos($switch_mod_manuf, strtolower($v['model_name'])) !== false) {
                 $d[0]['switch_model'] = $v['model_name'];
-                $d[0]['manufacturer']= $v['manufacturer'];
-                $d[0]['firmware']= $v['firmware'];
+                $d[0]['manufacturer'] = $v['manufacturer'];
+                $d[0]['firmware'] = $v['firmware'];
             }
         }
-        if(!$d[0]['switch_model']){
-            throw new Exception('Модель свича отсутсвтует в базе данных. Введите модель свича и соответствующий ей шаблон SNMP запросов (ссылка на добавление свича)',1);
-        }
 
+        if (!$d[0]['switch_model']) {
+
+            throw new Exception('Модель свича отсутсвтует в базе данных. Введите модель свича и соответствующий ей шаблон SNMP запросов (ссылка на добавление свича)', 1);
+        }
 
 
         $data = array(
@@ -177,12 +188,10 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
     }
 
 
-
-
     private function getDataByIDtest($account_id, $switch_ip = null, $mac = null, $port = null, $switch_model = null, $firmware = null, $manufacturer = null)
     {
         $dbc = Connect_db::getConnection(2);
-          $sql = "SELECT `switch_ip`, `mac`, `port` ,`switch_model`, `firmware`, `manufacturer` FROM `users` WHERE `id`= :account_id";
+        $sql = "SELECT `switch_ip`, `mac`, `port` ,`switch_model`, `firmware`, `manufacturer` FROM `users` WHERE `id`= :account_id";
 
         $placeholders = array(
             'account_id' => $account_id
@@ -228,13 +237,12 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
     }
 
 
-
-
-
     public function getAllMac($account_id, $pattern_id, array $port_coefficient)
     {
         $snmp = new Connect_SNMP($this->switch_mac['switch_ip']);
         $patternModel = new patternModel($account_id);
+
+
 
         $mac_port = $patternModel->macData($pattern_id);
 
@@ -245,7 +253,8 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
 
         $mac_data = $snmp->walkByKey($mac_port['mac_all']);
 
-          return  $this->extractMac($mac_data, $port_coefficient,$mac_port['mac_all']);
+
+        return $this->extractMac($mac_data, $port_coefficient, $mac_port['mac_all']);
 
     }
 
@@ -257,7 +266,7 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
 
 
         $patternModel = new patternModel($account_id);
-        $object_id = $patternModel->PatternData($port, $pattern_id, $this->switch_mac['switch_model'])['cable_test_start'];
+        $object_id = $patternModel->PatternData($port, $pattern_id)['cable_test_start'];
         if ($object_id) {
             $write_test = 1;
             if (strtolower($switch_manufacturer) == 'eltex') {
@@ -269,7 +278,7 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
 
             sleep(Config::get('timeout_cabletest')[$switch_manufacturer]);
         } else {
-            Session::setFlash('Тест кабеля для свича ' . $this->switch_mac['switch_model'] . ' ' . $this->switch_mac['manufacturer'] . ' ' . $this->switch_mac['firmware'] . ' на данный момент не доступен (отсутствует необходимый OID)',"notice");
+            Session::setFlash('Тест кабеля для свича ' . $this->switch_mac['switch_model'] . ' ' . $this->switch_mac['manufacturer'] . ' ' . $this->switch_mac['firmware'] . ' на данный момент не доступен (отсутствует необходимый OID)', "notice");
         }
     }
 
@@ -279,7 +288,7 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
         $dbc = Connect_db::getConnection(3);
         $sql = 'SELECT sw.snmp_auth, sw.use_snmp FROM sw_list sw JOIN port_list pl ON sw.sw_id = pl.sw_id AND pl.ref_user_id = :account_id';
         $placeholders = array(
-            'account_id'=> Router::getAccountId()
+            'account_id' => Router::getAccountId()
         );
         $data = $dbc->getDate($sql, $placeholders);
         return $data[0];
@@ -307,19 +316,70 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
         $data = $snmp->walkByKey($key);
         return $data;
     }
+
     public function userIdByPort($port, $switch_id)
     {
         $dbc = Connect_db::getConnection(3);
         $sql = 'SELECT `ref_user_id` FROM `port_list` WHERE `sw_id`= :switch_id AND `port_id`=:port_id';
         $placeholders = array(
-            'port_id'=> $port,
+            'port_id' => $port,
             'switch_id' => $switch_id
         );
         $data = $dbc->getDate($sql, $placeholders);
 
 
         return $data[0]['ref_user_id'];
+    }
 
+
+    public function getPortCoefficient($account_id, $port_number)
+    {
+
+        $patternModel = new patternModel($account_id);
+
+        $data_switch = $patternModel->getSwitchDataByName($this->switch_mac['switch_model']);
+
+        if ($data_switch[0]['model_name'] != 'DGS-3200-10') {
+
+            $snmp = new Connect_SNMP($this->switch_mac['switch_ip']);
+            $data_port_index = $snmp->walkByKey('.1.3.6.1.2.1.17.1.4.1.2');
+            $port_index = array();
+            $i = 0;
+            foreach ($data_port_index as $v) {
+                $i += 1;
+                $port_index[$i] = $v;
+            }
+
+            $port_coefficient['port_coefficient'] = $port_index[1] - 1;
+            $port_coefficient['gig_port_coefficient'] = $port_index[$data_switch[0]['simple_port'] + 1] - ($data_switch[0]['simple_port'] + 1);
+            if ($port_number <= $data_switch[0]['simple_port']) {
+
+                $port_coefficient['port_coefficient_simple_gig'] = $port_index[1] - 1;
+            } else {
+
+                $port_coefficient['port_coefficient_simple_gig'] = $port_index[$data_switch[0]['simple_port'] + 1] - ($data_switch[0]['simple_port'] + 1);
+            }
+        }elseif($data_switch[0]['model_name'] == 'DGS-3200-10'){
+            $port_coefficient = array(
+                'port_coefficient' =>0,
+                'gig_port_coefficient' =>0,
+                'port_coefficient_simple_gig' =>0,
+            );
+        }else{
+            $port_coefficient = array();
+        }
+        self::$port_coeff = $port_coefficient;
+
+        return $port_coefficient;
+
+    }
+
+    /**
+     * @return array
+     */
+    public static function getPortCoeff()
+    {
+        return self::$port_coeff;
     }
 
 

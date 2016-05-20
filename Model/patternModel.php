@@ -80,10 +80,10 @@ class patternModel
 
     }
 
-    public function PatternData($port_number, $pattern_id, $switch_model)
+    public function PatternData($port_number, $pattern_id)
     {
 
-        $data_switch = $this->getSwitchDataByName($switch_model);
+     //   $data_switch = $this->getSwitchDataByName($switch_model);
 
         $dbc = Connect_db::getConnection();
 
@@ -92,6 +92,10 @@ class patternModel
             'pattern_id' => $pattern_id
         );
         $data = $dbc->getDate($sql, $placeholders);
+
+        $port_coefficient_array = IndexModel::getPortCoeff();
+
+        /*
         if($port_number <= $data_switch[0]['simple_port']){
 
             $port = $port_number + $data[0]['port_coefficient'];
@@ -99,13 +103,14 @@ class patternModel
             $port = $port_number + $data[0]['gig_port_coefficient'];
         }
 
-
+*/
+        $port = $port_number + $port_coefficient_array['port_coefficient_simple_gig'];
 
 
 
 
         foreach ($data[0] as $k => $v) {
-            if ($k != 'id' && $k != 'port_coefficient'&& $k != 'mac_all'&& $k != 'macs_ports'&&  $k != 'gig_port_coefficient') {
+            if ($k != 'id' /* && $k != 'port_coefficient'&&  $k != 'gig_port_coefficient' */&& $k != 'mac_all'&& $k != 'macs_ports') {
 
                 $data[0][$k] = $data[0][$k] . $port;
 
@@ -131,7 +136,7 @@ class patternModel
 
         return $data[0];
     }
-
+/*
     public function getPortCoefficient($pattern_id,$port_number, $switch_model)
     {
 
@@ -155,7 +160,7 @@ class patternModel
 
         return $data[0];
     }
-
+*/
     public function patternsId()
     {
         $dbc = Connect_db::getConnection();

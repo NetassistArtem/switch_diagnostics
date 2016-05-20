@@ -42,21 +42,32 @@ class IndexController extends Controller
                 }
 
             }
-
+            $switch_data_result_model_array = array();
 
             foreach ($switch as $v) {
                 $switch_model[] = $v['model_name'];
             }
             $switch_model = array_unique($switch_model);
 
+            // Debugger::PrintR($data_switch);
+          //  Debugger::PrintR($switch_model);
 
             foreach ($switch_model as $val) {
-
+//echo $data_switch['key'].' test '.$val. '</br>';
                 if (stripos($data_switch['key'], $val) !== false) {
-
-                    $switch_data_result['model_name'] = $val;
+                    $switch_data_result_model_array[] = $val;//массив всех названий моделей попадающих под шаблон
+                    // $switch_data_result['model_name'] = $val;
                 }
             }
+
+//поиск названия свича с максимальным количеством символов - чтоб исключить попадающие в шаблон модели с аналогичными названиями
+            $switch_data_result_model_array_count = array();
+            foreach ($switch_data_result_model_array as $value_m) {
+                $switch_data_result_model_array_count[$value_m] = strlen($value_m);
+            }
+
+            $key_m = max($switch_data_result_model_array_count);
+            $switch_data_result['model_name'] = array_flip($switch_data_result_model_array_count)[$key_m];
 
 
             foreach ($switch as $v) {
@@ -64,11 +75,14 @@ class IndexController extends Controller
                     $switch_soft_version[] = $v['firmware'];
                 }
             }
-            if (!empty($switch_soft_version)) {
-                foreach ($switch_soft_version as $val) {
 
+            if (!empty($switch_soft_version)) {
+                //  Debugger::PrintR($switch_soft_version);
+                foreach ($switch_soft_version as $val) {
+//echo $data_switch['key'].'  test '.$val.'</br>  ';
                     if (stripos($data_switch['key'], $val) !== false) {
                         $switch_data_result['soft_version'] = $val;
+
                     } elseif (strtoupper($data_switch['manufacturer']) == 'ELTEX') {
 
 
@@ -94,8 +108,9 @@ class IndexController extends Controller
                 if (!$switch_data_result['manufacturer']) {
                     Session::setFlash('В полученных со свича данных отсутствует информация о производители свича.', $this->style_class['information']);
                 }
+
                 if (!$switch_data_result['soft_version']) {
-                    Session::setFlash('В полученных со свича данных отсутствует информация о версии прошивки свича.', $this->style_class['information']);
+                    Session::setFlash('В полученных со свича данных версия прошивки не совпадает с версией указанной в шаблоне свича.', $this->style_class['information']);
                     $patterns_array = array();
                     foreach ($switch as $v) {
                         if ($switch_data_result['model_name'] == $v['model_name']) {
@@ -114,20 +129,29 @@ class IndexController extends Controller
                 if ($switch_data_result['manufacturer'] || $switch_data_result['soft_version'] || $switch_data_result['model_name']) {
 
 
+                    $pattern_man_mod_firm = 0;
+                    $pattern_mod_firm = 0;
+                    $pattern_mod = 0;
                     foreach ($switch as $v) {
 
                         if ($switch_data_result['manufacturer'] == $v['manufacturer'] && $switch_data_result['model_name'] == $v['model_name'] && $switch_data_result['soft_version'] == $v['firmware']) {
-                            return $v['pattern_id'];
+                            $pattern_man_mod_firm = $v['pattern_id'];
                         } elseif ($switch_data_result['model_name'] == $v['model_name'] && $switch_data_result['soft_version'] == $v['firmware']) {
-
                             //Session::setFlash('Данные со свича не содержат информации о производители свича');
-                            return $v['pattern_id'];
+                            $pattern_mod_firm = $v['pattern_id'];
                         } elseif ($switch_data_result['model_name'] == $v['model_name']) {
-
-                            Session::setFlash('Данные со свича не содержат информации о производители свича м версии прошивки', $this->style_class['information']);
-                            return $v['pattern_id'];
+                            $pattern_mod = $v['pattern_id'];
                         }
-
+                    }
+                    if ($pattern_man_mod_firm) {
+                        return $pattern_man_mod_firm;
+                    } elseif ($pattern_mod_firm) {
+                        return $pattern_mod_firm;
+                    } elseif ($pattern_mod) {
+                        Session::setFlash('Данные со свича не содержат информации о производители свича и версии прошивки', $this->style_class['information']);
+                        return $pattern_mod;
+                    } else {
+                        return false;
                     }
 
                 }
@@ -302,23 +326,23 @@ class IndexController extends Controller
         $this->account_id = $account_id ? $account_id : Router::getAccountId();
 
 
-        $d = $indexModel->snmpData($this->account_id, Config::get('oid_switch_model'));
+        $d = $indexModel->snmpData($this->account_id, Config::get('oid_switch_model'),$tp_link);
 
 
-        //Debugger::PrintR($d);
+
+
         $pattern_id = $this->findPattern($d);
 
 
         $patternModel = new patternModel($this->account_id);
 
-       // $port_coefficient = $patternModel->getPortCoefficient($pattern_id, $d['port'], $d['switch_model'])['port_coefficient_simple_gig'];
-        $port_coefficient_array = $patternModel->getPortCoefficient($pattern_id, $d['port'], $d['switch_model']);
+        // $port_coefficient = $patternModel->getPortCoefficient($pattern_id, $d['port'], $d['switch_model'])['port_coefficient_simple_gig'];
+        $port_coefficient_array = $indexModel->getPortCoefficient($this->account_id, $d['port']);//$patternModel->getPortCoefficient($pattern_id, $d['port'], $d['switch_model']);
         $port_coefficient = $port_coefficient_array['port_coefficient_simple_gig'];
 
 
         $mac_port_array = $indexModel->getAllMac($this->account_id, $pattern_id, $port_coefficient_array);
-       // Debugger::PrintR($mac_port_array);
-
+        // Debugger::PrintR($mac_port_array);
 
 
         if ($d['mac']) {
@@ -349,8 +373,9 @@ class IndexController extends Controller
             Session::setFlash("Мак адрес в базе даных билинга для пользователя $this->account_id отсутствует", $this->style_class['warning']);
         }
 
-        $pattern_data = $patternModel->PatternData($d['port'], $pattern_id, $d['switch_model']);
+        $pattern_data = $patternModel->PatternData($d['port'], $pattern_id);
         //  Debugger::PrintR($d);
+
 
         //  Debugger::PrintR($pattern_data);
 
@@ -358,12 +383,12 @@ class IndexController extends Controller
         $oid_port_status = Config::get('port_status') . "." . ($d['port'] + $port_coefficient);
 
 
-
         $data_status = $indexModel->snmpByKey($this->account_id, $oid_port_status);
+
         $data_status = array_flip($data_status);
-        //  Debugger::PrintR($data_status);
 
         $cabletest_start = '';
+
         switch (Config::get('cabletest_on_off')) {
             case 'on':
                 $indexModel->cableTest($this->account_id, $pattern_id, $d['port'], $d['manufacturer']);
@@ -374,6 +399,7 @@ class IndexController extends Controller
                 break;
             case 'onoff':
                 if (isset($data_status[2])) {
+                    //  Debugger::PrintR($data_status);
                     $indexModel->cableTest($this->account_id, $pattern_id, $d['port'], $d['manufacturer']);
                     $cabletest_start = "yes";
                 } else {
@@ -383,9 +409,10 @@ class IndexController extends Controller
 
         }
 
+
         $oids = array();
         foreach ($pattern_data as $k => $v) {
-            if ($k != 'id' && $k != 'port_coefficient' && $k != 'mac_all' && $k != 'macs_ports' && $k != 'gig_port_coefficient') {
+            if ($k != 'id' /* && $k != 'port_coefficient'*/ && $k != 'mac_all' && $k != 'macs_ports'/* && $k != 'gig_port_coefficient' */) {
                 $oids[$k] = $v;
             }
         }
@@ -406,16 +433,17 @@ class IndexController extends Controller
         }
 
         //  die('ups');
-       //   Debugger::PrintR($oids);
+        //   Debugger::PrintR($oids);
 
         $data = $indexModel->snmpData($this->account_id, $oids);
+
 
         $oids = array_flip($oids);
         $data_switch = array_combine($oids, $data['key']);
 
 
         $mac_arr = array();
-      //   Debugger::PrintR($mac_port_array);
+        //   Debugger::PrintR($mac_port_array);
 
         foreach ($mac_port_array as $k => $v) {
             $val = $v;//- $port_coefficient;
@@ -441,11 +469,10 @@ class IndexController extends Controller
         }
 
         if (isset($data_switch['cable_status'])) {
-            echo $data_switch['cable_status'];
 
             $data_switch['cable_status'] = $cable_test[$d['manufacturer']][$data_switch['cable_status']];
             //  Debugger::PrintR($cable_test[$d['manufacturer']]);
-            echo $d['manufacturer'];
+
 
         };
         if ($data_switch['duplex']) {
@@ -580,9 +607,16 @@ class IndexController extends Controller
 
     public static function rewrite_file($file_path, $mode, $data)
     {
-       $f = fopen($file_path, $mode);
-       fwrite($f, $data);
+        $f = fopen($file_path, $mode);
+        fwrite($f, $data);
         fclose($f);
+    }
+
+    public static function write_error($message)
+    {
+        error_log($message, 3, APPROOT_DIR . 'log.txt');
+
+
     }
 
 
@@ -595,8 +629,8 @@ class IndexController extends Controller
         $data .= '/./ ' . $e->getLine() . PHP_EOL;
         $data .= '///';
 
-
-        self::rewrite_file(APPROOT_DIR . 'log.txt', 'a', $data);
+        self::write_error($data);
+        // self::rewrite_file(APPROOT_DIR . 'log.txt', 'a', $data);
     }
 
 }

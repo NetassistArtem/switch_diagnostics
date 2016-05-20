@@ -26,6 +26,7 @@ class Connect_SNMP
             $this->snmp_session = new SNMP($this->version, $switch_ip, $community);
             $this->snmp_session->exceptions_enabled = SNMP::ERRNO_ANY;
             $this->snmp_session->valueretrieval = SNMP_VALUE_PLAIN;
+            $this->snmp_session->oid_increasing_check = false;
         }else{
             throw new Exception('SNMP off in this switch', 1);
         }

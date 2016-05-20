@@ -19,8 +19,11 @@ class historyModel
             'port_status' => $data_switch['port_status'],
             'counter_byte_in' => $data_switch['counter_byte_in'],
             'counter_byte_out' => $data_switch['counter_byte_out'],
-            'counter_pkts_out' => $data_switch['counter_pkts_out'],
-            'error' => $data_switch['error'],
+            'counter_pkts_unicast_in' => $data_switch['counter_pkts_unicast_in'],
+            'counter_pkts_unicast_out' => $data_switch['counter_pkts_unicast_out'],
+            'error_in' => $data_switch['error_in'],
+            'error_out' => $data_switch['error_out'],
+            'duplex' => $data_switch['duplex'],
             'speed' => $data_switch['speed'],
             'last_change' => $data_switch['last_change']
 
@@ -28,9 +31,9 @@ class historyModel
 
         $dbc = Connect_db::getConnection();
         $sql = "INSERT INTO `users_history`(`date_time`,`account_id`, `switch_ip`, `mac`, `port`, `switch_model`, `firmware`,
- `port_status`, `counter_byte_in`, `counter_byte_out`, `counter_pkts_out`, `error`, `speed`, `last_change`)
+ `port_status`, `counter_byte_in`, `counter_byte_out`,`counter_pkts_unicast_in`, `counter_pkts_unicast_out`, `error_in`, `error_out`, `duplex`,`speed`, `last_change`)
   VALUES (:date_time,:account_id, :switch_ip, :mac, :port, :switch_model, :firmware, :port_status, :counter_byte_in,
-  :counter_byte_out, :counter_pkts_out, :error, :speed, :last_change)";
+  :counter_byte_out, :counter_pkts_unicast_in, :counter_pkts_unicast_out, :error_in, :error_out, :duplex, :speed, :last_change)";
         $sth = $dbc->getPDO()->prepare($sql);
         $sth->execute($placeholders);
 

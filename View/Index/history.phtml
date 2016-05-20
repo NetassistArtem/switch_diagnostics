@@ -17,8 +17,11 @@
         <td>Состояние порта</td>
         <td>счетчик(in), байт</td>
         <td>счетчик(out), байт</td>
-        <td>счетчик пакетов</td>
-        <td>Ошибки</td>
+        <td>счетчик пакетов(unicast,in)</td>
+        <td>счетчик пакетов(unicast,out)</td>
+        <td>Ошибки(in)</td>
+        <td>Ошибки(out)</td>
+        <td>Дупликс</td>
         <td>Скорость</td>
         <td>Время последнего изменения порта</td>
     </tr>
@@ -35,8 +38,11 @@
         <td><?= $v['port_status'] ?></td>
         <td><?= $v['counter_byte_in'] ?></td>
         <td><?= $v['counter_byte_out'] ?></td>
-        <td><?= $v['counter_pkts_out'] ?></td>
-        <td><?= $v['error'] ?></td>
+        <td><?= $v['counter_pkts_unicast_in'] ?></td>
+        <td><?= $v['counter_pkts_unicast_out'] ?></td>
+        <td><?= $v['error_in'] ?></td>
+        <td><?= $v['error_out'] ?></td>
+        <td><?= $v['duplex'] ?></td>
         <td><?= $v['speed'] ?></td>
         <td><?= $v['last_change'] ?></td>
     </tr>

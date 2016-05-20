@@ -26,9 +26,9 @@ class adminModel
             $pattern_fields_check_value = array();
             foreach($pattern_fields as $v){
                 $pattern_fields_value[$v] = $request->post($v);
-                if($v != 'port_coefficient' && $v != 'gig_port_coefficient'){
+             //   if($v != 'port_coefficient' && $v != 'gig_port_coefficient'){
                 $pattern_fields_check_value[$v] = $request->post("absent_$v");
-            }
+          //  }
             }
             unset($pattern_fields_value['id']);
             unset($pattern_fields_check_value['id']);
@@ -43,11 +43,13 @@ class adminModel
 
     public function isValidSwitch()
     {
-        if($this->switch_name && $this->switch_manufacturer && $this->switch_firmware && $this->pattern_id && $this->switch_simple_ports && $this->switch_gig_ports){
+        if($this->switch_name && $this->switch_manufacturer && $this->switch_firmware && $this->pattern_id  && $this->switch_simple_ports ){
             return true;
         }
         return false;
     }
+    /*
+     * валидация для обязательных полей, на данный момент все поля не обязательные
     public function isValidPattern()
     {
         if( $this->pattern_fields_value['port_coefficient'] !='' && $this->pattern_fields_value['gig_port_coefficient'] != ''){
@@ -56,6 +58,7 @@ class adminModel
         }
             return false;
     }
+    */
     public function isValidFieldPattern()
     {
         //Debugger::PrintR($this->pattern_field_check);
@@ -80,6 +83,8 @@ class adminModel
         }
             return true;
     }
+    /*
+     * проверка правильности формата ввода коєфициентов, на данный момент данные поступают по snmp без использования базы данных
     public function checkInsertPortCoefficient()
     {
         if(preg_match("/^[0-9]*$/",$this->pattern_fields_value['port_coefficient']) && preg_match("/^[0-9]*$/",$this->pattern_fields_value['gig_port_coefficient'])){
@@ -87,7 +92,7 @@ class adminModel
         }
         return false;
     }
-
+*/
     public function insertSwitch()
     {
         $dbc = Connect_db::getConnection();
@@ -132,6 +137,18 @@ class adminModel
         $sql = "SELECT * FROM `switches` WHERE `model_name`= :model_name";
         $placeholders = array(
             'model_name' => $this->switch_name
+        );
+        $data = $dbc->getDate($sql, $placeholders);
+
+        return $data[0];
+    }
+    public function selectSwitchByNameFirmware()
+    {
+        $dbc = Connect_db::getConnection();
+        $sql = "SELECT * FROM `switches` WHERE `model_name`= :model_name AND `firmware` = :firmware";
+        $placeholders = array(
+            'model_name' => $this->switch_name,
+            'firmware' => $this->switch_firmware
         );
         $data = $dbc->getDate($sql, $placeholders);
 

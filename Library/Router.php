@@ -22,34 +22,33 @@ abstract class Router
         $request = new Request();
 
 
-
         $arr = explode('?', $url);
         $url = rtrim($arr[0], '/');
 
         $url_a = explode('/', $url);
-        if($url_a[1]=='bl'){
+        if ($url_a[1] == 'bl') {
 
 
             self::$billing = 1;
-          //  Session::set('billing',1);
+            //  Session::set('billing',1);
 
-           // echo $request->get('billing');
+            // echo $request->get('billing');
             unset($url_a[1]);
             $switch_id = $request->get('switch');
             $port_id = $request->get('port');
 
-            if($switch_id && $port_id){
+            if ($switch_id && $port_id) {
 
                 $indexModel = new IndexModel();
 
-                $user_id = (int)$indexModel->userIdByPort($port_id,$switch_id);
+                $user_id = (int)$indexModel->userIdByPort($port_id, $switch_id);
 
 
-                if($user_id  !== -1 && isset($user_id)){
+                if ($user_id !== -1 && isset($user_id)) {
 
 
                     $url_a[] = $user_id;
-                    $url = implode("/",$url_a);
+                    $url = implode("/", $url_a);
                     $cabletest = $request->get('cabletest');
                     $link = $request->get('link');
 
@@ -58,19 +57,17 @@ abstract class Router
                     $information = $request->get('information');
                     $cable_length = $request->get('cable_length');
                     $switch_data = $request->get('switch_data');
-                    Controller::redirect($url."?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data");
-                }else{
-                    throw new Exception("В базе данных билинга не обнаружен пользователь с switch_id = $switch_id и port_id = $port_id ",1);
+                    Controller::redirect($url . "?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data");
+                } else {
+                    throw new Exception("В базе данных билинга не обнаружен пользователь с switch_id = $switch_id и port_id = $port_id ", 1);
                 }
-
 
 
             }
 
         }
-        $url = implode("/",$url_a);
-       // $url = rtrim($url, '/');
-
+        $url = implode("/", $url_a);
+        // $url = rtrim($url, '/');
 
 
         if (!$url) {
@@ -84,8 +81,10 @@ abstract class Router
 
             $regex = $item['pattern'];
 
-            foreach ($item['params'] as $k => $v) {
-                $regex = str_replace('{' . $k . '}', '(' . $v . ')', $regex);
+            if ($item['params']) {
+                foreach ($item['params'] as $k => $v) {
+                    $regex = str_replace('{' . $k . '}', '(' . $v . ')', $regex);
+                }
             }
 
             if (preg_match('@^' . $regex . '$@', $url, $matches)) {
@@ -94,12 +93,12 @@ abstract class Router
                 self::$action = $item['action'];
                 self::$id = isset($item['params']['id']) ? $item['params']['id'] : '';
 
-                if ($item['action'] == 'snmpData' || $item['action'] == 'history' ||  $item['action'] == 'insertCableLength') {
+                if ($item['action'] == 'snmpData' || $item['action'] == 'history' || $item['action'] == 'insertCableLength') {
                     $url_array = explode('/', $url);
 
                     self::$account_id = array_pop($url_array);
                 }
-                if($item['action'] == 'editSwitch'|| $item['action'] == 'deleteSwitch' || $item['action'] == 'editPattern'|| $item['action'] == 'deletePattern'){
+                if ($item['action'] == 'editSwitch' || $item['action'] == 'deleteSwitch' || $item['action'] == 'editPattern' || $item['action'] == 'deletePattern') {
                     $url_array = explode('/', $url);
                     self::$switch_pattern_id = array_pop($url_array);
                 }
@@ -127,7 +126,6 @@ abstract class Router
 
         // echo $_controller.PHP_EOL;
         // echo $_action.PHP_EOL;
-
 
 
         $content = $_controller_object->$_action();

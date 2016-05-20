@@ -1,0 +1,21 @@
+2016-05-13 12:51:52
+/./ 404
+/./ Page (/account_tes/400?cabletest=onoff) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 111
+///2016-05-13 12:51:52
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 111
+///2016-05-13 12:53:36
+/./ 404
+/./ Page (/account_tes/400?cabletest=onoff) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 111
+///2016-05-13 12:53:37
+/./ 404
+/./ Page (/favicon.ico) not found
+/./ /home/artem/public_html/test01/Library/Router.php
+/./ 111
+///
