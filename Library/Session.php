@@ -73,13 +73,27 @@ class Session
 
     public static function getFlash($account_id = null)
     {
-        $message = self::get('flash') ? self::get('flash') :array();
+        $message_all = self::get('flash') ? self::get('flash') :array();
+//удаление дублирующихся сообщений, если такие появятся
 
+        $m = array();
+        foreach($message_all as $k=> $v){
 
+            $m[$k] = $v['message'];
+        }
+        $m = array_unique($m);
+        $message = array();
+        foreach($message_all as $k=>$v){
+            if($m[$k]){
+                $message[$k] = $v;
+            }
+        }
+//завершение удаления дубликатов сообщений
         $errorModel = new errorModel($account_id);
         $errorModel->writeError($message);
 
         self::remove('flash');
+
         return $message;
 
     }

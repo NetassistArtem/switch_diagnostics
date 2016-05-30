@@ -1,4 +1,6 @@
-<h2> Пользователь <?= $account_id ?></h2>
+<?php if (!$billing_request): ?>
+    <h2> Пользователь <?= $account_id ?></h2>
+<?php endif; ?>
 <div>
     <?php foreach (Session::getFlash($account_id) as $v): ?>
 
@@ -12,8 +14,8 @@
                     тест</a>
             </p>
             <p>
-                <a href="<?= Config::get('host_for_link') ?>/account_test/insert_cable_length/<?= $account_id ?>">Записать
-                    длинну кабеля</a>
+                <a href="<?= Config::get('host_for_link') ?>/account_test/<?= $account_id ?>?cable_length=write">Перезаписать
+                    длину кабеля</a>
             </p>
             <p>
                 <a href="<?= Config::get('host_for_link') ?>/account_test/history/<?= $account_id ?>">История
@@ -84,9 +86,13 @@
         <td>Состояние кабеля</td>
         <td><?= (isset($cabletest_start) && $cabletest_start == 'yes') ? $data_switch['cable_status'] : 'Нет данных' ?></td>
     </tr>
-    <tr class="<?= $cable_length_status ?>">
-        <td>Длина кабеля</td>
-        <td><?= (isset($cabletest_start) && $cabletest_start == 'yes') ? $data_switch['cable_lenght'] : 'Нет данных' ?></td>
+    <tr class="<?= $cable_length_status_port_on ?>">
+        <td>Длина кабеля, порт - "ON"</td>
+        <td><?= (isset($cabletest_start) && $cabletest_start == 'yes') ? $cable_length_port_on : 'Нет данных' ?></td>
+    </tr>
+    <tr class="<?= $cable_length_status_port_off ?>">
+        <td>Длина кабеля, порт - "OFF"</td>
+        <td><?= (isset($cabletest_start) && $cabletest_start == 'yes') ? $cable_length_port_off : 'Нет данных' ?></td>
     </tr>
     <tr>
         <td>Время последнего изменения порта</td>
@@ -94,14 +100,28 @@
     </tr>
     <?php
     if (!empty($data_switch['mac'])):
-        foreach ($data_switch['mac'] as $k => $v): ?>
+        if (!$billing_request):
+            foreach ($data_switch['mac'] as $k => $v): ?>
 
+                <tr>
+                    <td>Мак адрес № <?= $k + 1; ?></td>
+                    <td><?= $v; ?></td>
+                </tr>
+
+            <?php endforeach;
+
+        else:?>
             <tr>
-                <td>Мак адрес № <?= $k + 1; ?></td>
-                <td><?= $v; ?></td>
+            <td style="text-align: center" colspan="2">Мак адреса</td>
             </tr>
+           <?php foreach ($data_switch['mac'] as $k => $v): ?>
 
-        <?php endforeach;
+                <tr>
+                    <td style="text-align: center" colspan="2"><?= $v; ?></td>
+                </tr>
+
+            <?php endforeach;
+        endif;
     else:?>
 
         <tr>

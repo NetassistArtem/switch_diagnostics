@@ -36,8 +36,10 @@ abstract class Router
             unset($url_a[1]);
             $switch_id = $request->get('switch');
             $port_id = $request->get('port');
+            $user_id = $request->get('user_id');
 
-            if ($switch_id && $port_id) {
+
+            if ($switch_id && $port_id && !$user_id) {
 
                 $indexModel = new IndexModel();
 
@@ -57,17 +59,40 @@ abstract class Router
                     $information = $request->get('information');
                     $cable_length = $request->get('cable_length');
                     $switch_data = $request->get('switch_data');
-                    Controller::redirect($url . "?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data");
+                    $user_switch = 'switch';//параметр для определения откуда пришел запрос со страници пользователя или страници свича (разная обработка мак адресов)
+
+                    self::parse("{$url}?bl=1&user_switch={$user_switch}&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data");
+                   // throw new Exception("{$url}?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data",2);
+                    //Controller::redirect($url . "?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data");
                 } else {
                     throw new Exception("В базе данных билинга не обнаружен пользователь с switch_id = $switch_id и port_id = $port_id ", 1);
                 }
 
 
             }
+            if($user_id){
+
+                $url_a[] = $user_id;
+                $url = implode("/", $url_a);
+                $cabletest = $request->get('cabletest');
+                $link = $request->get('link');
+
+                $warning = $request->get('warning');
+                $notice = $request->get('notice');
+                $information = $request->get('information');
+                $cable_length = $request->get('cable_length');
+                $switch_data = $request->get('switch_data');
+                $user_switch = 'user';//параметр для определения откуда пришел запрос со страници пользователя или страници свича (разная обработка мак адресов)
+
+                self::parse("{$url}?bl=1&user_switch={$user_switch}&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data");
+                // throw new Exception("{$url}?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data",2);
+                // Controller::redirect($url . "?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data");
+
+            }
 
         }
+
         $url = implode("/", $url_a);
-        // $url = rtrim($url, '/');
 
 
         if (!$url) {
@@ -113,7 +138,7 @@ abstract class Router
 
     public static function get_content_by_url($url)
     {
-
+        Session::remove('flash');//Удаляет сообщения записанные в массив пр обработке url поступившего из биллинга- решает проблему дубликатов сообщений
         self::parse($url);
         $request = new Request();
         $_controller = self::getController() . 'Controller';
@@ -129,7 +154,6 @@ abstract class Router
 
 
         $content = $_controller_object->$_action();
-
 
         return $content;
     }

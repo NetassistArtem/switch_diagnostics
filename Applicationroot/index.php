@@ -4,7 +4,6 @@
 $GLOBALS['start_time'] = microtime(true);
 
 
-
 require_once '../Applicationroot/init.php';
 Session::start();
 try {
@@ -16,7 +15,7 @@ try {
 } catch (SNMPException $e) {
     IndexController::errorAction($e);
     NodeController::writeErrorData($e);
-
+//echo $e->getMessage();
 
 
     $content = Router::get_content_by_url("/error_SNMP"); // $e->getMessage(); //
@@ -33,19 +32,25 @@ try {
     if ($e->getCode() == 403) {
 
         $content = Router::get_content_by_url("/error_403");
-    }
-    if ($e->getCode() == 1) {
+    } elseif ($e->getCode() == 1) {
+        NodeController::writeErrorData($e);
+
+        $content = Router::get_content_by_url("/error_mac_switch"); //$e->getMessage(); //
 
 
-        $content =  Router::get_content_by_url("/error_mac_switch"); //$e->getMessage(); //
+    } elseif ($e->getCode() == 2) {
+        $new_url = $e->getMessage();
+       // echo $e->getMessage();
+
+        $content = Router::get_content_by_url($new_url);
 
     } else {
-/*
-        $message = $e->getMessage();
-        $billing = '';
-        if(strpos($message,'bl')){
-            $billing = 'bl';
-        };*/
+        /*
+                $message = $e->getMessage();
+                $billing = '';
+                if(strpos($message,'bl')){
+                    $billing = 'bl';
+                };*/
 
         $content = Router::get_content_by_url("/error_404");
     }

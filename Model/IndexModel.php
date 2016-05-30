@@ -103,7 +103,9 @@ class IndexModel
             'port' => $this->switch_mac['port'],
             'switch_model' => $this->switch_mac['switch_model'],
             'firmware' => $this->switch_mac['firmware'],
-            'manufacturer' => $this->switch_mac['manufacturer']
+            'manufacturer' => $this->switch_mac['manufacturer'],
+            'snmp' => $this->switch_mac['snmp'],
+            'write_community' => $this->switch_mac['write_community']
 
 
         );
@@ -126,13 +128,14 @@ class IndexModel
         $dbc = Connect_db::getConnection(3);
 
 
-        $sql = "SELECT pl.sw_id, pl.port_id AS port, sl.sw_ip AS switch_ip,  sl.sw_model  AS switch_mod_manuf, ul.user_mac AS mac FROM port_list pl JOIN sw_list sl
+        $sql = "SELECT pl.sw_id, pl.port_id AS port, sl.sw_ip AS switch_ip,  sl.sw_model  AS switch_mod_manuf, ul.user_mac AS mac, sl.use_snmp AS snmp, sl.snmp_auth_rw AS write_community  FROM port_list pl JOIN sw_list sl
 JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl.ref_user_id = ul.user_id";
         $placeholders = array(
             'account_id' => $account_id
         );
 
         $d = $dbc->getDate($sql, $placeholders);
+
 
         // $d[0]['switch_mod_manuf'] = iconv('latin1','utf8', $d[0]['switch_mod_manuf']);
         //временный костыль
@@ -155,7 +158,11 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
 
         if (!$d[0]['switch_model']) {
 
-            throw new Exception('Модель свича отсутсвтует в базе данных. Введите модель свича и соответствующий ей шаблон SNMP запросов (ссылка на добавление свича)', 1);
+            throw new Exception('Модель свича отсутсвтует в базе данных. Введите модель свича и соответствующий ей шаблон SNMP запросов', 1);
+        }
+        if(!$d[0]['snmp']){
+
+            throw new Exception('SNMP отключено в запрашиваемом свиче (информация из базы данных биллинга).',1);
         }
 
 
@@ -165,7 +172,10 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
             'port' => $port ? $port : $d['0']['port'],
             'switch_model' => $switch_model ? $switch_model : $d['0']['switch_model'],
             'firmware' => $firmware ? $firmware : $d['0']['firmware'],
-            'manufacturer' => $manufacturer ? $manufacturer : $d['0']['manufacturer']
+            'manufacturer' => $manufacturer ? $manufacturer : $d['0']['manufacturer'],
+            'write_community' => $d['0']['write_community'],
+            'snmp' => $d['0']['snmp']
+
         );
 
 
@@ -258,8 +268,9 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
 
     }
 
-    public function cableTest($account_id, $pattern_id, $port, $switch_manufacturer)
+    public function cableTest($account_id, $pattern_id, $port, $switch_manufacturer,$style_class=null)
     {
+
         if (!$this->switch_mac) {
             $this->switch_mac = $this->getDataByID($account_id);
         }
@@ -267,6 +278,7 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
 
         $patternModel = new patternModel($account_id);
         $object_id = $patternModel->PatternData($port, $pattern_id)['cable_test_start'];
+
         if ($object_id) {
             $write_test = 1;
             if (strtolower($switch_manufacturer) == 'eltex') {
@@ -274,11 +286,14 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
             }
 
             $snmp = new Connect_SNMP($this->switch_mac['switch_ip'], 'w');
+
+
+
             $snmp->setData($object_id, 'i', $write_test);
 
             sleep(Config::get('timeout_cabletest')[$switch_manufacturer]);
         } else {
-            Session::setFlash('Тест кабеля для свича ' . $this->switch_mac['switch_model'] . ' ' . $this->switch_mac['manufacturer'] . ' ' . $this->switch_mac['firmware'] . ' на данный момент не доступен (отсутствует необходимый OID)', "notice");
+            Session::setFlash('Тест кабеля для свича ' . $this->switch_mac['switch_model'] . ' ' . $this->switch_mac['manufacturer'] . ' ' . $this->switch_mac['firmware'] . ' на данный момент не доступен (отсутствует необходимый OID)', $style_class['notice']);
         }
     }
 

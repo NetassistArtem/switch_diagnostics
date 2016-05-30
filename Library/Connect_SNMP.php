@@ -13,6 +13,7 @@ class Connect_SNMP
     {
         $indexModel = new IndexModel();
         $community_billing = $indexModel->getCommunity();
+
         if($community_billing['use_snmp'] || Config::get('mode') == 'test'){
             $this->community_read = $community_billing['snmp_auth'] ? $community_billing['snmp_auth'] : Config::get('community_read_default');
             $this->community_write = Config::get('community_write_default');
@@ -23,10 +24,13 @@ class Connect_SNMP
             }else{
                 throw new Exception('Wrong community flag', 500);
             }
+
             $this->snmp_session = new SNMP($this->version, $switch_ip, $community);
+
             $this->snmp_session->exceptions_enabled = SNMP::ERRNO_ANY;
             $this->snmp_session->valueretrieval = SNMP_VALUE_PLAIN;
             $this->snmp_session->oid_increasing_check = false;
+
         }else{
             throw new Exception('SNMP off in this switch', 1);
         }
@@ -48,6 +52,7 @@ class Connect_SNMP
 
     public function setData($object_id,$type,$value)
     {
+
         $this->snmp_session->set($object_id,$type,$value);
         $this->close_session();
 

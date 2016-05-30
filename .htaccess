@@ -1,3 +1,8 @@
+
+Order deny,allow
+deny from all
+Allow from 195.214.211.171 193.104.254.29 62.205.155.0/24
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteRule ^$ Applicationroot/ [L]
