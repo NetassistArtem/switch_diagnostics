@@ -1,23 +1,96 @@
-\hypertarget{class_connect__db}{\section{Connect\-\_\-db Class Reference}
+\hypertarget{class_connect__db}{\section{Класс Connect\-\_\-db}
 \label{class_connect__db}\index{Connect\-\_\-db@{Connect\-\_\-db}}
 }
-\subsection*{Public Member Functions}
+
+
+Class \hyperlink{class_connect__db}{Connect\-\_\-db}.  
+
+
+\subsection*{Открытые члены}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_connect__db_a064a8657e9547cedc4e1590fb8c7747f}{{\bfseries get\-Date} (\$sql, array \$placeholders=array())}\label{class_connect__db_a064a8657e9547cedc4e1590fb8c7747f}
-
+\hyperlink{class_connect__db_a064a8657e9547cedc4e1590fb8c7747f}{get\-Date} (\$sql, array \$placeholders=array())
 \item 
-\hypertarget{class_connect__db_af708fa20ff0c04a5a9bd8badd63e632c}{{\bfseries get\-P\-D\-O} ()}\label{class_connect__db_af708fa20ff0c04a5a9bd8badd63e632c}
-
+\hyperlink{class_connect__db_af708fa20ff0c04a5a9bd8badd63e632c}{get\-P\-D\-O} ()
 \end{DoxyCompactItemize}
-\subsection*{Static Public Member Functions}
+\subsection*{Открытые статические члены}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_connect__db_ab6bc68b89cd8ca077dd8ab2c5a357f06}{static {\bfseries get\-Connection} (\$db\-\_\-number=1)}\label{class_connect__db_ab6bc68b89cd8ca077dd8ab2c5a357f06}
-
+static \hyperlink{class_connect__db_ab6bc68b89cd8ca077dd8ab2c5a357f06}{get\-Connection} (\$db\-\_\-number=1)
 \end{DoxyCompactItemize}
 
 
-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\subsection{Подробное описание}
+Class \hyperlink{class_connect__db}{Connect\-\_\-db}. 
+
+Class \hyperlink{class_connect__db}{Connect\-\_\-db} созадет подключение к базам данных используя стандартный класс P\-D\-O. Используется паттерн Singleton. Конструктор класса (privat property -\/ допустимо в пределах шаблона Singleton чтоб полностью исключить создание еще одного объекта подключения).Создает объект подключения класса P\-D\-O и устанавливает дополнительные атрибуты 
+
+См. определение в файле Connect\-\_\-db.\-php строка 11
+
+
+
+\subsection{Методы}
+\hypertarget{class_connect__db_ab6bc68b89cd8ca077dd8ab2c5a357f06}{\index{Connect\-\_\-db@{Connect\-\_\-db}!get\-Connection@{get\-Connection}}
+\index{get\-Connection@{get\-Connection}!Connect_db@{Connect\-\_\-db}}
+\subsubsection[{get\-Connection}]{\setlength{\rightskip}{0pt plus 5cm}static get\-Connection (
+\begin{DoxyParamCaption}
+\item[{}]{\$db\-\_\-number = {\ttfamily 1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_connect__db_ab6bc68b89cd8ca077dd8ab2c5a357f06}
+
+\begin{DoxyParams}{Аргументы}
+{\em \$db\-\_\-number} & номер базы данных (1,2,3), по умолчанию база данных 1-\/ тестовая для dev версии\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+self\-::\$connection1 свойство содержащее подключение
+\end{DoxyReturn}
+Проверяет есть ли свойство содержащее подключение self\-::\$connection1, если нет создает его. В зависимости от номера базы данных создает и\textbackslash{}или возвращает подключение private static \$connection1, private static \$connection2, private static \$connection3 Соответствующие данные для подключения будут взяты из конфигурационных данных\-: 
+\begin{DoxyCode}
+$db\_data = \hyperlink{class_config_a15e2679f2a8f6fa4d60757f4d65413ac}{Config::get}(\textcolor{stringliteral}{'db\_'}.$db\_number);
+\end{DoxyCode}
+ 
+
+См. определение в файле Connect\-\_\-db.\-php строка 41
+
+\hypertarget{class_connect__db_a064a8657e9547cedc4e1590fb8c7747f}{\index{Connect\-\_\-db@{Connect\-\_\-db}!get\-Date@{get\-Date}}
+\index{get\-Date@{get\-Date}!Connect_db@{Connect\-\_\-db}}
+\subsubsection[{get\-Date}]{\setlength{\rightskip}{0pt plus 5cm}get\-Date (
+\begin{DoxyParamCaption}
+\item[{}]{\$sql, }
+\item[{array}]{\$placeholders = {\ttfamily array()}}
+\end{DoxyParamCaption}
+)}}\label{class_connect__db_a064a8657e9547cedc4e1590fb8c7747f}
+
+\begin{DoxyParams}[1]{Аргументы}
+ & {\em \$sql} & S\-Q\-L запрос \\
+\hline
+array & {\em \$placeholders,=array()} & массив параметров которые используются для подстановки в sql запросе \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+\$date запрашиваемые данные из базы данных
+\end{DoxyReturn}
+Используя методы объекта P\-D\-O prepare(\$sql), execute(\$placeholders), fetch\-All(\-P\-D\-O\-::\-F\-E\-T\-C\-H\-\_\-\-A\-S\-S\-O\-C) плучает данные из базы данных на основании sql запроса, использование \$placeholders исключает возможность sql инъекций 
+
+См. определение в файле Connect\-\_\-db.\-php строка 76
+
+\hypertarget{class_connect__db_af708fa20ff0c04a5a9bd8badd63e632c}{\index{Connect\-\_\-db@{Connect\-\_\-db}!get\-P\-D\-O@{get\-P\-D\-O}}
+\index{get\-P\-D\-O@{get\-P\-D\-O}!Connect_db@{Connect\-\_\-db}}
+\subsubsection[{get\-P\-D\-O}]{\setlength{\rightskip}{0pt plus 5cm}get\-P\-D\-O (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_connect__db_af708fa20ff0c04a5a9bd8badd63e632c}
+\begin{DoxyReturn}{Возвращает}
+\$this-\/$>$P\-D\-O возвращает подключение с помощью P\-D\-O
+\end{DoxyReturn}
+Возвращает объект подключения P\-D\-O. Это дает возможность обращаться к свойствам и методам класса P\-D\-O 
+
+См. определение в файле Connect\-\_\-db.\-php строка 96
+
+
+
+Объявления и описания членов класса находятся в файле\-:\begin{DoxyCompactItemize}
 \item 
-Library/Connect\-\_\-db.\-php\end{DoxyCompactItemize}
+/home/artem/public\-\_\-html/test01/\-Library/\hyperlink{_connect__db_8php}{Connect\-\_\-db.\-php}\end{DoxyCompactItemize}

@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>user_test: Исходный файл /home/artem/public_html/test01/Library/Connect_SNMP.php</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">user_test
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.6 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
+      <li><a href="pages.html"><span>Описания</span></a></li>
+      <li><a href="modules.html"><span>Группы</span></a></li>
+      <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Поиск" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+      <li><a href="globals.html"><span>Список&#160;членов&#160;всех&#160;файлов</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Страницы</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_5ad7f572bbca03234e8e621e192fc099.html">Library</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Connect_SNMP.php</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="_connect___s_n_m_p_8php.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;?php</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="class_connect___s_n_m_p.html">    9</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_connect___s_n_m_p.html">Connect_SNMP</a></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">private</span> $snmp_session;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">private</span> $version = SNMP::VERSION_2c;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">private</span> $community_read;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">private</span> $community_write;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="class_connect___s_n_m_p.html#a8a4beac9f8314f8e4f86f29b4cf619a0">   45</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_connect___s_n_m_p.html#a8a4beac9f8314f8e4f86f29b4cf619a0">__construct</a>($switch_ip, $wr_rd = <span class="charliteral">&#39;r&#39;</span>)</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    {</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        $indexModel = <span class="keyword">new</span> <a class="code" href="class_index_model.html">IndexModel</a>();</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        $community_billing = $indexModel-&gt;getCommunity();</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordflow">if</span>($community_billing[<span class="stringliteral">&#39;use_snmp&#39;</span>] || <a class="code" href="class_config.html#a15e2679f2a8f6fa4d60757f4d65413ac">Config::get</a>(<span class="stringliteral">&#39;mode&#39;</span>) == <span class="stringliteral">&#39;test&#39;</span>){</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            $this-&gt;community_read = $community_billing[<span class="stringliteral">&#39;snmp_auth&#39;</span>] ? $community_billing[<span class="stringliteral">&#39;snmp_auth&#39;</span>] : <a class="code" href="class_config.html#a15e2679f2a8f6fa4d60757f4d65413ac">Config::get</a>(<span class="stringliteral">&#39;community_read_default&#39;</span>);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            $this-&gt;community_write = <a class="code" href="class_config.html#a15e2679f2a8f6fa4d60757f4d65413ac">Config::get</a>(<span class="stringliteral">&#39;community_write_default&#39;</span>);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keywordflow">if</span>($wr_rd == <span class="charliteral">&#39;w&#39;</span>){</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                $community = $this-&gt;community_write;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            }elseif($wr_rd == <span class="charliteral">&#39;r&#39;</span>){</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                $community = $this-&gt;community_read;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                <span class="keywordflow">throw</span> <span class="keyword">new</span> Exception(<span class="stringliteral">&#39;Wrong community flag&#39;</span>, 500);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            }</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            $this-&gt;snmp_session = <span class="keyword">new</span> SNMP($this-&gt;version, $switch_ip, $community);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            $this-&gt;snmp_session-&gt;exceptions_enabled = SNMP::ERRNO_ANY;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            $this-&gt;snmp_session-&gt;valueretrieval = SNMP_VALUE_PLAIN;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            $this-&gt;snmp_session-&gt;oid_increasing_check = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordflow">throw</span> <span class="keyword">new</span> Exception(<span class="stringliteral">&#39;SNMP off in this switch&#39;</span>, 1);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    }</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="class_connect___s_n_m_p.html#a2266e0810688c5e97603e08be2733771">   74</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_connect___s_n_m_p.html#a2266e0810688c5e97603e08be2733771">close_session</a>()</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        $this-&gt;snmp_session-&gt;close();</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="class_connect___s_n_m_p.html#ad6dcf9d79ad7d6839e1639c3d6f1ce47">   84</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_connect___s_n_m_p.html#ad6dcf9d79ad7d6839e1639c3d6f1ce47">getByKey</a>($key)</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    {</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        $data = $this-&gt;snmp_session-&gt;get($key, $preserve_keys = <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        $this-&gt;<a class="code" href="class_connect___s_n_m_p.html#a2266e0810688c5e97603e08be2733771">close_session</a>();</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordflow">return</span> $data;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }</div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="class_connect___s_n_m_p.html#a7d9b0650197ccf543efa794508f7fbd6">  101</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_connect___s_n_m_p.html#a7d9b0650197ccf543efa794508f7fbd6">setData</a>($object_id,$type,$value)</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    {</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        $this-&gt;snmp_session-&gt;set($object_id,$type,$value);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        $this-&gt;<a class="code" href="class_connect___s_n_m_p.html#a2266e0810688c5e97603e08be2733771">close_session</a>();</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    }</div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="class_connect___s_n_m_p.html#a0cf9c2e32cb02151e4d117af3ec13b39">  116</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_connect___s_n_m_p.html#a0cf9c2e32cb02151e4d117af3ec13b39">walkByKey</a>($key)</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    {</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;       $data = $this-&gt;snmp_session-&gt;walk($key);</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        $this-&gt;<a class="code" href="class_connect___s_n_m_p.html#a2266e0810688c5e97603e08be2733771">close_session</a>();</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keywordflow">return</span> $data;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    }</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="class_connect___s_n_m_p.html#a91a834f81bf2db67f0523d92666db887">  130</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_connect___s_n_m_p.html#a91a834f81bf2db67f0523d92666db887">getSnmpSession</a>()</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    {</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        <span class="keywordflow">return</span> $this-&gt;snmp_session;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    }</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;}</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
+<div class="ttc" id="class_connect___s_n_m_p_html_a8a4beac9f8314f8e4f86f29b4cf619a0"><div class="ttname"><a href="class_connect___s_n_m_p.html#a8a4beac9f8314f8e4f86f29b4cf619a0">Connect_SNMP\__construct</a></div><div class="ttdeci">__construct($switch_ip, $wr_rd= 'r')</div><div class="ttdef"><b>Definition:</b> <a href="_connect___s_n_m_p_8php_source.html#l00045">Connect_SNMP.php:45</a></div></div>
+<div class="ttc" id="class_connect___s_n_m_p_html_a0cf9c2e32cb02151e4d117af3ec13b39"><div class="ttname"><a href="class_connect___s_n_m_p.html#a0cf9c2e32cb02151e4d117af3ec13b39">Connect_SNMP\walkByKey</a></div><div class="ttdeci">walkByKey($key)</div><div class="ttdoc">Получение данных по oid-у аналогично команде snmp walk. </div><div class="ttdef"><b>Definition:</b> <a href="_connect___s_n_m_p_8php_source.html#l00116">Connect_SNMP.php:116</a></div></div>
+<div class="ttc" id="class_connect___s_n_m_p_html"><div class="ttname"><a href="class_connect___s_n_m_p.html">Connect_SNMP</a></div><div class="ttdoc">Class Connect_SNMP. </div><div class="ttdef"><b>Definition:</b> <a href="_connect___s_n_m_p_8php_source.html#l00009">Connect_SNMP.php:9</a></div></div>
+<div class="ttc" id="class_connect___s_n_m_p_html_ad6dcf9d79ad7d6839e1639c3d6f1ce47"><div class="ttname"><a href="class_connect___s_n_m_p.html#ad6dcf9d79ad7d6839e1639c3d6f1ce47">Connect_SNMP\getByKey</a></div><div class="ttdeci">getByKey($key)</div><div class="ttdoc">Получение данных по oid-у аналогично команде snmp get. </div><div class="ttdef"><b>Definition:</b> <a href="_connect___s_n_m_p_8php_source.html#l00084">Connect_SNMP.php:84</a></div></div>
+<div class="ttc" id="class_index_model_html"><div class="ttname"><a href="class_index_model.html">IndexModel</a></div><div class="ttdef"><b>Definition:</b> <a href="_index_model_8php_source.html#l00004">IndexModel.php:4</a></div></div>
+<div class="ttc" id="class_connect___s_n_m_p_html_a91a834f81bf2db67f0523d92666db887"><div class="ttname"><a href="class_connect___s_n_m_p.html#a91a834f81bf2db67f0523d92666db887">Connect_SNMP\getSnmpSession</a></div><div class="ttdeci">getSnmpSession()</div><div class="ttdoc">Получение snmp сессии </div><div class="ttdef"><b>Definition:</b> <a href="_connect___s_n_m_p_8php_source.html#l00130">Connect_SNMP.php:130</a></div></div>
+<div class="ttc" id="class_connect___s_n_m_p_html_a2266e0810688c5e97603e08be2733771"><div class="ttname"><a href="class_connect___s_n_m_p.html#a2266e0810688c5e97603e08be2733771">Connect_SNMP\close_session</a></div><div class="ttdeci">close_session()</div><div class="ttdoc">Закрывает snmp сессию </div><div class="ttdef"><b>Definition:</b> <a href="_connect___s_n_m_p_8php_source.html#l00074">Connect_SNMP.php:74</a></div></div>
+<div class="ttc" id="class_config_html_a15e2679f2a8f6fa4d60757f4d65413ac"><div class="ttname"><a href="class_config.html#a15e2679f2a8f6fa4d60757f4d65413ac">Config\get</a></div><div class="ttdeci">static get($key)</div><div class="ttdoc">Отдает конфигурационные настройки </div><div class="ttdef"><b>Definition:</b> <a href="_config_8php_source.html#l00021">Config.php:21</a></div></div>
+<div class="ttc" id="class_connect___s_n_m_p_html_a7d9b0650197ccf543efa794508f7fbd6"><div class="ttname"><a href="class_connect___s_n_m_p.html#a7d9b0650197ccf543efa794508f7fbd6">Connect_SNMP\setData</a></div><div class="ttdeci">setData($object_id, $type, $value)</div><div class="ttdoc">Запись данных по oid-у аналогично команде snmp set. </div><div class="ttdef"><b>Definition:</b> <a href="_connect___s_n_m_p_8php_source.html#l00101">Connect_SNMP.php:101</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Документация по user_test. Последние изменения: Пн 6 Июн 2016 18:37:54. Создано системой &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>

@@ -2,7 +2,7 @@
     <h2> Пользователь <?= $account_id ?></h2>
 <?php endif; ?>
 <div>
-    <?php foreach (Session::getFlash($account_id) as $v): ?>
+    <?php foreach (Session::getFlash($data_db['user_id'], $data_db['switch_id'], $data_db['port'], $switch_port_id) as $v): ?>
 
         <p class="<?= $v['warning_class']; ?>"><?= $v['warning_level']; ?>: <?= $v['message']; ?></p>
     <?php endforeach; ?>
@@ -147,6 +147,10 @@
         <tr>
             <td>Порт</td>
             <td><?= $data_db['port'] ? $data_db['port'] : 'Нет данных' ?></td>
+        </tr>
+        <tr>
+            <td>Свич id</td>
+            <td><?= $data_db['switch_id'] ? $data_db['switch_id'] : 'Нет данных' ?></td>
         </tr>
         <?php if (Config::get('switch_info_view') == 'string'): ?>
             <tr>

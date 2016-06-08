@@ -79,18 +79,24 @@ class IndexModel
 
     }
 
-    public function snmpData($account_id, $key, $variable=null)
+    public function snmpData($account_id, $key, $variable = null, $switch_id = null, $port_id = null)
     {
         if (!$this->switch_mac) {
-            $this->switch_mac = $this->getDataByID($account_id);
+
+            $this->switch_mac = $this->getDataByID($account_id, $switch_id, $port_id);
         }
+
+
         $snmp = new Connect_SNMP($this->switch_mac['switch_ip']);
+
 
 
         $switch_data = $snmp->getByKey($key);
 
 
-        if($variable[$switch_data]){
+
+
+        if ($variable[$switch_data]) {
             $switch_data = $variable[$switch_data];
         }
 
@@ -105,44 +111,71 @@ class IndexModel
             'firmware' => $this->switch_mac['firmware'],
             'manufacturer' => $this->switch_mac['manufacturer'],
             'snmp' => $this->switch_mac['snmp'],
-            'write_community' => $this->switch_mac['write_community']
+            'write_community' => $this->switch_mac['write_community'],
+            'user_id'=> $this->switch_mac['user_id'],
+            'switch_id' => $this->switch_mac['sw_id']
 
 
         );
+
+
 
         return $data;
     }
 
-    private function getDataByID($account_id, $switch_ip = null, $mac = null, $port = null, $switch_model = null, $firmware = null, $manufacturer = null)
+    private function getDataByID($account_id, $switch_id = null, $port = null, $switch_ip = null, $mac = null, $switch_model = null, $firmware = null, $manufacturer = null)
     {
         if (Config::get('mode') == 'test') {
-            return $this->getDataByIDtest($account_id, $switch_ip, $mac, $port, $switch_model, $firmware, $manufacturer);
+            return $this->getDataByIDtest($account_id, $switch_id, $port, $switch_ip, $mac, $switch_model, $firmware, $manufacturer);
         } else {
-            return $this->getDataByIDprod($account_id, $switch_ip, $mac, $port, $switch_model, $firmware, $manufacturer);
+            return $this->getDataByIDprod($account_id, $switch_id, $port, $switch_ip, $mac, $switch_model, $firmware, $manufacturer);
         }
     }
 
-    private function getDataByIDprod($account_id, $switch_ip = null, $mac = null, $port = null, $switch_model = null, $firmware = null, $manufacturer = null)
+    private function getDataByIDprod($account_id, $switch_id = null, $port = null, $switch_ip = null, $mac = null, $switch_model = null, $firmware = null, $manufacturer = null)
     {
 
         $dbc = Connect_db::getConnection(3);
 
-
-        $sql = "SELECT pl.sw_id, pl.port_id AS port, sl.sw_ip AS switch_ip,  sl.sw_model  AS switch_mod_manuf, ul.user_mac AS mac, sl.use_snmp AS snmp, sl.snmp_auth_rw AS write_community  FROM port_list pl JOIN sw_list sl
+        if ($account_id) {
+            $sql = "SELECT pl.sw_id, pl.port_id AS port, sl.sw_ip AS switch_ip,  sl.sw_model  AS switch_mod_manuf, ul.user_mac AS mac, sl.use_snmp AS snmp, sl.snmp_auth_rw AS write_community  FROM port_list pl JOIN sw_list sl
 JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl.ref_user_id = ul.user_id";
-        $placeholders = array(
-            'account_id' => $account_id
-        );
+            $placeholders = array(
+                'account_id' => $account_id
+            );
+        } elseif ($switch_id && $port) {
 
+            $sql = "SELECT pl.ref_user_id AS user_id, sl.sw_ip AS switch_ip,  sl.sw_model  AS switch_mod_manuf, ul.user_mac AS mac, sl.use_snmp AS snmp, sl.snmp_auth_rw AS write_community  FROM port_list pl JOIN sw_list sl
+JOIN user_list ul ON pl.sw_id = :switch_id AND pl.port_id = :port_id AND pl.sw_id = sl.sw_id AND pl.ref_user_id = ul.user_id";
+            $placeholders = array(
+                'switch_id' => $switch_id,
+                'port_id' => $port
+            );
+        } else {
+            throw new Exception('Нет данных account_id, switch_id, port_id.', 1);
+        }
         $d = $dbc->getDate($sql, $placeholders);
+        if($switch_id && $port && !$d){
+            $sql = "SELECT sl.sw_ip AS switch_ip,  sl.sw_model  AS switch_mod_manuf, sl.use_snmp AS snmp, sl.snmp_auth_rw
+AS write_community  FROM port_list pl JOIN sw_list sl ON pl.sw_id = :switch_id AND pl.port_id = :port_id AND pl.sw_id = sl.sw_id";
+            $placeholders = array(
+                'switch_id' => $switch_id,
+                'port_id' => $port
+            );
 
+            $d = $dbc->getDate($sql, $placeholders);
+
+            $d[0]['mac'] = 'Нет данных';
+            $d[0]['user_id'] = 'Нет данных';
+        }
+        //  Debugger::PrintR($d);
 
         // $d[0]['switch_mod_manuf'] = iconv('latin1','utf8', $d[0]['switch_mod_manuf']);
         //временный костыль
         $d[0]['switch_mod_manuf'] = str_replace(" ", "", $d[0]['switch_mod_manuf']);
         $d[0]['switch_mod_manuf'] = str_replace('å', 'E', $d[0]['switch_mod_manuf']);
         //окончание временного костыля
-      //  Debugger::PrintR($d);
+        //  Debugger::PrintR($d);
 
         $switch_data_db = $this->switchData();
         $switch_mod_manuf = strtolower($d[0]['switch_mod_manuf']);
@@ -158,11 +191,12 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
 
         if (!$d[0]['switch_model']) {
 
+
             throw new Exception('Модель свича отсутсвтует в базе данных. Введите модель свича и соответствующий ей шаблон SNMP запросов', 1);
         }
-        if(!$d[0]['snmp']){
+        if (!$d[0]['snmp']) {
 
-            throw new Exception('SNMP отключено в запрашиваемом свиче (информация из базы данных биллинга).',1);
+            throw new Exception('SNMP отключено в запрашиваемом свиче (информация из базы данных биллинга).', 1);
         }
 
 
@@ -174,7 +208,9 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
             'firmware' => $firmware ? $firmware : $d['0']['firmware'],
             'manufacturer' => $manufacturer ? $manufacturer : $d['0']['manufacturer'],
             'write_community' => $d['0']['write_community'],
-            'snmp' => $d['0']['snmp']
+            'snmp' => $d['0']['snmp'],
+            'user_id' => $account_id ? $account_id : $d['0']['user_id'],
+            'sw_id' => $d[0]['sw_id']
 
         );
 
@@ -198,7 +234,7 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
     }
 
 
-    private function getDataByIDtest($account_id, $switch_ip = null, $mac = null, $port = null, $switch_model = null, $firmware = null, $manufacturer = null)
+    private function getDataByIDtest($account_id, $switch_id = null, $port = null, $switch_ip = null, $mac = null, $switch_model = null, $firmware = null, $manufacturer = null)
     {
         $dbc = Connect_db::getConnection(2);
         $sql = "SELECT `switch_ip`, `mac`, `port` ,`switch_model`, `firmware`, `manufacturer` FROM `users` WHERE `id`= :account_id";
@@ -247,11 +283,10 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
     }
 
 
-    public function getAllMac($account_id, $pattern_id, array $port_coefficient)
+    public function getAllMac($account_id, $pattern_id, array $port_coefficient, $switch_id=null, $port_id=null)
     {
         $snmp = new Connect_SNMP($this->switch_mac['switch_ip']);
-        $patternModel = new patternModel($account_id);
-
+        $patternModel = new patternModel($account_id,$switch_id,$port_id);
 
 
         $mac_port = $patternModel->macData($pattern_id);
@@ -268,7 +303,7 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
 
     }
 
-    public function cableTest($account_id, $pattern_id, $port, $switch_manufacturer,$style_class=null)
+    public function cableTest($account_id, $pattern_id, $port, $switch_manufacturer, $style_class = null,$switch_id = null)
     {
 
         if (!$this->switch_mac) {
@@ -276,7 +311,7 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
         }
 
 
-        $patternModel = new patternModel($account_id);
+        $patternModel = new patternModel($account_id, $switch_id, $port);
         $object_id = $patternModel->PatternData($port, $pattern_id)['cable_test_start'];
 
         if ($object_id) {
@@ -288,23 +323,36 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
             $snmp = new Connect_SNMP($this->switch_mac['switch_ip'], 'w');
 
 
-
             $snmp->setData($object_id, 'i', $write_test);
 
             sleep(Config::get('timeout_cabletest')[$switch_manufacturer]);
         } else {
             Session::setFlash('Тест кабеля для свича ' . $this->switch_mac['switch_model'] . ' ' . $this->switch_mac['manufacturer'] . ' ' . $this->switch_mac['firmware'] . ' на данный момент не доступен (отсутствует необходимый OID)', $style_class['notice']);
+            return 1;
         }
+        return null;
     }
 
     public function getCommunity()
     {
 
         $dbc = Connect_db::getConnection(3);
-        $sql = 'SELECT sw.snmp_auth, sw.use_snmp FROM sw_list sw JOIN port_list pl ON sw.sw_id = pl.sw_id AND pl.ref_user_id = :account_id';
-        $placeholders = array(
-            'account_id' => Router::getAccountId()
-        );
+        $user_id = Router::getAccountId();
+        $switch_id = Router::getSwitchId();
+        if ($user_id) {
+            $sql = 'SELECT sw.snmp_auth, sw.use_snmp FROM sw_list sw JOIN port_list pl ON sw.sw_id = pl.sw_id AND pl.ref_user_id = :account_id';
+            $placeholders = array(
+                'account_id' => Router::getAccountId()
+            );
+        }elseif($switch_id){
+
+            $sql = 'SELECT sw.snmp_auth, sw.use_snmp FROM sw_list sw WHERE sw.sw_id = :switch_id';
+            $placeholders = array(
+                'switch_id' => $switch_id,
+            );
+        }else{
+            throw new Exception('Нет данных user_id, switch_id',1);
+        }
         $data = $dbc->getDate($sql, $placeholders);
         return $data[0];
     }
@@ -321,10 +369,10 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
         return $data;
     }
 
-    public function snmpByKey($account_id, $key)
+    public function snmpByKey($account_id, $key, $switch_id = null, $port_id = null)
     {
         if (!$this->switch_mac) {
-            $this->switch_mac = $this->getDataByID($account_id);
+            $this->switch_mac = $this->getDataByID($account_id, $switch_id, $port_id);
         }
 
         $snmp = new Connect_SNMP($this->switch_mac['switch_ip']);
@@ -347,10 +395,10 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
     }
 
 
-    public function getPortCoefficient($account_id, $port_number)
+    public function getPortCoefficient($account_id, $port_number, $switch_id)
     {
 
-        $patternModel = new patternModel($account_id);
+        $patternModel = new patternModel($account_id,$switch_id,$port_number);
 
         $data_switch = $patternModel->getSwitchDataByName($this->switch_mac['switch_model']);
 
@@ -374,18 +422,30 @@ JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl
 
                 $port_coefficient['port_coefficient_simple_gig'] = $port_index[$data_switch[0]['simple_port'] + 1] - ($data_switch[0]['simple_port'] + 1);
             }
-        }elseif($data_switch[0]['model_name'] == 'DGS-3200-10'){
+        } elseif ($data_switch[0]['model_name'] == 'DGS-3200-10') {
             $port_coefficient = array(
-                'port_coefficient' =>0,
-                'gig_port_coefficient' =>0,
-                'port_coefficient_simple_gig' =>0,
+                'port_coefficient' => 0,
+                'gig_port_coefficient' => 0,
+                'port_coefficient_simple_gig' => 0,
             );
-        }else{
+        } else {
             $port_coefficient = array();
         }
         self::$port_coeff = $port_coefficient;
 
         return $port_coefficient;
+
+    }
+    public function getUserByMac($mac)
+    {
+        $dbc = Connect_db::getConnection(3);
+        $sql = "SELECT `user_id` FROM `user_list` WHERE `user_mac`= :user_mac";
+        $placeholders = array(
+            'user_mac' => $mac
+        );
+        $data = $dbc->getDate($sql, $placeholders);
+
+        return $data[0]['user_id'];
 
     }
 

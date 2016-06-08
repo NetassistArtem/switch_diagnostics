@@ -71,7 +71,7 @@ class Session
         $_SESSION['flash'] = self::$flash_messages;
     }
 
-    public static function getFlash($account_id = null)
+    public static function getFlash($account_id = null, $switch_id = null, $port_id = null, $switch_port_id = null)
     {
         $message_all = self::get('flash') ? self::get('flash') :array();
 //удаление дублирующихся сообщений, если такие появятся
@@ -89,7 +89,7 @@ class Session
             }
         }
 //завершение удаления дубликатов сообщений
-        $errorModel = new errorModel($account_id);
+        $errorModel = new errorModel($account_id, $switch_id, $port_id, $switch_port_id);
         $errorModel->writeError($message);
 
         self::remove('flash');

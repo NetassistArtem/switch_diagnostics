@@ -1,27 +1,80 @@
-\hypertarget{class_node_controller}{\section{Node\-Controller Class Reference}
+\hypertarget{class_node_controller}{\section{Класс Node\-Controller}
 \label{class_node_controller}\index{Node\-Controller@{Node\-Controller}}
 }
-Inheritance diagram for Node\-Controller\-:\begin{figure}[H]
+
+
+Class \hyperlink{class_node_controller}{Node\-Controller}.  
+
+
+Граф наследования\-:Node\-Controller\-:\begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[height=2.000000cm]{class_node_controller}
 \end{center}
 \end{figure}
-\subsection*{Public Member Functions}
+\subsection*{Открытые члены}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_node_controller_a04f2101fe1cdc785b61219c2df753024}{{\bfseries index\-Action} ()}\label{class_node_controller_a04f2101fe1cdc785b61219c2df753024}
-
-\end{DoxyCompactItemize}
-\subsection*{Static Public Member Functions}
+\hyperlink{class_node_controller_a04f2101fe1cdc785b61219c2df753024}{index\-Action} ()
+\begin{DoxyCompactList}\small\item\em Action отвечате за загрузку обычных страниц(включая стандартных страниц ошибок) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Открытые статические члены}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_node_controller_a2d13f67877bc056bc6798b3d0931c4a2}{static {\bfseries write\-Error\-Data} (Exception \$e)}\label{class_node_controller_a2d13f67877bc056bc6798b3d0931c4a2}
+static \hyperlink{class_node_controller_a2d13f67877bc056bc6798b3d0931c4a2}{write\-Error\-Data} (Exception \$e)
+\begin{DoxyCompactList}\small\item\em Обработка информации выброшенных исключений \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Дополнительные унаследованные члены}
 
-\end{DoxyCompactItemize}
-\subsection*{Additional Inherited Members}
+
+\subsection{Подробное описание}
+Class \hyperlink{class_node_controller}{Node\-Controller}. 
+
+Class \hyperlink{class_node_controller}{Node\-Controller} отвечает за загрузку страниц приложения. Включает метод для загрузки стандартных страниц и страниц ошибок. Также write\-Error\-Data записывает на страницах ошибок информацию полученную из выброшенных исключений. 
+
+См. определение в файле Node\-Controller.\-php строка 9
 
 
-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+
+\subsection{Методы}
+\hypertarget{class_node_controller_a04f2101fe1cdc785b61219c2df753024}{\index{Node\-Controller@{Node\-Controller}!index\-Action@{index\-Action}}
+\index{index\-Action@{index\-Action}!NodeController@{Node\-Controller}}
+\subsubsection[{index\-Action}]{\setlength{\rightskip}{0pt plus 5cm}index\-Action (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_node_controller_a04f2101fe1cdc785b61219c2df753024}
+
+
+Action отвечате за загрузку обычных страниц(включая стандартных страниц ошибок) 
+
+Action отвечате за загрузку обычных страниц(включая стандартных страниц ошибок). Данные о необходимой странице передает объект класса \hyperlink{class_node_model}{Node\-Model}, id нужной страници получает роутер (\hyperlink{class_router}{Router}) при парсинге url. \$args массив содержит контент страници полученный \hyperlink{class_node_model}{Node\-Model} моделью из базы данных а также данные о выброшенном исключении. Передается аргументом в возвращаемую функцию рендеринга \$this-\/$>$render(\$args) \begin{DoxyReturn}{Возвращает}
+\$this-\/$>$render(\$args) Функция рендеринга страници с параметром \$args 
+\end{DoxyReturn}
+
+
+См. определение в файле Node\-Controller.\-php строка 39
+
+\hypertarget{class_node_controller_a2d13f67877bc056bc6798b3d0931c4a2}{\index{Node\-Controller@{Node\-Controller}!write\-Error\-Data@{write\-Error\-Data}}
+\index{write\-Error\-Data@{write\-Error\-Data}!NodeController@{Node\-Controller}}
+\subsubsection[{write\-Error\-Data}]{\setlength{\rightskip}{0pt plus 5cm}static write\-Error\-Data (
+\begin{DoxyParamCaption}
+\item[{Exception}]{\$e}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_node_controller_a2d13f67877bc056bc6798b3d0931c4a2}
+
+
+Обработка информации выброшенных исключений 
+
+
+\begin{DoxyParams}[1]{Аргументы}
+Exception & {\em \$e} & объект выброшенного исключения\\
+\hline
+\end{DoxyParams}
+Записывает в свойства класса код ошибки и сообщение полученное из объекта \$e выброшенного исключения 
+
+См. определение в файле Node\-Controller.\-php строка 23
+
+
+
+Объявления и описания членов класса находятся в файле\-:\begin{DoxyCompactItemize}
 \item 
-Controller/Node\-Controller.\-php\end{DoxyCompactItemize}
+/home/artem/public\-\_\-html/test01/\-Controller/\hyperlink{_node_controller_8php}{Node\-Controller.\-php}\end{DoxyCompactItemize}

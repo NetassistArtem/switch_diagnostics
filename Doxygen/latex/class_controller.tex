@@ -1,38 +1,94 @@
-\hypertarget{class_controller}{\section{Controller Class Reference}
+\hypertarget{class_controller}{\section{Класс Controller}
 \label{class_controller}\index{Controller@{Controller}}
 }
 
 
-Тестовый коментарий  
+Class \hyperlink{class_controller}{Controller}.  
 
 
-Inheritance diagram for Controller\-:\begin{figure}[H]
+Граф наследования\-:Controller\-:\begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[height=2.000000cm]{class_controller}
 \end{center}
 \end{figure}
-\subsection*{Static Public Member Functions}
+\subsection*{Открытые статические члены}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_controller_a4c9227317bc5a987371b5eb4407f75e1}{static {\bfseries redirect} (\$url)}\label{class_controller_a4c9227317bc5a987371b5eb4407f75e1}
-
+static \hyperlink{class_controller_a4c9227317bc5a987371b5eb4407f75e1}{redirect} (\$url)
 \end{DoxyCompactItemize}
-\subsection*{Protected Member Functions}
+\subsection*{Защищенные члены}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_controller_a87cbafbc85f49bc8864557e1ffe0c143}{{\bfseries render} (array \$args=array(), \$tpl=null)}\label{class_controller_a87cbafbc85f49bc8864557e1ffe0c143}
-
+\hyperlink{class_controller_a87cbafbc85f49bc8864557e1ffe0c143}{render} (array \$args=array(), \$tpl=null)
+\begin{DoxyCompactList}\small\item\em Рендеринг обычных страниц \end{DoxyCompactList}\item 
+\hyperlink{class_controller_a97e0e46d82368469d174861ca29f2001}{render\-\_\-admin} (array \$args=array(), \$tpl=null)
 \end{DoxyCompactItemize}
 
 
-\subsection{Detailed Description}
-Тестовый коментарий 
+\subsection{Подробное описание}
+Class \hyperlink{class_controller}{Controller}. 
 
-Class \hyperlink{class_controller}{Controller}
+Отвечает за рендеринг, редиректы 
 
-еще один тестовый коментарий 
+См. определение в файле Controller.\-php строка 9
 
-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+
+
+\subsection{Методы}
+\hypertarget{class_controller_a4c9227317bc5a987371b5eb4407f75e1}{\index{Controller@{Controller}!redirect@{redirect}}
+\index{redirect@{redirect}!Controller@{Controller}}
+\subsubsection[{redirect}]{\setlength{\rightskip}{0pt plus 5cm}static redirect (
+\begin{DoxyParamCaption}
+\item[{}]{\$url}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_controller_a4c9227317bc5a987371b5eb4407f75e1}
+
+
+См. определение в файле Controller.\-php строка 97
+
+\hypertarget{class_controller_a87cbafbc85f49bc8864557e1ffe0c143}{\index{Controller@{Controller}!render@{render}}
+\index{render@{render}!Controller@{Controller}}
+\subsubsection[{render}]{\setlength{\rightskip}{0pt plus 5cm}render (
+\begin{DoxyParamCaption}
+\item[{array}]{\$args = {\ttfamily array()}, }
+\item[{}]{\$tpl = {\ttfamily null}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_controller_a87cbafbc85f49bc8864557e1ffe0c143}
+
+
+Рендеринг обычных страниц 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em \$arg} & Массив переменных передаваемые в шаблон для отображения \\
+\hline
+{\em \$tpl} & имя файла шаблона по умолчанию = null если оно отличается от имени дейстия (Action)\\
+\hline
+\end{DoxyParams}
+Переменные из массива \$args используются в файлах шаблонов для вывода необходимого контента.\-В буфер обмена записывается сначала результат рендеринга необходимого шаблона, результат передается переменной \$content. После этого из буфера обмена выгружатеся вся страница в виде основного шаблона \hyperlink{layout_8phtml}{layout.\-phtml} или \hyperlink{layout__billing_8phtml}{layout\-\_\-billing.\-phtml} в котором встроенна переменная \$content, содержащая основной контент. Используются различные лайауты \hyperlink{layout_8phtml}{layout.\-phtml} или \hyperlink{layout__billing_8phtml}{layout\-\_\-billing.\-phtml} в зависимости от запроса страници -\/ если запрос произошел из биллинга (еслиь get параметр 'bl') -\/layout\-\_\-billing.\-phtml, если запрос из самого приложения обычный лайаут.
+
+\begin{DoxyReturn}{Возвращает}
+ob\-\_\-get\-\_\-clean() Отрендеренную страницу из буфера обмена 
+\end{DoxyReturn}
+
+
+См. определение в файле Controller.\-php строка 60
+
+\hypertarget{class_controller_a97e0e46d82368469d174861ca29f2001}{\index{Controller@{Controller}!render\-\_\-admin@{render\-\_\-admin}}
+\index{render\-\_\-admin@{render\-\_\-admin}!Controller@{Controller}}
+\subsubsection[{render\-\_\-admin}]{\setlength{\rightskip}{0pt plus 5cm}render\-\_\-admin (
+\begin{DoxyParamCaption}
+\item[{array}]{\$args = {\ttfamily array()}, }
+\item[{}]{\$tpl = {\ttfamily null}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_controller_a97e0e46d82368469d174861ca29f2001}
+
+
+См. определение в файле Controller.\-php строка 80
+
+
+
+Объявления и описания членов класса находятся в файле\-:\begin{DoxyCompactItemize}
 \item 
-Library/Controller.\-php\end{DoxyCompactItemize}
+/home/artem/public\-\_\-html/test01/\-Library/\hyperlink{_controller_8php}{Controller.\-php}\end{DoxyCompactItemize}

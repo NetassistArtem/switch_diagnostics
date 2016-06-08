@@ -10,6 +10,9 @@ abstract class Router
     private static $id;
     private static $switch_pattern_id = null;
     private static $billing = null;
+    private static $switch_id = null;
+    private static $port_id = null;
+    private static $switch_port_id = null;
 
 
     /**
@@ -37,9 +40,17 @@ abstract class Router
             $switch_id = $request->get('switch');
             $port_id = $request->get('port');
             $user_id = $request->get('user_id');
+            $switch = $request->get('sw');//параметр для определения откуда пришел запрос со страници пользователя или страници свича
+            $cabletest = $request->get('cabletest');
+            $link = $request->get('link');
 
+            $warning = $request->get('warning');
+            $notice = $request->get('notice');
+            $information = $request->get('information');
+            $cable_length = $request->get('cable_length');
+            $switch_data = $request->get('switch_data');
 
-            if ($switch_id && $port_id && !$user_id) {
+            if ($switch_id && $port_id && !$user_id && !$switch) {
 
                 $indexModel = new IndexModel();
 
@@ -51,18 +62,9 @@ abstract class Router
 
                     $url_a[] = $user_id;
                     $url = implode("/", $url_a);
-                    $cabletest = $request->get('cabletest');
-                    $link = $request->get('link');
 
-                    $warning = $request->get('warning');
-                    $notice = $request->get('notice');
-                    $information = $request->get('information');
-                    $cable_length = $request->get('cable_length');
-                    $switch_data = $request->get('switch_data');
-                    $user_switch = 'switch';//параметр для определения откуда пришел запрос со страници пользователя или страници свича (разная обработка мак адресов)
-
-                    self::parse("{$url}?bl=1&user_switch={$user_switch}&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data");
-                   // throw new Exception("{$url}?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data",2);
+                    self::parse("{$url}?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data");
+                    // throw new Exception("{$url}?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data",2);
                     //Controller::redirect($url . "?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data");
                 } else {
                     throw new Exception("В базе данных билинга не обнаружен пользователь с switch_id = $switch_id и port_id = $port_id ", 1);
@@ -70,24 +72,21 @@ abstract class Router
 
 
             }
-            if($user_id){
+            if ($user_id && !$switch) {
 
                 $url_a[] = $user_id;
                 $url = implode("/", $url_a);
-                $cabletest = $request->get('cabletest');
-                $link = $request->get('link');
 
-                $warning = $request->get('warning');
-                $notice = $request->get('notice');
-                $information = $request->get('information');
-                $cable_length = $request->get('cable_length');
-                $switch_data = $request->get('switch_data');
-                $user_switch = 'user';//параметр для определения откуда пришел запрос со страници пользователя или страници свича (разная обработка мак адресов)
-
-                self::parse("{$url}?bl=1&user_switch={$user_switch}&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data");
+                self::parse("{$url}?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data");
                 // throw new Exception("{$url}?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data",2);
                 // Controller::redirect($url . "?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data");
 
+            }
+            if($switch){
+                $url_a[] = $switch_id.'_'.$port_id;
+                $url = implode("/", $url_a);
+
+                self::parse("{$url}?bl=1&cabletest=$cabletest&link=$link&warning=$warning&notice=$notice&information=$information&cable_length=$cable_length&switch_data=$switch_data");
             }
 
         }
@@ -122,6 +121,15 @@ abstract class Router
                     $url_array = explode('/', $url);
 
                     self::$account_id = array_pop($url_array);
+                }
+                if($item['action'] == 'snmpSwitchData' || $item['action'] == 'historyBySwitch'){
+                    $url_array = explode('/', $url);
+                    $switch_port = array_pop($url_array);
+                    $switch_port_array = explode('_', $switch_port);
+                    self::$switch_id = $switch_port_array[0];
+                    self::$port_id = $switch_port_array[1];
+                    self::$switch_port_id = $switch_port;
+
                 }
                 if ($item['action'] == 'editSwitch' || $item['action'] == 'deleteSwitch' || $item['action'] == 'editPattern' || $item['action'] == 'deletePattern') {
                     $url_array = explode('/', $url);
@@ -210,6 +218,32 @@ abstract class Router
     {
         return self::$billing;
     }
+
+    /**
+     * @return null
+     */
+    public static function getSwitchId()
+    {
+        return self::$switch_id;
+    }
+
+    /**
+     * @return null
+     */
+    public static function getPortId()
+    {
+        return self::$port_id;
+    }
+
+    /**
+     * @return null
+     */
+    public static function getSwitchPortId()
+    {
+        return self::$switch_port_id;
+    }
+
+
 
 
 }

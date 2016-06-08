@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>user_test: Исходный файл /home/artem/public_html/test01/Library/Controller.php</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">user_test
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.6 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
+      <li><a href="pages.html"><span>Описания</span></a></li>
+      <li><a href="modules.html"><span>Группы</span></a></li>
+      <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Поиск" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+      <li><a href="globals.html"><span>Список&#160;членов&#160;всех&#160;файлов</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Страницы</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_5ad7f572bbca03234e8e621e192fc099.html">Library</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Controller.php</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="_controller_8php.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;?php</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="class_controller.html">    9</a></span>&#160;<span class="keyword">abstract</span> <span class="keyword">class </span><a class="code" href="class_controller.html">Controller</a></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">    public static function test()</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">{</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">    $t = &quot;http://test.naic.29632.as/bl/account_test/6048?bl=1&quot;;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">    return $t;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">}</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">*/</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">private</span> <span class="keyword">function</span> file_path($tpl = null)</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        $tplDir = <a class="code" href="class_router.html#a0c5216068060ca9253dbad31e5895a2b">Router::getController</a>();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        $tplName = isset($tpl) ? $tpl : <a class="code" href="class_router.html#af8b331d3ac442a1071aa9f7db3b60637">Router::getAction</a>();</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        $templateFile = <a class="code" href="conf_8php.html#ab03c61889740a358477b63e1060ed780">VIEW_DIR</a> . $tplDir . <a class="code" href="conf_8php.html#ae073998f73900b8375397889044c8313">DS</a> . $tplName . <span class="stringliteral">&#39;.phtml&#39;</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keywordflow">if</span> (!file_exists($templateFile)) {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keywordflow">throw</span> <span class="keyword">new</span> Exception(<span class="stringliteral">&quot;{$templateFile} not found&quot;</span>, 404);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        }</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">return</span> $templateFile;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="class_controller.html#a87cbafbc85f49bc8864557e1ffe0c143">   60</a></span>&#160;    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_controller.html#a87cbafbc85f49bc8864557e1ffe0c143">render</a>(array $args = array(), $tpl = null)</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        extract($args);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        ob_start();</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        require $this-&gt;file_path($tpl); <span class="comment">//$templateFile;</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <a class="code" href="index_8php.html#a57b284fe00866494b33afa80ba729bed">$content</a> = ob_get_clean();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;      <span class="comment">//  ob_start();</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <a class="code" href="conf_8php.html#abb35c8495a232b510389fa6d7b15d38a">$request</a> = <span class="keyword">new</span> <a class="code" href="class_request.html">Request</a>();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">if</span>(<a class="code" href="conf_8php.html#abb35c8495a232b510389fa6d7b15d38a">$request</a>-&gt;get(<span class="stringliteral">&#39;bl&#39;</span>)){<span class="comment">//Router::getBilling()){</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            require <a class="code" href="conf_8php.html#ab03c61889740a358477b63e1060ed780">VIEW_DIR</a> . <span class="stringliteral">&#39;layout_billing.phtml&#39;</span>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            require <a class="code" href="conf_8php.html#ab03c61889740a358477b63e1060ed780">VIEW_DIR</a> . <span class="stringliteral">&#39;layout.phtml&#39;</span>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        }</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordflow">return</span> ob_get_clean();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="class_controller.html#a97e0e46d82368469d174861ca29f2001">   80</a></span>&#160;    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code" href="class_controller.html#a97e0e46d82368469d174861ca29f2001">render_admin</a>(array $args = array(), $tpl = null)</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    {</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        extract($args);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        ob_start();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        require $this-&gt;file_path($tpl); <span class="comment">//$templateFile;</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <a class="code" href="index_8php.html#a57b284fe00866494b33afa80ba729bed">$content</a> = ob_get_clean();</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="comment">// ob_start();</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        require <a class="code" href="conf_8php.html#ab03c61889740a358477b63e1060ed780">VIEW_DIR</a> . <span class="stringliteral">&#39;layout_admin.phtml&#39;</span>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keywordflow">return</span> ob_get_clean();</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="class_controller.html#a4c9227317bc5a987371b5eb4407f75e1">   97</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_controller.html#a4c9227317bc5a987371b5eb4407f75e1">redirect</a>($url)</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        header(<span class="stringliteral">&quot;Location: $url&quot;</span>);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        die;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="comment">// exit;</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;}</div>
+<div class="ttc" id="index_8php_html_a57b284fe00866494b33afa80ba729bed"><div class="ttname"><a href="index_8php.html#a57b284fe00866494b33afa80ba729bed">$content</a></div><div class="ttdeci">$content</div><div class="ttdoc">Переменная содержит основной контент сформированный на основе запроса $url. </div><div class="ttdef"><b>Definition:</b> <a href="index_8php_source.html#l00024">index.php:24</a></div></div>
+<div class="ttc" id="class_router_html_a0c5216068060ca9253dbad31e5895a2b"><div class="ttname"><a href="class_router.html#a0c5216068060ca9253dbad31e5895a2b">Router\getController</a></div><div class="ttdeci">static getController()</div><div class="ttdef"><b>Definition:</b> <a href="_router_8php_source.html#l00183">Router.php:183</a></div></div>
+<div class="ttc" id="class_request_html"><div class="ttname"><a href="class_request.html">Request</a></div><div class="ttdef"><b>Definition:</b> <a href="_request_8php_source.html#l00004">Request.php:4</a></div></div>
+<div class="ttc" id="class_controller_html"><div class="ttname"><a href="class_controller.html">Controller</a></div><div class="ttdoc">Class Controller. </div><div class="ttdef"><b>Definition:</b> <a href="_controller_8php_source.html#l00009">Controller.php:9</a></div></div>
+<div class="ttc" id="class_router_html_af8b331d3ac442a1071aa9f7db3b60637"><div class="ttname"><a href="class_router.html#af8b331d3ac442a1071aa9f7db3b60637">Router\getAction</a></div><div class="ttdeci">static getAction()</div><div class="ttdef"><b>Definition:</b> <a href="_router_8php_source.html#l00191">Router.php:191</a></div></div>
+<div class="ttc" id="class_controller_html_a4c9227317bc5a987371b5eb4407f75e1"><div class="ttname"><a href="class_controller.html#a4c9227317bc5a987371b5eb4407f75e1">Controller\redirect</a></div><div class="ttdeci">static redirect($url)</div><div class="ttdef"><b>Definition:</b> <a href="_controller_8php_source.html#l00097">Controller.php:97</a></div></div>
+<div class="ttc" id="class_controller_html_a97e0e46d82368469d174861ca29f2001"><div class="ttname"><a href="class_controller.html#a97e0e46d82368469d174861ca29f2001">Controller\render_admin</a></div><div class="ttdeci">render_admin(array $args=array(), $tpl=null)</div><div class="ttdef"><b>Definition:</b> <a href="_controller_8php_source.html#l00080">Controller.php:80</a></div></div>
+<div class="ttc" id="conf_8php_html_ab03c61889740a358477b63e1060ed780"><div class="ttname"><a href="conf_8php.html#ab03c61889740a358477b63e1060ed780">VIEW_DIR</a></div><div class="ttdeci">const VIEW_DIR</div><div class="ttdef"><b>Definition:</b> <a href="conf_8php_source.html#l00027">conf.php:27</a></div></div>
+<div class="ttc" id="conf_8php_html_ae073998f73900b8375397889044c8313"><div class="ttname"><a href="conf_8php.html#ae073998f73900b8375397889044c8313">DS</a></div><div class="ttdeci">const DS</div><div class="ttdef"><b>Definition:</b> <a href="conf_8php_source.html#l00019">conf.php:19</a></div></div>
+<div class="ttc" id="class_controller_html_a87cbafbc85f49bc8864557e1ffe0c143"><div class="ttname"><a href="class_controller.html#a87cbafbc85f49bc8864557e1ffe0c143">Controller\render</a></div><div class="ttdeci">render(array $args=array(), $tpl=null)</div><div class="ttdoc">Рендеринг обычных страниц </div><div class="ttdef"><b>Definition:</b> <a href="_controller_8php_source.html#l00060">Controller.php:60</a></div></div>
+<div class="ttc" id="conf_8php_html_abb35c8495a232b510389fa6d7b15d38a"><div class="ttname"><a href="conf_8php.html#abb35c8495a232b510389fa6d7b15d38a">$request</a></div><div class="ttdeci">$request</div><div class="ttdoc">Объект принимает и обрабатывает все запросы _POST, _GET, _SERVER. </div><div class="ttdef"><b>Definition:</b> <a href="conf_8php_source.html#l00033">conf.php:33</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Документация по user_test. Последние изменения: Пн 6 Июн 2016 18:37:54. Создано системой &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>

@@ -20,6 +20,17 @@ $cable_test = array(
         6 => 'unknown',//'неизвестно',
         7 => 'notSupport',//'не поддерживается',
     ),
+    'D-Link' => array(
+        0 => 'ok',
+        1 => 'open',
+        2 => 'short',
+        3 => 'open-short',
+        4 => 'crosstalk',
+        5 => 'unknown',
+        6 => 'count',
+        7 => 'no-cable',
+        8 => 'other',
+    )
 );
 
 $duplex = array(

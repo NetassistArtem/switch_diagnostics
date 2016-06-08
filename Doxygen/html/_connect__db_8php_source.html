@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>user_test: Исходный файл /home/artem/public_html/test01/Library/Connect_db.php</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">user_test
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.6 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
+      <li><a href="pages.html"><span>Описания</span></a></li>
+      <li><a href="modules.html"><span>Группы</span></a></li>
+      <li><a href="annotated.html"><span>Структуры&#160;данных</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Поиск" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+      <li><a href="globals.html"><span>Список&#160;членов&#160;всех&#160;файлов</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Указатель</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Структуры данных</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Файлы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Функции</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Переменные</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Группы</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Страницы</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_5ad7f572bbca03234e8e621e192fc099.html">Library</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Connect_db.php</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="_connect__db_8php.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;&lt;?php</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="class_connect__db.html">   11</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_connect__db.html">Connect_db</a> {</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">private</span> <span class="keyword">static</span> $connection1;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">private</span> <span class="keyword">static</span> $connection2;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">private</span> <span class="keyword">static</span> $connection3;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">private</span> $PDO;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">private</span> <span class="keyword">function</span> __clone(){}</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">private</span> <span class="keyword">function</span> __wakeup(){}</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">private</span>   <span class="keyword">function</span> __construct($dsn, $user, $pass){</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="comment">//try{</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        $this-&gt;PDO = <span class="keyword">new</span> PDO($dsn, $user, $pass);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        $this-&gt;PDO-&gt;setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;          <span class="comment">//  }catch (PDOException $e){</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;           <span class="comment">// throw new Exception($e-&gt;getMessage(),1044);</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="comment">//}</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    }</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="class_connect__db.html#ab6bc68b89cd8ca077dd8ab2c5a357f06">   41</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">function</span> <a class="code" href="class_connect__db.html#ab6bc68b89cd8ca077dd8ab2c5a357f06">getConnection</a>($db_number = 1)</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        $db_data = <a class="code" href="class_config.html#a15e2679f2a8f6fa4d60757f4d65413ac">Config::get</a>(<span class="stringliteral">&#39;db_&#39;</span>.$db_number);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">if</span>($db_number == 1){</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keywordflow">if</span>(!self::$connection1){</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                self::$connection1 = <span class="keyword">new</span> <a class="code" href="class_connect__db.html">Connect_db</a>($db_data[<span class="stringliteral">&#39;dsn&#39;</span>], $db_data[<span class="stringliteral">&#39;user&#39;</span>], $db_data[<span class="stringliteral">&#39;pass&#39;</span>]);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            }</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keywordflow">return</span> self::$connection1;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        }elseif($db_number == 2){</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keywordflow">if</span>(!self::$connection2){</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                self::$connection2 = <span class="keyword">new</span> <a class="code" href="class_connect__db.html">Connect_db</a>($db_data[<span class="stringliteral">&#39;dsn&#39;</span>], $db_data[<span class="stringliteral">&#39;user&#39;</span>], $db_data[<span class="stringliteral">&#39;pass&#39;</span>]);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            }</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="keywordflow">return</span> self::$connection2;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        }elseif($db_number == 3){</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordflow">if</span>(!self::$connection3){</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                self::$connection3 = <span class="keyword">new</span> <a class="code" href="class_connect__db.html">Connect_db</a>($db_data[<span class="stringliteral">&#39;dsn&#39;</span>], $db_data[<span class="stringliteral">&#39;user&#39;</span>], $db_data[<span class="stringliteral">&#39;pass&#39;</span>]);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            }</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordflow">return</span> self::$connection3;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        }<span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <span class="keywordflow">return</span> null;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        }</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="class_connect__db.html#a064a8657e9547cedc4e1590fb8c7747f">   76</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_connect__db.html#a064a8657e9547cedc4e1590fb8c7747f">getDate</a>($sql, array $placeholders=array())</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    {</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="comment">//$this-&gt;PDO-&gt;setAttribute(PDO::ATTR_EMULATE_PREPARES, false);</span></div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        $sth = $this-&gt;PDO-&gt;prepare($sql);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="comment">//$sth-&gt;bindParam(&#39;:from&#39;, $from, PDO::PARAM_INT);</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;       <span class="comment">// $sth-&gt;bindParam(&#39;:count&#39;, $count, PDO::PARAM_INT);</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        $sth-&gt;execute($placeholders);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        $date = $sth-&gt;fetchAll(PDO::FETCH_ASSOC);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">return</span> $date;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="class_connect__db.html#af708fa20ff0c04a5a9bd8badd63e632c">   96</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code" href="class_connect__db.html#af708fa20ff0c04a5a9bd8badd63e632c">getPDO</a>()</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    {</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keywordflow">return</span> $this-&gt;PDO;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    }</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
+<div class="ttc" id="class_connect__db_html"><div class="ttname"><a href="class_connect__db.html">Connect_db</a></div><div class="ttdoc">Class Connect_db. </div><div class="ttdef"><b>Definition:</b> <a href="_connect__db_8php_source.html#l00011">Connect_db.php:11</a></div></div>
+<div class="ttc" id="class_connect__db_html_a064a8657e9547cedc4e1590fb8c7747f"><div class="ttname"><a href="class_connect__db.html#a064a8657e9547cedc4e1590fb8c7747f">Connect_db\getDate</a></div><div class="ttdeci">getDate($sql, array $placeholders=array())</div><div class="ttdef"><b>Definition:</b> <a href="_connect__db_8php_source.html#l00076">Connect_db.php:76</a></div></div>
+<div class="ttc" id="class_connect__db_html_ab6bc68b89cd8ca077dd8ab2c5a357f06"><div class="ttname"><a href="class_connect__db.html#ab6bc68b89cd8ca077dd8ab2c5a357f06">Connect_db\getConnection</a></div><div class="ttdeci">static getConnection($db_number=1)</div><div class="ttdef"><b>Definition:</b> <a href="_connect__db_8php_source.html#l00041">Connect_db.php:41</a></div></div>
+<div class="ttc" id="class_config_html_a15e2679f2a8f6fa4d60757f4d65413ac"><div class="ttname"><a href="class_config.html#a15e2679f2a8f6fa4d60757f4d65413ac">Config\get</a></div><div class="ttdeci">static get($key)</div><div class="ttdoc">Отдает конфигурационные настройки </div><div class="ttdef"><b>Definition:</b> <a href="_config_8php_source.html#l00021">Config.php:21</a></div></div>
+<div class="ttc" id="class_connect__db_html_af708fa20ff0c04a5a9bd8badd63e632c"><div class="ttname"><a href="class_connect__db.html#af708fa20ff0c04a5a9bd8badd63e632c">Connect_db\getPDO</a></div><div class="ttdeci">getPDO()</div><div class="ttdef"><b>Definition:</b> <a href="_connect__db_8php_source.html#l00096">Connect_db.php:96</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Документация по user_test. Последние изменения: Пн 6 Июн 2016 18:37:54. Создано системой &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>

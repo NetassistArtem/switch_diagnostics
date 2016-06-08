@@ -4,10 +4,14 @@
 class patternModel
 {
     public $account_id;
+    public $switch_id;
+    public $port_id;
 
-    public function __construct($account_id)
+    public function __construct($account_id, $switch_id = null, $port_id = null)
     {
         $this->account_id = $account_id;
+        $this->switch_id = $switch_id;
+        $this->port_id = $port_id;
     }
 
     public function switchData()
@@ -16,7 +20,6 @@ class patternModel
         $sql = "SELECT * FROM  switches";
         $placeholders = array();
         $data = $dbc->getDate($sql, $placeholders);
-
 
 
         if (!$data) {
@@ -28,11 +31,20 @@ class patternModel
     private function switchUserData()
     {
         $dbc = Connect_db::getConnection(2);
-
-        $sql = "SELECT `switch_model`, `firmware` FROM `users` WHERE `id`= :id_user";
-        $placeholders = array(
-            'id_user' => $this->account_id
-        );
+        if ($this->account_id) {
+            $sql = "SELECT `switch_model`, `firmware` FROM `users` WHERE `id`= :id_user";
+            $placeholders = array(
+                'id_user' => $this->account_id
+            );
+        } elseif ($this->switch_id && $this->port_id) {
+            $sql = "SELECT `switch_model`, `firmware` FROM `users` WHERE `switch_id`= :switch_id AND `port`= :port";
+            $placeholders = array(
+                'switch_id' => $this->switch_id,
+                'port' => $this->port_id
+            );
+        } else {
+            throw new Exception("Нет данных user_id, switch_id, port_id", 1);
+        }
         $data = $dbc->getDate($sql, $placeholders);
 
 
@@ -83,7 +95,7 @@ class patternModel
     public function PatternData($port_number, $pattern_id)
     {
 
-     //   $data_switch = $this->getSwitchDataByName($switch_model);
+        //   $data_switch = $this->getSwitchDataByName($switch_model);
 
         $dbc = Connect_db::getConnection();
 
@@ -107,14 +119,12 @@ class patternModel
         $port = $port_number + $port_coefficient_array['port_coefficient_simple_gig'];
 
 
-
-
         foreach ($data[0] as $k => $v) {
-            if ($k != 'id' /* && $k != 'port_coefficient'&&  $k != 'gig_port_coefficient' */&& $k != 'mac_all'&& $k != 'macs_ports') {
+            if ($k != 'id' /* && $k != 'port_coefficient'&&  $k != 'gig_port_coefficient' */ && $k != 'mac_all' && $k != 'macs_ports') {
 
                 $data[0][$k] = $data[0][$k] . $port;
 
-                if(empty($v)){
+                if (empty($v)) {
                     unset($data[0][$k]);
                 }
 
@@ -125,6 +135,7 @@ class patternModel
         return $data[0];
 
     }
+
     public function macData($pattern_id)
     {
         $dbc = Connect_db::getConnection();
@@ -136,31 +147,32 @@ class patternModel
 
         return $data[0];
     }
-/*
-    public function getPortCoefficient($pattern_id,$port_number, $switch_model)
-    {
 
-        $data_switch = $this->getSwitchDataByName($switch_model);
+    /*
+        public function getPortCoefficient($pattern_id,$port_number, $switch_model)
+        {
 
-        $dbc = Connect_db::getConnection();
+            $data_switch = $this->getSwitchDataByName($switch_model);
 
-        $sql = "SELECT `port_coefficient`, `gig_port_coefficient` FROM `patterns` WHERE  `id`= :pattern_id";
-        $placeholders = array(
-            'pattern_id' => $pattern_id
-        );
-        $data = $dbc->getDate($sql, $placeholders);
+            $dbc = Connect_db::getConnection();
 
-        if($port_number <= $data_switch[0]['simple_port']){
+            $sql = "SELECT `port_coefficient`, `gig_port_coefficient` FROM `patterns` WHERE  `id`= :pattern_id";
+            $placeholders = array(
+                'pattern_id' => $pattern_id
+            );
+            $data = $dbc->getDate($sql, $placeholders);
 
-            $data[0]['port_coefficient_simple_gig'] = $data[0]['port_coefficient'];
-        }else{
+            if($port_number <= $data_switch[0]['simple_port']){
 
-            $data[0]['port_coefficient_simple_gig'] = $data[0]['gig_port_coefficient'];
+                $data[0]['port_coefficient_simple_gig'] = $data[0]['port_coefficient'];
+            }else{
+
+                $data[0]['port_coefficient_simple_gig'] = $data[0]['gig_port_coefficient'];
+            }
+
+            return $data[0];
         }
-
-        return $data[0];
-    }
-*/
+    */
     public function patternsId()
     {
         $dbc = Connect_db::getConnection();
@@ -190,7 +202,7 @@ class patternModel
         $d = $dbc->getDate($sql, $placeholders);
         $data = array();
 
-        foreach($d as $k => $v){
+        foreach ($d as $k => $v) {
             $data[] = $v['Field'];
         }
 

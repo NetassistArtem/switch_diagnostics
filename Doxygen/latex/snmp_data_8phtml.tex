@@ -1,0 +1,65 @@
+\hypertarget{snmp_data_8phtml}{\section{Файл /home/artem/public\-\_\-html/test01/\-View/\-Index/snmp\-Data.phtml}
+\label{snmp_data_8phtml}\index{/home/artem/public\-\_\-html/test01/\-View/\-Index/snmp\-Data.\-phtml@{/home/artem/public\-\_\-html/test01/\-View/\-Index/snmp\-Data.\-phtml}}
+}
+\subsection*{Переменные}
+\begin{DoxyCompactItemize}
+\item 
+if(!\$billing\-\_\-request) \hyperlink{snmp_data_8phtml_ad4128fad7b5af6f950a9b08c7a326c07}{foreach} (\hyperlink{class_session_ae4c4b98671bdd1fbfe4ae9defb5405ad}{Session\-::get\-Flash}(\$data\-\_\-db\mbox{[}'user\-\_\-id'\mbox{]}, \$data\-\_\-db\mbox{[}'switch\-\_\-id'\mbox{]}, \$data\-\_\-db\mbox{[}'port'\mbox{]}, \$switch\-\_\-port\-\_\-id) as \$v) = \$v\mbox{[}'warning\-\_\-level'\mbox{]}
+\item 
+\hyperlink{snmp_data_8phtml_a672d9707ef91db026c210f98cc601123}{endforeach} = \$v\mbox{[}'message'\mbox{]}
+\item 
+if(!\$link\-\_\-on\-\_\-off)('host\-\_\-for\-\_\-link')?$>$\\*
+/account\-\_\-test/$<$? \hyperlink{snmp_data_8phtml_ad46029792e22c84c23775487f5df39df}{endif} = \$account\-\_\-id
+\item 
+if(\hyperlink{class_config_a15e2679f2a8f6fa4d60757f4d65413ac}{Config\-::get}('duplex\-\_\-speed\-\_\-view')== \\*
+'table')(\$data\-\_\-switch\mbox{[}'speed'\mbox{]})?\$data\-\_\-switch\mbox{[}'speed'\mbox{]}(\$data\-\_\-switch\mbox{[}'duplex'\mbox{]})?\$data\-\_\-switch\mbox{[}'duplex'\mbox{]}if(!empty(\$data\-\_\-switch\mbox{[}'mac'\mbox{]})) \hyperlink{snmp_data_8phtml_acdc3d14aaf4fe531149c8ceaea738f59}{(!\$billing\-\_\-request)} (\$data\-\_\-switch\mbox{[}'mac'\mbox{]} as \$k=$>$ \$v) = \$v
+\item 
+else \hyperlink{snmp_data_8phtml_a8e01dcc96c43199448ee66f7c2ae8ea6}{\-\_\-\-\_\-pad0\-\_\-\-\_\-}
+\item 
+else \hyperlink{snmp_data_8phtml_ae8b4bb1441c6ab4dcb28a37bc46c8ead}{\-\_\-\-\_\-pad1\-\_\-\-\_\-}
+\end{DoxyCompactItemize}
+
+
+\subsection{Переменные}
+\hypertarget{snmp_data_8phtml_acdc3d14aaf4fe531149c8ceaea738f59}{\index{snmp\-Data.\-phtml@{snmp\-Data.\-phtml}!(!\$billing\-\_\-request)@{(!\$billing\-\_\-request)}}
+\index{(!\$billing\-\_\-request)@{(!\$billing\-\_\-request)}!snmpData.phtml@{snmp\-Data.\-phtml}}
+\subsubsection[{(!\$billing\-\_\-request)}]{\setlength{\rightskip}{0pt plus 5cm}if({\bf Config\-::get}('duplex\-\_\-speed\-\_\-view') == 'table') (\$data\-\_\-switch\mbox{[}'speed'\mbox{]}) ? \$data\-\_\-switch\mbox{[}'speed'\mbox{]} (\$data\-\_\-switch\mbox{[}'duplex'\mbox{]})?\$data\-\_\-switch\mbox{[}'duplex'\mbox{]}if(!empty(\$data\-\_\-switch\mbox{[}'mac'\mbox{]})) (!\$billing\-\_\-request)(\$data\-\_\-switch\mbox{[}'mac'\mbox{]} as \$k=$>$ \$v) = \$v}}\label{snmp_data_8phtml_acdc3d14aaf4fe531149c8ceaea738f59}
+
+
+См. определение в файле snmp\-Data.\-phtml строка 108
+
+\hypertarget{snmp_data_8phtml_a8e01dcc96c43199448ee66f7c2ae8ea6}{\index{snmp\-Data.\-phtml@{snmp\-Data.\-phtml}!\-\_\-\-\_\-pad0\-\_\-\-\_\-@{\-\_\-\-\_\-pad0\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-pad0\-\_\-\-\_\-@{\-\_\-\-\_\-pad0\-\_\-\-\_\-}!snmpData.phtml@{snmp\-Data.\-phtml}}
+\subsubsection[{\-\_\-\-\_\-pad0\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}else \-\_\-\-\_\-pad0\-\_\-\-\_\-}}\label{snmp_data_8phtml_a8e01dcc96c43199448ee66f7c2ae8ea6}
+
+
+См. определение в файле snmp\-Data.\-phtml строка 120
+
+\hypertarget{snmp_data_8phtml_ae8b4bb1441c6ab4dcb28a37bc46c8ead}{\index{snmp\-Data.\-phtml@{snmp\-Data.\-phtml}!\-\_\-\-\_\-pad1\-\_\-\-\_\-@{\-\_\-\-\_\-pad1\-\_\-\-\_\-}}
+\index{\-\_\-\-\_\-pad1\-\_\-\-\_\-@{\-\_\-\-\_\-pad1\-\_\-\-\_\-}!snmpData.phtml@{snmp\-Data.\-phtml}}
+\subsubsection[{\-\_\-\-\_\-pad1\-\_\-\-\_\-}]{\setlength{\rightskip}{0pt plus 5cm}else \-\_\-\-\_\-pad1\-\_\-\-\_\-}}\label{snmp_data_8phtml_ae8b4bb1441c6ab4dcb28a37bc46c8ead}
+
+
+См. определение в файле snmp\-Data.\-phtml строка 132
+
+\hypertarget{snmp_data_8phtml_a672d9707ef91db026c210f98cc601123}{\index{snmp\-Data.\-phtml@{snmp\-Data.\-phtml}!endforeach@{endforeach}}
+\index{endforeach@{endforeach}!snmpData.phtml@{snmp\-Data.\-phtml}}
+\subsubsection[{endforeach}]{\setlength{\rightskip}{0pt plus 5cm}endforeach = \$v\mbox{[}'message'\mbox{]}}}\label{snmp_data_8phtml_a672d9707ef91db026c210f98cc601123}
+
+
+См. определение в файле snmp\-Data.\-phtml строка 7
+
+\hypertarget{snmp_data_8phtml_ad46029792e22c84c23775487f5df39df}{\index{snmp\-Data.\-phtml@{snmp\-Data.\-phtml}!endif@{endif}}
+\index{endif@{endif}!snmpData.phtml@{snmp\-Data.\-phtml}}
+\subsubsection[{endif}]{\setlength{\rightskip}{0pt plus 5cm}if(\$switch\-\_\-data\-\_\-on\-\_\-off == 1)({\bf Config\-::get}('switch\-\_\-info\-\_\-view') == 'string') ({\bf Config\-::get}('switch\-\_\-info\-\_\-view') == 'table') ({\bf Config\-::get}('time\-\_\-switch\-\_\-response')== 'on') с$<$/td$>$$<$td$>$$<$?=microtime(true)-\/\$G\-L\-O\-B\-A\-L\-S\mbox{[}'start\-\_\-time'\mbox{]};?$>$$<$/td$>$$<$/tr$>$ endif endif = \$account\-\_\-id}}\label{snmp_data_8phtml_ad46029792e22c84c23775487f5df39df}
+
+
+См. определение в файле snmp\-Data.\-phtml строка 21
+
+\hypertarget{snmp_data_8phtml_ad4128fad7b5af6f950a9b08c7a326c07}{\index{snmp\-Data.\-phtml@{snmp\-Data.\-phtml}!foreach@{foreach}}
+\index{foreach@{foreach}!snmpData.phtml@{snmp\-Data.\-phtml}}
+\subsubsection[{foreach}]{\setlength{\rightskip}{0pt plus 5cm}if (!\$billing\-\_\-request) foreach({\bf Session\-::get\-Flash}(\$data\-\_\-db\mbox{[}'user\-\_\-id'\mbox{]}, \$data\-\_\-db\mbox{[}'switch\-\_\-id'\mbox{]}, \$data\-\_\-db\mbox{[}'port'\mbox{]}, \$switch\-\_\-port\-\_\-id) as \$v) = \$v\mbox{[}'warning\-\_\-level'\mbox{]}}}\label{snmp_data_8phtml_ad4128fad7b5af6f950a9b08c7a326c07}
+
+
+См. определение в файле snmp\-Data.\-phtml строка 7
+

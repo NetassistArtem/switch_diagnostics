@@ -7,6 +7,8 @@ class IndexController extends Controller
     public $style_class = array();
     public $cable_length;
     public $cable_length_write;
+    public $switch_id;
+    public $port_id;
 
     public function __construct()
     {
@@ -22,7 +24,9 @@ class IndexController extends Controller
     {
 
 
-        $patternModel = new patternModel($this->account_id);
+        $patternModel = new patternModel($this->account_id, $this->switch_id, $this->port_id);
+
+
         if ($data_switch) {
             $switch = $patternModel->switchData();
             //  Debugger::PrintR($switch);
@@ -92,7 +96,7 @@ class IndexController extends Controller
                         $indexModel = new IndexModel();
 
 
-                        $soft_ver_array = $indexModel->snmpByKey($this->account_id, '1.3.6.1.4.1.89.2.4');
+                        $soft_ver_array = $indexModel->snmpByKey($this->account_id, '1.3.6.1.4.1.89.2.4', $this->switch_id, $this->port_id);
 
 
                         foreach ($soft_ver_array as $v) {
@@ -184,8 +188,8 @@ class IndexController extends Controller
             if ($pattern_number['pattern_id']) {
                 return $pattern_number['pattern_id'];
             } else {
-                Session::setFlash('Данные со свича не были получены. Информация о модели свича в базе данных билинга для
-                 запрашиваемого пользователя отсутствуют', $this->style_class['warning']);
+                Session::setFlash("Данные со свича не были получены. Информация о модели свича в базе данных билинга для
+                 запрашиваемого user $this->account_id  отсутствуют", $this->style_class['warning']);
             }
 
         }
@@ -224,8 +228,11 @@ class IndexController extends Controller
 
         }
     */
-    private function cableLengthWrite($cable_length, $port_on_off)
+    private function cableLengthWrite($cable_length, $port_on_off, $account_id, $sw_id, $port)
     {
+        $user_id = $this->account_id ? $this->account_id : $account_id;
+        $switch_id = $this->switch_id ? $this->switch_id : $sw_id;
+        $port_id = $this->port_id ? $this->port_id : $port;
 
         //if ($cable_length) {
         if ($cable_length == 0) {
@@ -237,12 +244,12 @@ class IndexController extends Controller
 
         if (empty($this->cable_length)) {
 
-            $cableLengthModel->insertCableLength($this->account_id, $cable_length, $port_on_off);
+            $cableLengthModel->insertCableLength($user_id, $cable_length, $port_on_off, $switch_id, $port_id);
 
-            Session::setFlash("Длинна кабеля(порт в статусе $port_on_off) для пользователя " . $this->account_id . " успешно записанна.", $this->style_class['information']);
+            Session::setFlash("Длинна кабеля(порт в статусе $port_on_off) для user " . $this->account_id . " успешно записанна.", $this->style_class['information']);
         } else {
-            $cableLengthModel->updataCableLength($this->account_id, $cable_length, $port_on_off);
-            Session::setFlash("Длинна кабеля(порт в статусе $port_on_off) для пользователя " . $this->account_id . " успешно перезаписана.", $this->style_class['information']);
+            $cableLengthModel->updataCableLength($user_id, $cable_length, $port_on_off, $switch_id, $port_id);
+            Session::setFlash("Длинна кабеля(порт в статусе $port_on_off) для user " . $this->account_id . " успешно перезаписана.", $this->style_class['information']);
 
         }
 
@@ -286,7 +293,7 @@ class IndexController extends Controller
     {
         $cable_length_write = null;
         $cableLengthModel = new cableLengthModel();
-        $cable_length = $cableLengthModel->cableLength($this->account_id);
+        $cable_length = $cableLengthModel->cableLength($this->account_id, $this->switch_id, $this->port_id);
         $this->cable_length = $cable_length;
 //Debugger::PrintR($port_status);
         if ($port_status[1] && !$cable_length[0]['cable_length_port_on']) {
@@ -326,7 +333,7 @@ class IndexController extends Controller
                     //Router::parse("/account_test/{$request->post('account_id')}?cabletest=on");
                     break;
                 case 'without_cabletest':
-                     $this->redirect("/account_test/" . $request->post('account_id') . "?cabletest=off");
+                    $this->redirect("/account_test/" . $request->post('account_id') . "?cabletest=off");
                     //throw new Exception("/account_test/{$request->post('account_id')}?cabletest=off", 2);
                     //Router::parse("/account_test/{$request->post('account_id')}?cabletest=off");
                     break;
@@ -386,7 +393,7 @@ class IndexController extends Controller
         $patternModel = new patternModel($this->account_id);
 
         // $port_coefficient = $patternModel->getPortCoefficient($pattern_id, $d['port'], $d['switch_model'])['port_coefficient_simple_gig'];
-        $port_coefficient_array = $indexModel->getPortCoefficient($this->account_id, $d['port']);//$patternModel->getPortCoefficient($pattern_id, $d['port'], $d['switch_model']);
+        $port_coefficient_array = $indexModel->getPortCoefficient($this->account_id, $d['port'], $this->switch_id);//$patternModel->getPortCoefficient($pattern_id, $d['port'], $d['switch_model']);
         $port_coefficient = $port_coefficient_array['port_coefficient_simple_gig'];
 
 
@@ -404,22 +411,45 @@ class IndexController extends Controller
                 $p_s = $port_switch;// - $port_coefficient;
 
                 if ($port_switch != $port_db) {
-                    // echo $port_switch.PHP_EOL;
-                    // echo $port_db;
+                    if (!Router::getSwitchPortId()) {
+                        // echo $port_switch.PHP_EOL;
+                        // echo $port_db;
 
-                    Session::setFlash("В базе данных билинга указан не правильный порт! В базе данных порт
+                        Session::setFlash("В базе данных билинга указан не правильный порт! В базе данных порт
                     - " . $d['port'] . " По данным свича - $p_s Для получения данных исползуется порт $p_s", $this->style_class['warning']);
 
-                    $d['port'] = $p_s;
+                        $d['port'] = $p_s;
+                    } else {
+                        $macs_in_port = array_keys($mac_port_array, $d['port']);
+                        if (count($macs_in_port)) {
+                            if (count($macs_in_port) == 1) {
+                                $user_id_in_port = $indexModel->getUserByMac($macs_in_port[0]);
+                                If ($user_id_in_port) {
+                                    $d['user_id'] = $user_id_in_port;
+                                    Session::setFlash("На запрашиваемом порту указанный в базе данный билинка мак адрес {$d['mac']} не обнаружен.
+                                    По данному порту обнаружен мак адрес {$macs_in_port[0]}, user id - {$user_id_in_port}", $this->style_class['warning']);
+                                } else {
+                                    Session::setFlash("На запрашиваемом порту указанный в базе данный билинка мак адрес {$d['mac']} не обнаружен.
+                                    По данному порту обнаружен мак адрес {$macs_in_port[0]}, пользователь с таким адресом в базе данных билинга отсутствует.", $this->style_class['warning']);
+                                }
+                            }
+                        } else {
+                            Session::setFlash("На запрашиваемом порту мак адресов не обнаружено. По базе данных билинга на запрашиваемом порту должен быть мак адрес {$d['mac']}", $this->style_class['warning']);
+                        }
+
+                    }
 
                 }
 
+            } elseif ($d['mac'] == 'Нет данных') { //это значение присваивается в indexModel когда в б.д. id  пользователя = -1, т.е. он не числится на порту
+
+                Session::setFlash("На запрашиваемом прту (свич $this->switch_id, порт $this->port_id) по данным базы данных пользователь не числится", $this->style_class['warning']);
             } else {
-                Session::setFlash("Мак адрес пользователя $this->account_id  указанный в базе даных билинга не обнаружен в данных свича", $this->style_class['warning']);
+                Session::setFlash("Мак адрес для свич $this->switch_id, порт $this->port_id  указанный в базе даных билинга не обнаружен в данных свича", $this->style_class['warning']);
             }
 
         } else {
-            Session::setFlash("Мак адрес в базе даных билинга для пользователя $this->account_id отсутствует", $this->style_class['warning']);
+            Session::setFlash("Мак адрес в базе даных билинга для user $this->account_id отсутствует", $this->style_class['warning']);
         }
 
         $pattern_data = $patternModel->PatternData($d['port'], $pattern_id);
@@ -447,8 +477,13 @@ class IndexController extends Controller
 
             case 'on':
                 if ($d['write_community']) {
-                    $indexModel->cableTest($this->account_id, $pattern_id, $d['port'], $d['manufacturer']);
-                    $cabletest_start = "yes";
+                    $ct_start = $indexModel->cableTest($this->account_id, $pattern_id, $d['port'], $d['manufacturer'], null, $this->switch_id);
+
+                    if($ct_start){
+                        $cabletest_start = "no";
+                    }else{
+                        $cabletest_start = "yes";
+                    }
                 } else {
                     $cabletest_start = "no";
                     Session::setFlash('В настройках запрашиваемого свича не прописанна комьюнити для записи. Проведение кабель теста не возможно.', $this->style_class['notice']);
@@ -462,9 +497,14 @@ class IndexController extends Controller
                 if (isset($data_status[2]) || !$first_write_cable_test['cable_length_port_on']) { //если порт выключен или длина кабеля для пользователя при включенном порте не записана
                     //  Debugger::PrintR($data_status);
                     if ($d['write_community']) {
-                        $indexModel->cableTest($this->account_id, $pattern_id, $d['port'], $d['manufacturer'], $this->style_class);
+                        $ct_start = $indexModel->cableTest($this->account_id, $pattern_id, $d['port'], $d['manufacturer'], $this->style_class, $this->switch_id);
 
-                        $cabletest_start = "yes";
+                        if($ct_start){
+                            $cabletest_start = "no";
+                        }else{
+                            $cabletest_start = "yes";
+                        }
+
                     } else {
                         $cabletest_start = "no";
                         Session::setFlash('В настройках запрашиваемого свича не прописанна комьюнити для записи. Проведение кабель теста не возможно.', $this->style_class['notice']);
@@ -507,7 +547,6 @@ class IndexController extends Controller
 
         $oids = array_flip($oids);
         $data_switch = array_combine($oids, $data['key']);
-
 
         $mac_arr = array();
         //   Debugger::PrintR($mac_port_array);
@@ -563,13 +602,13 @@ class IndexController extends Controller
 
         //Debugger::PrintR($first_write_cable_test);
 
-        if (($request->get('cable_length') == 'write' && $d['write_community']) || ($first_write_cable_test['cable_length_write'] && $d['write_community'])) {
+        if (($request->get('cable_length') == 'write' && $d['write_community'] && $data_switch['cable_test_start']) || ($first_write_cable_test['cable_length_write'] && $d['write_community'] && $data_switch['cable_test_start'])) {
             if ($data_switch['port_status'] == 'on') {
 
-                $this->cableLengthWrite($data_switch['cable_lenght'], "on");
+                $this->cableLengthWrite($data_switch['cable_lenght'], "on", $d['user_id'], $d['switch_id'], $d['port']);
             } elseif ($data_switch['port_status'] == 'off') {
 
-                $this->cableLengthWrite($data_switch['cable_lenght'], "off");
+                $this->cableLengthWrite($data_switch['cable_lenght'], "off", $d['user_id'], $d['switch_id'], $d['port']);
             }
         }
 
@@ -584,9 +623,8 @@ class IndexController extends Controller
             Session::setFlash('Длинна кабеля для выключенного порта не записана', $this->style_class['notice']);
         }
 
-
         $data_switch['speed'] = $data_switch['port_status'] == 'off' ? 0 : $data_switch['speed'];
-        $historyModel->insertData($this->account_id, $data_switch, $data);
+        $historyModel->insertData($this->account_id, $data_switch, $data, $this->switch_id);
 
         $link_on_off = $request->get('link');//Параметр необходимый для отключения ссылок в шаблоне
         $switch_data_on_off = $request->get('switch_data'); // Параметр необходимый для отключения вывода данный о свиче (только snmp данные)
@@ -594,6 +632,7 @@ class IndexController extends Controller
 
         $c_l_port_on = $this->cable_length[0]['cable_length_port_on'] ? $this->cable_length[0]['cable_length_port_on'] : 'Нет данных';
         $c_l_port_off = $this->cable_length[0]['cable_length_port_off'] ? $this->cable_length[0]['cable_length_port_off'] : ' Нет данных';
+
 
         $args = array(
             'data_switch' => $data_switch,
@@ -606,7 +645,8 @@ class IndexController extends Controller
             'cable_length_status_port_off' => $data_switch['port_status'] == 'off' ? $cable_length_status : '',
             'link_on_off' => isset($link_on_off) ? $request->get('link') : null,
             'switch_data_on_off' => isset($switch_data_on_off) ? $request->get('switch_data') : 1,
-            'billing_request' => isset($billing_request) ? $billing_request : null
+            'billing_request' => isset($billing_request) ? $billing_request : null,
+            'switch_port_id' => Router::getSwitchPortId() ? Router::getSwitchPortId() : ''
         );
 
 
@@ -621,17 +661,23 @@ class IndexController extends Controller
 
     }
 
-    public function historyAction($account_id = NULL, $tpl = null)
+    public function historyBySwitchAction()
+    {
+        return $this->historyAction(null, 'history', Router::getSwitchId(), Router::getPortId());
+    }
+
+    public function historyAction($account_id = NULL, $tpl = null, $switch_id, $port_id)
     {
 
 
         $this->account_id = $account_id ? $account_id : Router::getAccountId();
+        $this->switch_id = $switch_id ? $switch_id : Router::getSwitchId();
+        $this->port_id = $port_id ? $port_id : Router::getPortId();
         $historyModel = new historyModel();
 
         $historyModel->cleanHistory();
 
-
-        $data_history = $historyModel->selectData($this->account_id);
+        $data_history = $historyModel->selectData($this->account_id, $this->switch_id, $this->port_id);
 
         $data_history = array_reverse($data_history);
 
@@ -668,7 +714,7 @@ class IndexController extends Controller
         if ($request->isPost()) {
 
 
-            return $this->historyAction($request->post('account_id'), 'history');
+            return $this->historyAction($request->post('account_id'), 'history', $request->post('switch_id'), $request->post('port_id'));
 
             //  добавить другие проверки - есть ли такой пользователь допустим
 
@@ -733,6 +779,301 @@ class IndexController extends Controller
     public function getStyleClass()
     {
         return $this->style_class;
+    }
+
+
+    public function snmpSwitchDataAction($switch_id = null, $port_id = null)
+    {
+        require LIB_DIR . 'responseValue.php';
+        $request = new Request();
+
+        $historyModel = new historyModel();
+        $historyModel->cleanHistory();
+
+        $indexModel = new IndexModel();
+
+        $this->switch_id = $switch_id ? $switch_id : Router::getSwitchId();
+        $this->port_id = $port_id ? $port_id : Router::getPortId();
+
+
+        $d = $indexModel->snmpData(null, Config::get('oid_switch_model'), $tp_link, $this->switch_id, $this->port_id);
+
+        $pattern_id = $this->findPattern($d);
+
+
+
+        $patternModel = new patternModel($this->account_id, $this->switch_id, $this->port_id);
+
+
+        // $port_coefficient = $patternModel->getPortCoefficient($pattern_id, $d['port'], $d['switch_model'])['port_coefficient_simple_gig'];
+        $port_coefficient_array = $indexModel->getPortCoefficient($this->account_id, $d['port'], $this->switch_id);//$patternModel->getPortCoefficient($pattern_id, $d['port'], $d['switch_model']);
+
+
+        $port_coefficient = $port_coefficient_array['port_coefficient_simple_gig'];
+
+
+        $mac_port_array = $indexModel->getAllMac($this->account_id, $pattern_id, $port_coefficient_array, $this->switch_id, $this->port_id);
+        // Debugger::PrintR($mac_port_array);
+
+
+        if ($d['mac']) {
+            if (array_key_exists($d['mac'], $mac_port_array)) {
+                $port_db = $d['port'];// + $port_coefficient;
+
+                $port_switch = $mac_port_array[$d['mac']];
+
+
+                $p_s = $port_switch;// - $port_coefficient;
+
+                if ($port_switch != $port_db) {
+                    if (!Router::getSwitchPortId()) {
+                        // echo $port_switch.PHP_EOL;
+                        // echo $port_db;
+
+                        Session::setFlash("В базе данных билинга указан не правильный порт! В базе данных порт
+                    - " . $d['port'] . " По данным свича - $p_s Для получения данных исползуется порт $p_s", $this->style_class['warning']);
+
+                        $d['port'] = $p_s;
+                    } else {
+                        $macs_in_port = array_keys($mac_port_array, $d['port']);
+                        if (count($macs_in_port)) {
+                            if (count($macs_in_port) == 1) {
+                                $user_id_in_port = $indexModel->getUserByMac($macs_in_port[0]);
+                                If ($user_id_in_port) {
+                                    $d['user_id'] = $user_id_in_port;
+
+                                    Session::setFlash("На запрашиваемом порту указанный в базе данный билинка мак адрес {$d['mac']} не обнаружен.
+                                    По данному порту обнаружен мак адрес {$macs_in_port[0]}, user id - {$user_id_in_port}", $this->style_class['warning']);
+                                } else {
+                                    Session::setFlash("На запрашиваемом порту указанный в базе данный билинка мак адрес {$d['mac']} не обнаружен.
+                                    По данному порту обнаружен мак адрес {$macs_in_port[0]}, пользователь с таким адресом в базе данных билинга отсутствует.", $this->style_class['warning']);
+                                }
+                            }
+                        } else {
+                            Session::setFlash("На запрашиваемом порту мак адресов не обнаружено. По базе данных билинга на запрашиваемом порту должен быть мак адрес {$d['mac']}", $this->style_class['warning']);
+                        }
+
+                    }
+                }
+
+            } elseif ($d['mac'] == 'Нет данных') {
+
+                Session::setFlash("На запрашиваемом прту (свич $this->switch_id, порт $this->port_id) по данным базы данных пользователь не числится", $this->style_class['warning']);
+            } else {
+                Session::setFlash("Мак адрес для свич $this->switch_id, порт $this->port_id  указанный в базе даных билинга не обнаружен в данных свича", $this->style_class['warning']);
+            }
+
+        } else {
+            Session::setFlash("Мак адрес в базе даных билинга для свич $this->switch_id, порт $this->port_id отсутствует", $this->style_class['warning']);
+        }
+
+        $pattern_data = $patternModel->PatternData($d['port'], $pattern_id);
+        //  Debugger::PrintR($d);
+
+        $oid_port_status = Config::get('port_status') . "." . ($d['port'] + $port_coefficient);
+
+        $data_status = $indexModel->snmpByKey($this->account_id, $oid_port_status, $this->switch_id, $this->port_id);
+
+
+        $data_status = array_flip($data_status);
+
+        $first_write_cable_test = $this->isCableLength($data_status);// проверка есть ли запись длинны кабеля для пользователя при включенном и выключенном порте.
+        $cabletest_start = '';
+
+        $this->cable_length_write = $request->get('cable_length');
+        $cable_test_on_off = $this->cable_length_write == 'write' ? "on" : Config::get('cabletest_on_off');
+
+        switch ($cable_test_on_off) {
+
+            case 'on':
+                if ($d['write_community']) {
+                    $ct_start =$indexModel->cableTest($this->account_id, $pattern_id, $d['port'], $d['manufacturer'], null, $this->switch_id);
+                    if($ct_start){
+                        $cabletest_start = "no";
+                    }else{
+                        $cabletest_start = "yes";
+                    }
+
+                } else {
+                    $cabletest_start = "no";
+                    Session::setFlash('В настройках запрашиваемого свича не прописанна комьюнити для записи. Проведение кабель теста не возможно.', $this->style_class['notice']);
+                }
+                break;
+            case 'off':
+                $cabletest_start = "no";
+                break;
+            case 'onoff':
+
+                if (isset($data_status[2]) || !$first_write_cable_test['cable_length_port_on']) { //если порт выключен или длина кабеля для пользователя при включенном порте не записана
+                    //  Debugger::PrintR($data_status);
+                    if ($d['write_community']) {
+                        $ct_start =$indexModel->cableTest($this->account_id, $pattern_id, $d['port'], $d['manufacturer'], $this->style_class, $this->switch_id);
+                        if($ct_start){
+                            $cabletest_start = "no";
+                        }else{
+                            $cabletest_start = "yes";
+                        }
+
+                    } else {
+                        $cabletest_start = "no";
+                        Session::setFlash('В настройках запрашиваемого свича не прописанна комьюнити для записи. Проведение кабель теста не возможно.', $this->style_class['notice']);
+                    }
+                } else {
+                    $cabletest_start = "no";
+                }
+                break;
+
+        }
+
+        $oids = array();
+        foreach ($pattern_data as $k => $v) {
+            if ($k != 'id' /* && $k != 'port_coefficient'*/ && $k != 'mac_all' && $k != 'macs_ports'/* && $k != 'gig_port_coefficient' */) {
+                $oids[$k] = $v;
+            }
+        }
+        //Debugger::PrintR($oids);
+        // $manufacturer = strtolower($d['manufacturer']);
+
+        if ($d['manufacturer'] == 'Eltex') {
+            $oids['cable_status'] = $oids['cable_status'] . '.2';
+            $oids['cable_lenght'] = $oids['cable_lenght'] . '.3';
+
+        }
+        // Debugger::PrintR($oids);
+
+        if ($cabletest_start == 'no') {
+            unset($oids['cable_test_start']);
+            unset($oids['cable_status']);
+            unset($oids['cable_lenght']);
+        }
+
+        //  die('ups');
+        //   Debugger::PrintR($oids);
+
+        $data = $indexModel->snmpData($this->account_id, $oids, null, $this->switch_id, $this->port_id);
+
+        $oids = array_flip($oids);
+        $data_switch = array_combine($oids, $data['key']);
+
+        // Debugger::PrintR($data);
+        $mac_arr = array();
+        //   Debugger::PrintR($mac_port_array);
+
+        foreach ($mac_port_array as $k => $v) {
+            $val = $v;//- $port_coefficient;
+
+            if ($val == $d['port']) {
+                $mac_arr[] = $k;
+            }
+        }
+        $data_switch['mac'] = $mac_arr;
+        //Debugger::PrintR($data_switch['mac']);
+
+
+        if ($data_switch['port_status'] == 1) {
+            $data_switch['port_status'] = 'on';
+        } else {
+            $data_switch['port_status'] = 'off';
+        }
+        if (isset($data_switch['last_change'])) {
+
+            $data_switch['last_change'] = date(' Y-m-d h:i:m', mktime(0, 0, -($data_switch['last_change'])));
+        }
+
+        if (isset($data_switch['cable_status'])) {
+
+            $data_switch['cable_status'] = $cable_test[$d['manufacturer']][$data_switch['cable_status']];
+            //  Debugger::PrintR($cable_test[$d['manufacturer']]);
+
+        };
+        if ($data_switch['duplex']) {
+            $data_switch['duplex'] = $duplex[$data_switch['duplex']];
+        }
+
+
+        // Debugger::PrintR($data_switch);
+        unset($data['key']);
+
+        $data['port'] = $d['port'];
+        //Debugger::PrintR($data);
+        //  if (!$data) {
+        //      throw new Exception(" SNMP data is not found", 404);
+
+        // }
+        $cable_length_status = '';
+
+        if ($cabletest_start == "yes") {
+            $cable_length_status = $this->compareCableLength($data_switch['cable_lenght'], $data_switch['port_status']);
+        }
+
+
+        //Debugger::PrintR($first_write_cable_test);\
+      //  Debugger::PrintR($data_switch);
+
+        if (($request->get('cable_length') == 'write' && $d['write_community'] && $data_switch['cable_test_start']) || ($first_write_cable_test['cable_length_write'] && $d['write_community'] && $data_switch['cable_test_start'])) {
+
+            if ($data_switch['port_status'] == 'on') {
+
+                $this->cableLengthWrite($data_switch['cable_lenght'], "on", $d['user_id'], $d['switch_id'], $d['port']);
+            } elseif ($data_switch['port_status'] == 'off') {
+
+                $this->cableLengthWrite($data_switch['cable_lenght'], "off", $d['user_id'], $d['switch_id'], $d['port']);
+            }
+        }
+
+        if ($first_write_cable_test['cable_length_write']) { // если запись длинны кабеля произодилас, одновить информацию о состоянии длинн кабеля после записи
+            $first_write_cable_test = $this->isCableLength($data_status);
+        }
+
+        if (!$first_write_cable_test['cable_length_port_on']) {
+            Session::setFlash('Длинна кабеля для включенного порта не записана', $this->style_class['notice']);
+        }
+        if (!$first_write_cable_test['cable_length_port_off']) {
+            Session::setFlash('Длинна кабеля для выключенного порта не записана', $this->style_class['notice']);
+        }
+
+        //  die('ups');
+        $data_switch['speed'] = $data_switch['port_status'] == 'off' ? 0 : $data_switch['speed'];
+
+
+        $historyModel->insertData($this->account_id, $data_switch, $data, $this->switch_id);
+
+        $link_on_off = $request->get('link');//Параметр необходимый для отключения ссылок в шаблоне
+        $switch_data_on_off = $request->get('switch_data'); // Параметр необходимый для отключения вывода данный о свиче (только snmp данные)
+        $billing_request = $request->get('bl');// Параметр для определения откуда пришел запрос из биллинга или напрямую из приложения
+
+        $c_l_port_on = $this->cable_length[0]['cable_length_port_on'] ? $this->cable_length[0]['cable_length_port_on'] : 'Нет данных';
+        $c_l_port_off = $this->cable_length[0]['cable_length_port_off'] ? $this->cable_length[0]['cable_length_port_off'] : ' Нет данных';
+
+        $args = array(
+            'data_switch' => $data_switch,
+            'data_db' => $data,
+            'cable_length_port_on' => $data_switch['port_status'] == 'on' ? $data_switch['cable_lenght'] : $c_l_port_on,
+            'cable_length_port_off' => $data_switch['port_status'] == 'off' ? $data_switch['cable_lenght'] : $c_l_port_off,
+            'account_id' => $this->account_id,
+            'switch_id' => $this->switch_id,
+            'cabletest_start' => $cabletest_start,
+            'cable_length_status_port_on' => $data_switch['port_status'] == 'on' ? $cable_length_status : '',
+            'cable_length_status_port_off' => $data_switch['port_status'] == 'off' ? $cable_length_status : '',
+            'link_on_off' => isset($link_on_off) ? $request->get('link') : null,
+            'switch_data_on_off' => isset($switch_data_on_off) ? $request->get('switch_data') : 1,
+            'billing_request' => isset($billing_request) ? $billing_request : null,
+            'switch_port_id' => Router::getSwitchPortId() ? Router::getSwitchPortId() : ''
+        );
+
+
+        //Debugger::PrintR($args);
+
+
+        // Debugger::PrintR($data_switch);
+        // Debugger::PrintR($data_switch);
+        //  if($this->repetition != 1){
+        //      $this->repetition = 1;
+        //      $this->snmpDataAction();
+        //  }
+
+        return $this->render($args);
+
     }
 
 

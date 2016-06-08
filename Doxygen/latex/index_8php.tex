@@ -1,0 +1,72 @@
+\hypertarget{index_8php}{\section{Файл /home/artem/public\-\_\-html/test01/\-Applicationroot/index.php}
+\label{index_8php}\index{/home/artem/public\-\_\-html/test01/\-Applicationroot/index.\-php@{/home/artem/public\-\_\-html/test01/\-Applicationroot/index.\-php}}
+}
+
+
+Основной файл запуска приложения  
+
+
+\subsection*{Переменные}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{index_8php_a1e4daea35abc15dd2599d5c8551ccba0}{\$\-G\-L\-O\-B\-A\-L\-S} \mbox{[}'start\-\_\-time'\mbox{]} = microtime(true)
+\begin{DoxyCompactList}\small\item\em Время запуска скрипта. Необходимо для определения времени исполнения скрипта. \end{DoxyCompactList}\item 
+\hyperlink{index_8php_abe4cc9788f52e49485473dc699537388}{try}
+\item 
+\hyperlink{index_8php_a57b284fe00866494b33afa80ba729bed}{\$content} = \hyperlink{class_router_a7e384b5b08035be60df7696428c6cf56}{Router\-::get\-\_\-content\-\_\-by\-\_\-url}(\$url = \$request-\/$>$server('R\-E\-Q\-U\-E\-S\-T\-\_\-\-U\-R\-I'))
+\begin{DoxyCompactList}\small\item\em Переменная содержит основной контент сформированный на основе запроса \$url. \end{DoxyCompactList}\item 
+catch(S\-N\-M\-P\-Exception \$e) catch(P\-D\-O\-Exception \\*
+\$e) \hyperlink{index_8php_a51a795867632fb0101bd436c945c49ab}{catch} (Exception \$e)
+\end{DoxyCompactItemize}
+
+
+\subsection{Подробное описание}
+Основной файл запуска приложения В данном файле подключается файл \hyperlink{init_8php}{init.\-php} который содержит автозагрузчик классов. Запускает сесию. Формирует и выводит на печать переменную \$content которая содержит сформированный шаблон для всей необходимой информации заприашиваемой по url. U\-R\-L передается в статический метод роутера \hyperlink{class_router_a7e384b5b08035be60df7696428c6cf56}{Router\-::get\-\_\-content\-\_\-by\-\_\-url}. Блок иполнения помещен в блок try для вылавливания исключений. Если в процессе обработки url выбрасывается иключение оно обрабатыается в блоках catch (Их несколько S\-N\-M\-P\-Exception, P\-D\-O\-Exception, Exception ). В этом случае формирование переменной \$content происходит по адресам соответствующих ошибок (\char`\"{}/error\-\_\-\-S\-N\-M\-P\char`\"{},\char`\"{}/error\-\_\-500\char`\"{}, \char`\"{}/error\-\_\-403\char`\"{} и т.\-д. ) 
+
+См. определение в файле \hyperlink{index_8php_source}{index.\-php}
+
+
+
+\subsection{Переменные}
+\hypertarget{index_8php_a57b284fe00866494b33afa80ba729bed}{\index{index.\-php@{index.\-php}!\$content@{\$content}}
+\index{\$content@{\$content}!index.php@{index.\-php}}
+\subsubsection[{\$content}]{\setlength{\rightskip}{0pt plus 5cm}\$content = {\bf Router\-::get\-\_\-content\-\_\-by\-\_\-url}(\$url = \$request-\/$>$server('R\-E\-Q\-U\-E\-S\-T\-\_\-\-U\-R\-I'))}}\label{index_8php_a57b284fe00866494b33afa80ba729bed}
+
+
+Переменная содержит основной контент сформированный на основе запроса \$url. 
+
+
+
+См. определение в файле index.\-php строка 24
+
+\hypertarget{index_8php_a1e4daea35abc15dd2599d5c8551ccba0}{\index{index.\-php@{index.\-php}!\$\-G\-L\-O\-B\-A\-L\-S@{\$\-G\-L\-O\-B\-A\-L\-S}}
+\index{\$\-G\-L\-O\-B\-A\-L\-S@{\$\-G\-L\-O\-B\-A\-L\-S}!index.php@{index.\-php}}
+\subsubsection[{\$\-G\-L\-O\-B\-A\-L\-S}]{\setlength{\rightskip}{0pt plus 5cm}\$G\-L\-O\-B\-A\-L\-S\mbox{[}'start\-\_\-time'\mbox{]} = microtime(true)}}\label{index_8php_a1e4daea35abc15dd2599d5c8551ccba0}
+
+
+Время запуска скрипта. Необходимо для определения времени исполнения скрипта. 
+
+
+
+См. определение в файле index.\-php строка 15
+
+\hypertarget{index_8php_a51a795867632fb0101bd436c945c49ab}{\index{index.\-php@{index.\-php}!catch@{catch}}
+\index{catch@{catch}!index.php@{index.\-php}}
+\subsubsection[{catch}]{\setlength{\rightskip}{0pt plus 5cm}catch (S\-N\-M\-P\-Exception \$e) catch (P\-D\-O\-Exception \$e) catch(Exception \$e)}}\label{index_8php_a51a795867632fb0101bd436c945c49ab}
+
+
+См. определение в файле index.\-php строка 42
+
+\hypertarget{index_8php_abe4cc9788f52e49485473dc699537388}{\index{index.\-php@{index.\-php}!try@{try}}
+\index{try@{try}!index.php@{index.\-php}}
+\subsubsection[{try}]{\setlength{\rightskip}{0pt plus 5cm}try}}\label{index_8php_abe4cc9788f52e49485473dc699537388}
+{\bfseries Инициализатор}
+\begin{DoxyCode}
+\{
+
+    \hyperlink{conf_8php_abb35c8495a232b510389fa6d7b15d38a}{$request} = \textcolor{keyword}{new} \hyperlink{class_request}{Request}()
+\end{DoxyCode}
+
+
+См. определение в файле index.\-php строка 20
+

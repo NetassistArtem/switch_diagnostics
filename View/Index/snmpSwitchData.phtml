@@ -1,0 +1,186 @@
+<?php if (!$billing_request): ?>
+    <h2> Свич <?= $switch_id ?>, порт <?= $data_db['port'] ?> </h2>
+<?php endif; ?>
+<div>
+    <?php foreach (Session::getFlash($data_db['user_id'], $switch_id, $data_db['port'], $switch_port_id) as $v): ?>
+
+        <p class="<?= $v['warning_class']; ?>"><?= $v['warning_level']; ?>: <?= $v['message']; ?></p>
+    <?php endforeach; ?>
+    <?php if (!$link_on_off): ?>
+
+        <div>
+            <p>
+                <a href="<?= Config::get('host_for_link') ?>/account_test/<?= $switch_port_id ?>?cabletest=on">Кабель
+                    тест</a>
+            </p>
+            <p>
+                <a href="<?= Config::get('host_for_link') ?>/account_test/<?= $switch_port_id ?>?cable_length=write">Перезаписать
+                    длину кабеля</a>
+            </p>
+            <p>
+                <a href="<?= Config::get('host_for_link') ?>/account_test/history_by_switch/<?= $switch_port_id ?>">История
+                    пользователя</a>
+            </p>
+
+        </div>
+
+    <?php endif; ?>
+
+
+</div>
+
+<table border="1">
+    <tr>
+        <td colspan="2">Данные полученные со свича</td>
+    </tr>
+    <tr>
+        <td>Состояние порта</td>
+        <td><?= isset($data_switch['port_status']) ? $data_switch['port_status'] : 'Нет данных' ?></td>
+    </tr>
+    <tr>
+        <td>счетчик(in), байт</td>
+        <td><?= isset($data_switch['counter_byte_in']) ? $data_switch['counter_byte_in'] : 'Нет данных' ?></td>
+    </tr>
+
+    <tr>
+        <td>счетчик(out), байт</td>
+        <td><?= isset($data_switch['counter_byte_out']) ? $data_switch['counter_byte_out'] : 'Нет данных' ?></td>
+    </tr>
+    <tr>
+        <td>счетчик пакетов(unicast,in)</td>
+        <td><?= isset($data_switch['counter_pkts_unicast_in']) ? $data_switch['counter_pkts_unicast_in'] : 'Нет данных' ?></td>
+    </tr>
+    <tr>
+        <td>счетчик пакетов(unicast,out)</td>
+        <td><?= isset($data_switch['counter_pkts_unicast_out']) ? $data_switch['counter_pkts_unicast_out'] : 'Нет данных' ?></td>
+    </tr>
+    <tr>
+        <td>Ошибки(in)</td>
+        <td><?= isset($data_switch['error_in']) ? $data_switch['error_in'] : 'Нет данных' ?></td>
+    </tr>
+    <tr>
+        <td>Ошибки(out)</td>
+        <td><?= isset($data_switch['error_out']) ? $data_switch['error_out'] : 'Нет данных' ?></td>
+    </tr>
+
+    <?php if (Config::get('duplex_speed_view') == 'string'): ?>
+        <tr>
+            <td>Дуплекс, Скорость мб/с</td>
+            <td>
+                <?= isset($data_switch['duplex']) ? $data_switch['duplex'] : '' ?>
+                <?= isset($data_switch['speed']) ? $data_switch['speed'] : '' ?>
+            </td>
+        </tr>
+    <?php endif; ?>
+    <?php if (Config::get('duplex_speed_view') == 'table'): ?>
+        <tr>
+            <td>Скорость мб/с</td>
+            <td><?= isset($data_switch['speed']) ? $data_switch['speed'] : 'Нет данных' ?></td>
+        </tr>
+        <tr>
+            <td>Дуплекс</td>
+            <td><?= isset($data_switch['duplex']) ? $data_switch['duplex'] : 'Нет данных' ?></td>
+        </tr>
+    <?php endif; ?>
+    <tr>
+        <td>Состояние кабеля</td>
+        <td><?= (isset($cabletest_start) && $cabletest_start == 'yes') ? $data_switch['cable_status'] : 'Нет данных' ?></td>
+    </tr>
+    <tr class="<?= $cable_length_status_port_on ?>">
+        <td>Длина кабеля, порт - "ON"</td>
+        <td><?= (isset($cabletest_start) && $cabletest_start == 'yes') ? $cable_length_port_on : 'Нет данных' ?></td>
+    </tr>
+    <tr class="<?= $cable_length_status_port_off ?>">
+        <td>Длина кабеля, порт - "OFF"</td>
+        <td><?= (isset($cabletest_start) && $cabletest_start == 'yes') ? $cable_length_port_off : 'Нет данных' ?></td>
+    </tr>
+    <tr>
+        <td>Время последнего изменения порта</td>
+        <td><?= isset($data_switch['last_change']) ? $data_switch['last_change'] : 'Нет данных' ?></td>
+    </tr>
+    <?php
+    if (!empty($data_switch['mac'])):
+        if (!$billing_request):
+            foreach ($data_switch['mac'] as $k => $v): ?>
+
+                <tr>
+                    <td>Мак адрес № <?= $k + 1; ?></td>
+                    <td><?= $v; ?></td>
+                </tr>
+
+            <?php endforeach;
+
+        else:?>
+            <tr>
+            <td style="text-align: center" colspan="2">Мак адреса</td>
+            </tr>
+           <?php foreach ($data_switch['mac'] as $k => $v): ?>
+
+                <tr>
+                    <td style="text-align: center" colspan="2"><?= $v; ?></td>
+                </tr>
+
+            <?php endforeach;
+        endif;
+    else:?>
+
+        <tr>
+            <td>Мак адрес</td>
+            <td>Нет данных</td>
+        </tr>
+
+    <?php endif; ?>
+
+    <?php if ($switch_data_on_off == 1): ?>
+
+        <tr>
+            <td colspan="2">Данные полученные из базы данных билинга</td>
+        </tr>
+        <tr>
+            <td>ip свича</td>
+            <td><?= $data_db['switch_ip'] ? $data_db['switch_ip'] : 'Нет данных' ?></td>
+        </tr>
+        <tr>
+            <td>Мак адрес пользователя</td>
+            <td><?= $data_db['mac'] ? $data_db['mac'] : 'Нет данных' ?></td>
+        </tr>
+        <tr>
+            <td>Пользователь</td>
+            <td><?= $data_db['user_id'] ? $data_db['user_id'] : 'Нет данных' ?></td>
+        </tr>
+        <?php if (Config::get('switch_info_view') == 'string'): ?>
+            <tr>
+                <td>Свич</td>
+                <td>
+                    <?= $data_db['manufacturer'] ? $data_db['manufacturer'] : '' ?>
+                    <?= $data_db['switch_model'] ? $data_db['switch_model'] : '' ?>
+                    <?= $data_db['firmware'] ? $data_db['firmware'] : '' ?>
+                </td>
+            </tr>
+        <?php endif ?>
+        <?php if (Config::get('switch_info_view') == 'table'): ?>
+            <tr>
+                <td>Производитель свича</td>
+                <td><?= $data_db['manufacturer'] ? $data_db['manufacturer'] : 'Нет данных' ?></td>
+            </tr>
+            <tr>
+                <td>Модель свича</td>
+                <td><?= $data_db['switch_model'] ? $data_db['switch_model'] : 'Нет данных' ?></td>
+            </tr>
+            <tr>
+                <td>Прошивка свича</td>
+                <td><?= $data_db['firmware'] ? $data_db['firmware'] : 'Нет данных' ?></td>
+            </tr>
+        <?php endif ?>
+        <?php if (Config::get('time_switch_response') == 'on'): ?>
+            <tr>
+                <td>Время отработки свича, с</td>
+                <td><?= microtime(true) - $GLOBALS['start_time']; ?></td>
+            </tr>
+        <?php endif ?>
+
+    <?php endif; ?>
+</table>
+
+
+

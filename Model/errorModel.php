@@ -3,19 +3,34 @@
 
 class errorModel
 {
-    public $user_id;
+    public $user_id = null;
+    public $switch_id = null;
+    public $port_id = null;
     public $date;
     public $time;
 
-    public function __construct($account_id = null)
+    public function __construct($account_id = null, $switch_id = null, $port_id = null, $switch_port_id = null)
     {
         $request = new Request();
-        if ($account_id) {
+
+        if ($account_id && !$switch_port_id) {
             $this->user_id = $account_id;
-        } elseif (Router::getAccountId()) {
+            $this->switch_id =$switch_id;
+            $this->port_id = $port_id;
+        } elseif (Router::getAccountId() && !$switch_port_id) {
             $this->user_id = Router::getAccountId();
-        } else {
+        } elseif($request->post('account_id')&& !$switch_port_id) {
             $this->user_id = $request->post('account_id');
+        } elseif($switch_id && $port_id){
+            $this->switch_id = $switch_id;
+            $this->port_id = $port_id;
+            $this->user_id = $account_id;
+        }elseif(Router::getSwitchId() && Router::getPortId()){
+            $this->switch_id = Router::getSwitchId();
+            $this->port_id = Router::getPortId();
+        }elseif($request->post('switch_id')&& $request->post('port_id')){
+            $this->user_id = $request->post('switch_id');
+            $this->user_id = $request->post('port_id');
         }
         //   $this->user_id = Router::getAccountId()? Router::getAccountId() : $request->post('account_id');
         $this->date = strtotime(date('Y-m-d'));
@@ -36,10 +51,13 @@ class errorModel
                 'date' => $this->date,
                 'time' => $this->time,
                 'user_id' => $this->user_id,
+                'switch_id' => $this->switch_id,
+                'port_id' => $this->port_id,
                 'error' => $error_string
             );
 
-            $sql = "INSERT INTO `user_error`(`date`, `time`, `user_id`, `error`) VALUES (:date,:time,:user_id,:error)";
+
+            $sql = "INSERT INTO `user_error`(`date`, `time`, `user_id`, `error`, `switch_id`, `port_id`) VALUES (:date,:time,:user_id,:error,:switch_id,:port_id)";
             $sth = $dbc->getPDO()->prepare($sql);
             $sth->execute($placeholders);
         }
@@ -55,12 +73,12 @@ class errorModel
             $date = strtotime(date('Y-m-d'));
             // }
 
-            $sql = "SELECT `date`, `time`, `user_id`, `error` FROM `user_error` WHERE `date`= :date";
+            $sql = "SELECT * FROM `user_error` WHERE `date`= :date";
             $placeholders = array(
                 'date' => $date
             );
         } else {
-            $sql = "SELECT `date`, `time`, `user_id`, `error` FROM `user_error`";
+            $sql = "SELECT * FROM `user_error`";
             $placeholders = array();
         }
 

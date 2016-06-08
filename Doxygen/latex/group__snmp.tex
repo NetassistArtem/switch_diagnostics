@@ -1,0 +1,22 @@
+\hypertarget{group__snmp}{\section{S\-N\-M\-P}
+\label{group__snmp}\index{S\-N\-M\-P@{S\-N\-M\-P}}
+}
+
+
+Некоторые настройки для получения данных по протоколу snmp.  
+
+
+Некоторые настройки для получения данных по протоколу snmp. S\-N\-M\-P Connect, Имена комьюнити необходимы для получения данных по протоколу snmp\-: 
+\begin{DoxyCode}
+\hyperlink{class_config_aa485369b2925858d92e468d405bd0798}{Config::set}(\textcolor{stringliteral}{'community\_read\_default'}, \textcolor{stringliteral}{'Swstat'});
+\hyperlink{class_config_aa485369b2925858d92e468d405bd0798}{Config::set}(\textcolor{stringliteral}{'community\_write\_default'}, \textcolor{stringliteral}{'Swwrite'});
+\end{DoxyCode}
+ oid необходимы для получения предварительных данных про модель свича и статус портов
+\begin{DoxyItemize}
+\item используются для определения необходимого шаблона (find switch pattern) 
+\begin{DoxyCode}
+\hyperlink{class_config_aa485369b2925858d92e468d405bd0798}{Config::set}(\textcolor{stringliteral}{'oid\_switch\_model'}, \textcolor{stringliteral}{'.1.3.6.1.2.1.1.1.0'});
+\hyperlink{class_config_aa485369b2925858d92e468d405bd0798}{Config::set}(\textcolor{stringliteral}{'port\_status'}, \textcolor{stringliteral}{'.1.3.6.1.2.1.2.2.1.8'});
+\end{DoxyCode}
+ 
+\end{DoxyItemize}

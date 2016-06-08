@@ -1,29 +1,124 @@
-\hypertarget{class_connect___s_n_m_p}{\section{Connect\-\_\-\-S\-N\-M\-P Class Reference}
+\hypertarget{class_connect___s_n_m_p}{\section{Класс Connect\-\_\-\-S\-N\-M\-P}
 \label{class_connect___s_n_m_p}\index{Connect\-\_\-\-S\-N\-M\-P@{Connect\-\_\-\-S\-N\-M\-P}}
 }
-\subsection*{Public Member Functions}
+
+
+Class \hyperlink{class_connect___s_n_m_p}{Connect\-\_\-\-S\-N\-M\-P}.  
+
+
+\subsection*{Открытые члены}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_connect___s_n_m_p_a8a4beac9f8314f8e4f86f29b4cf619a0}{{\bfseries \-\_\-\-\_\-construct} (\$switch\-\_\-ip, \$wr\-\_\-rd= 'r')}\label{class_connect___s_n_m_p_a8a4beac9f8314f8e4f86f29b4cf619a0}
-
+\hyperlink{class_connect___s_n_m_p_a8a4beac9f8314f8e4f86f29b4cf619a0}{\-\_\-\-\_\-construct} (\$switch\-\_\-ip, \$wr\-\_\-rd= 'r')
 \item 
-\hypertarget{class_connect___s_n_m_p_a2266e0810688c5e97603e08be2733771}{{\bfseries close\-\_\-session} ()}\label{class_connect___s_n_m_p_a2266e0810688c5e97603e08be2733771}
-
-\item 
-\hypertarget{class_connect___s_n_m_p_ad6dcf9d79ad7d6839e1639c3d6f1ce47}{{\bfseries get\-By\-Key} (\$key)}\label{class_connect___s_n_m_p_ad6dcf9d79ad7d6839e1639c3d6f1ce47}
-
-\item 
-\hypertarget{class_connect___s_n_m_p_a7d9b0650197ccf543efa794508f7fbd6}{{\bfseries set\-Data} (\$object\-\_\-id, \$type, \$value)}\label{class_connect___s_n_m_p_a7d9b0650197ccf543efa794508f7fbd6}
-
-\item 
-\hypertarget{class_connect___s_n_m_p_a0cf9c2e32cb02151e4d117af3ec13b39}{{\bfseries walk\-By\-Key} (\$key)}\label{class_connect___s_n_m_p_a0cf9c2e32cb02151e4d117af3ec13b39}
-
-\item 
+\hyperlink{class_connect___s_n_m_p_a2266e0810688c5e97603e08be2733771}{close\-\_\-session} ()
+\begin{DoxyCompactList}\small\item\em Закрывает snmp сессию \end{DoxyCompactList}\item 
+\hyperlink{class_connect___s_n_m_p_ad6dcf9d79ad7d6839e1639c3d6f1ce47}{get\-By\-Key} (\$key)
+\begin{DoxyCompactList}\small\item\em Получение данных по oid-\/у аналогично команде snmp get. \end{DoxyCompactList}\item 
+\hyperlink{class_connect___s_n_m_p_a7d9b0650197ccf543efa794508f7fbd6}{set\-Data} (\$object\-\_\-id, \$type, \$value)
+\begin{DoxyCompactList}\small\item\em Запись данных по oid-\/у аналогично команде snmp set. \end{DoxyCompactList}\item 
+\hyperlink{class_connect___s_n_m_p_a0cf9c2e32cb02151e4d117af3ec13b39}{walk\-By\-Key} (\$key)
+\begin{DoxyCompactList}\small\item\em Получение данных по oid-\/у аналогично команде snmp walk. \end{DoxyCompactList}\item 
 \hyperlink{class_connect___s_n_m_p_a91a834f81bf2db67f0523d92666db887}{get\-Snmp\-Session} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Получение snmp сессии \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
-\subsection{Member Function Documentation}
+\subsection{Подробное описание}
+Class \hyperlink{class_connect___s_n_m_p}{Connect\-\_\-\-S\-N\-M\-P}. 
+
+Class \hyperlink{class_connect___s_n_m_p}{Connect\-\_\-\-S\-N\-M\-P} обеспечивает взаимодействие со свичами по snmp протоколу. создает сесию соединения со свичем по snmp протоколу 
+
+См. определение в файле Connect\-\_\-\-S\-N\-M\-P.\-php строка 9
+
+
+
+\subsection{Конструктор(ы)}
+\hypertarget{class_connect___s_n_m_p_a8a4beac9f8314f8e4f86f29b4cf619a0}{\index{Connect\-\_\-\-S\-N\-M\-P@{Connect\-\_\-\-S\-N\-M\-P}!\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}}
+\index{\-\_\-\-\_\-construct@{\-\_\-\-\_\-construct}!Connect_SNMP@{Connect\-\_\-\-S\-N\-M\-P}}
+\subsubsection[{\-\_\-\-\_\-construct}]{\setlength{\rightskip}{0pt plus 5cm}\-\_\-\-\_\-construct (
+\begin{DoxyParamCaption}
+\item[{}]{\$switch\-\_\-ip, }
+\item[{}]{\$wr\-\_\-rd = {\ttfamily 'r'}}
+\end{DoxyParamCaption}
+)}}\label{class_connect___s_n_m_p_a8a4beac9f8314f8e4f86f29b4cf619a0}
+
+\begin{DoxyParams}{Аргументы}
+{\em \$switch\-\_\-ip} & ip свича \\
+\hline
+{\em \$wr\-\_\-rd} & параметр определяющий режим взаиможействия со свичем -\/ получение данных ('read'-\/ значение 'r' -\/ установленно по умолчанию и 'read\-\_\-write' -\/ значение 'w')\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+private \$snmp\-\_\-session установленную snmp сессию в виде свойства класса
+\end{DoxyReturn}
+Получает из базы данных билинга информацию о настройках snmp в свиче \$community\-\_\-billing, если snmp включено \$community\-\_\-billing\mbox{[}'use\-\_\-snmp'\mbox{]} или приложение работает в режиме -\/ 'test', присваивает свойствам класса названия комьюнити на чтение и на запись. Комьюнити на чтение из баы данных биллинга \$community\-\_\-billing\mbox{[}'snmp\-\_\-auth'\mbox{]} или если его нет комьюнити по умолчанию 
+\begin{DoxyCode}
+\hyperlink{class_config_a15e2679f2a8f6fa4d60757f4d65413ac}{Config::get}(\textcolor{stringliteral}{'community\_read\_default'})
+\end{DoxyCode}
+ комьюнити на запись устанавливается из конфигурационных настроек $\ast$
+\begin{DoxyCode}
+\hyperlink{class_config_a15e2679f2a8f6fa4d60757f4d65413ac}{Config::get}(\textcolor{stringliteral}{'community\_write\_default'})
+\end{DoxyCode}
+ \begin{DoxyRefDesc}{Необходимо сделать}
+\item[\hyperlink{todo__todo000001}{Необходимо сделать}]Сделать получение комьюнити на запись из базы данных, аналогично комьюнити на чтение\end{DoxyRefDesc}
+
+
+В зависимости от флага \$wr\-\_\-rd переменной \$community присваевается или комьюнити на чтение или на запись. Дале для установленной сессии добавляются необходимые настройки
+\begin{DoxyItemize}
+\item $\ast$
+\begin{DoxyCode}
+$this->snmp\_session->exceptions\_enabled = SNMP::ERRNO\_ANY;
+$this->snmp\_session->valueretrieval = SNMP\_VALUE\_PLAIN;
+$this->snmp\_session->oid\_increasing\_check = \textcolor{keyword}{false};
+\end{DoxyCode}
+
+\end{DoxyItemize}
+
+в случает не удачного подключения выбрасывается исключение 
+
+См. определение в файле Connect\-\_\-\-S\-N\-M\-P.\-php строка 45
+
+
+
+\subsection{Методы}
+\hypertarget{class_connect___s_n_m_p_a2266e0810688c5e97603e08be2733771}{\index{Connect\-\_\-\-S\-N\-M\-P@{Connect\-\_\-\-S\-N\-M\-P}!close\-\_\-session@{close\-\_\-session}}
+\index{close\-\_\-session@{close\-\_\-session}!Connect_SNMP@{Connect\-\_\-\-S\-N\-M\-P}}
+\subsubsection[{close\-\_\-session}]{\setlength{\rightskip}{0pt plus 5cm}close\-\_\-session (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_connect___s_n_m_p_a2266e0810688c5e97603e08be2733771}
+
+
+Закрывает snmp сессию 
+
+
+
+См. определение в файле Connect\-\_\-\-S\-N\-M\-P.\-php строка 74
+
+\hypertarget{class_connect___s_n_m_p_ad6dcf9d79ad7d6839e1639c3d6f1ce47}{\index{Connect\-\_\-\-S\-N\-M\-P@{Connect\-\_\-\-S\-N\-M\-P}!get\-By\-Key@{get\-By\-Key}}
+\index{get\-By\-Key@{get\-By\-Key}!Connect_SNMP@{Connect\-\_\-\-S\-N\-M\-P}}
+\subsubsection[{get\-By\-Key}]{\setlength{\rightskip}{0pt plus 5cm}get\-By\-Key (
+\begin{DoxyParamCaption}
+\item[{}]{\$key}
+\end{DoxyParamCaption}
+)}}\label{class_connect___s_n_m_p_ad6dcf9d79ad7d6839e1639c3d6f1ce47}
+
+
+Получение данных по oid-\/у аналогично команде snmp get. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em \$key} & ключь в виде единичного O\-I\-D или массива с O\-I\-D \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+\$data массив полученных данных или string значение если \$key единичный O\-I\-D 
+\end{DoxyReturn}
+
+
+См. определение в файле Connect\-\_\-\-S\-N\-M\-P.\-php строка 84
+
 \hypertarget{class_connect___s_n_m_p_a91a834f81bf2db67f0523d92666db887}{\index{Connect\-\_\-\-S\-N\-M\-P@{Connect\-\_\-\-S\-N\-M\-P}!get\-Snmp\-Session@{get\-Snmp\-Session}}
 \index{get\-Snmp\-Session@{get\-Snmp\-Session}!Connect_SNMP@{Connect\-\_\-\-S\-N\-M\-P}}
 \subsubsection[{get\-Snmp\-Session}]{\setlength{\rightskip}{0pt plus 5cm}get\-Snmp\-Session (
@@ -31,11 +126,68 @@
 {}
 \end{DoxyParamCaption}
 )}}\label{class_connect___s_n_m_p_a91a834f81bf2db67f0523d92666db887}
-\begin{DoxyReturn}{Returns}
-S\-N\-M\-P 
+
+
+Получение snmp сессии 
+
+\begin{DoxyReturn}{Возвращает}
+S\-N\-M\-P сессию
+\end{DoxyReturn}
+Можно использовать для обращения на прямую к методам и свойствам стандартного класса S\-N\-M\-P 
+
+См. определение в файле Connect\-\_\-\-S\-N\-M\-P.\-php строка 130
+
+\hypertarget{class_connect___s_n_m_p_a7d9b0650197ccf543efa794508f7fbd6}{\index{Connect\-\_\-\-S\-N\-M\-P@{Connect\-\_\-\-S\-N\-M\-P}!set\-Data@{set\-Data}}
+\index{set\-Data@{set\-Data}!Connect_SNMP@{Connect\-\_\-\-S\-N\-M\-P}}
+\subsubsection[{set\-Data}]{\setlength{\rightskip}{0pt plus 5cm}set\-Data (
+\begin{DoxyParamCaption}
+\item[{}]{\$object\-\_\-id, }
+\item[{}]{\$type, }
+\item[{}]{\$value}
+\end{DoxyParamCaption}
+)}}\label{class_connect___s_n_m_p_a7d9b0650197ccf543efa794508f7fbd6}
+
+
+Запись данных по oid-\/у аналогично команде snmp set. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em \$object\-\_\-id} & O\-I\-D на запись \\
+\hline
+{\em \$type} & тип записываемых данных (integer -\/ 'i', string -\/ 's') \\
+\hline
+{\em \$value} & записываемое значение\\
+\hline
+\end{DoxyParams}
+В данном прилоджении эта функция используется только для проведения кабель теста. Используемый для этой цели oid поизводит записть тестового значения и чтение полученных данных 
+
+См. определение в файле Connect\-\_\-\-S\-N\-M\-P.\-php строка 101
+
+\hypertarget{class_connect___s_n_m_p_a0cf9c2e32cb02151e4d117af3ec13b39}{\index{Connect\-\_\-\-S\-N\-M\-P@{Connect\-\_\-\-S\-N\-M\-P}!walk\-By\-Key@{walk\-By\-Key}}
+\index{walk\-By\-Key@{walk\-By\-Key}!Connect_SNMP@{Connect\-\_\-\-S\-N\-M\-P}}
+\subsubsection[{walk\-By\-Key}]{\setlength{\rightskip}{0pt plus 5cm}walk\-By\-Key (
+\begin{DoxyParamCaption}
+\item[{}]{\$key}
+\end{DoxyParamCaption}
+)}}\label{class_connect___s_n_m_p_a0cf9c2e32cb02151e4d117af3ec13b39}
+
+
+Получение данных по oid-\/у аналогично команде snmp walk. 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em \$key} & -\/ oid\\
+\hline
+\end{DoxyParams}
+Используется для получение данных с испрользованием различных oid. \begin{DoxyReturn}{Возвращает}
+\$data массив полученных данных или string значение если \$key единичный O\-I\-D 
 \end{DoxyReturn}
 
 
-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+См. определение в файле Connect\-\_\-\-S\-N\-M\-P.\-php строка 116
+
+
+
+Объявления и описания членов класса находятся в файле\-:\begin{DoxyCompactItemize}
 \item 
-Library/Connect\-\_\-\-S\-N\-M\-P.\-php\end{DoxyCompactItemize}
+/home/artem/public\-\_\-html/test01/\-Library/\hyperlink{_connect___s_n_m_p_8php}{Connect\-\_\-\-S\-N\-M\-P.\-php}\end{DoxyCompactItemize}

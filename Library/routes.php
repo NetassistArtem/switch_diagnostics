@@ -10,6 +10,16 @@
 
         )
     ),
+     'account_test_switch_port_id' => array(
+         'pattern' => '/account_test/{switch_id}_{port_id}',
+         'controller' => 'Index',
+         'action' => 'snmpSwitchData',
+         'params' => array(
+             'switch_id' => '[1-9][0-9]*',
+             'port_id' => '[1-9][0-9]*'
+
+         )
+     ),
 
      'account_test' => array(
          'pattern' => '/account_test',
@@ -68,6 +78,18 @@
 
          )
      ),
+
+     'account_test_switch_port_id_history' => array(
+         'pattern' => '/account_test/history_by_switch/{switch_id}_{port_id}',
+         'controller' => 'Index',
+         'action' => 'historyBySwitch',
+         'params' => array(
+             'switch_id' => '[1-9][0-9]*',
+             'port_id' => '[1-9][0-9]*'
+
+         )
+     ),
+
      'account_test_history' => array(
          'pattern' => '/account_test/history',
          'controller' => 'Index',

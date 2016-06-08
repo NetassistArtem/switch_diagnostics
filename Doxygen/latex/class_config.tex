@@ -1,23 +1,97 @@
-\hypertarget{class_config}{\section{Config Class Reference}
+\hypertarget{class_config}{\section{Класс Config}
 \label{class_config}\index{Config@{Config}}
 }
-\subsection*{Static Public Member Functions}
+
+
+Class \hyperlink{class_config}{Config}.  
+
+
+\subsection*{Открытые статические члены}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_config_a15e2679f2a8f6fa4d60757f4d65413ac}{static {\bfseries get} (\$key)}\label{class_config_a15e2679f2a8f6fa4d60757f4d65413ac}
-
-\item 
-\hypertarget{class_config_aa485369b2925858d92e468d405bd0798}{static {\bfseries set} (\$key, \$value)}\label{class_config_aa485369b2925858d92e468d405bd0798}
-
-\end{DoxyCompactItemize}
-\subsection*{Static Protected Attributes}
+static \hyperlink{class_config_a15e2679f2a8f6fa4d60757f4d65413ac}{get} (\$key)
+\begin{DoxyCompactList}\small\item\em Отдает конфигурационные настройки \end{DoxyCompactList}\item 
+static \hyperlink{class_config_aa485369b2925858d92e468d405bd0798}{set} (\$key, \$value)
+\begin{DoxyCompactList}\small\item\em Записывает конфигурационные настройки \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Статические защищенные данные}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_config_ac7c3353107070daa85f641882931b358}{static {\bfseries \$settings} = array()}\label{class_config_ac7c3353107070daa85f641882931b358}
+static \hyperlink{class_config_ac7c3353107070daa85f641882931b358}{\$settings} = array()
+\begin{DoxyCompactList}\small\item\em содержит конфигурационные настройки \end{DoxyCompactList}\end{DoxyCompactItemize}
 
-\end{DoxyCompactItemize}
+
+\subsection{Подробное описание}
+Class \hyperlink{class_config}{Config}. 
+
+Class \hyperlink{class_config}{Config} принимает и отдает конфигурационные настройки 
+
+См. определение в файле Config.\-php строка 9
 
 
-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+
+\subsection{Методы}
+\hypertarget{class_config_a15e2679f2a8f6fa4d60757f4d65413ac}{\index{Config@{Config}!get@{get}}
+\index{get@{get}!Config@{Config}}
+\subsubsection[{get}]{\setlength{\rightskip}{0pt plus 5cm}static get (
+\begin{DoxyParamCaption}
+\item[{}]{\$key}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_config_a15e2679f2a8f6fa4d60757f4d65413ac}
+
+
+Отдает конфигурационные настройки 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em \$key} & Ключ необходимой настройки для поиска в массиве свойства \$setting\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+isset(self\-::\$settings\mbox{[}\$key\mbox{]})? self\-::\$settings\mbox{[}\$key\mbox{]}\-: null Возвращает необходимую настройку если она есть в свойсте объекта \$setting или null если по переданному ключу настройка не обнаружена 
+\end{DoxyReturn}
+
+
+См. определение в файле Config.\-php строка 21
+
+\hypertarget{class_config_aa485369b2925858d92e468d405bd0798}{\index{Config@{Config}!set@{set}}
+\index{set@{set}!Config@{Config}}
+\subsubsection[{set}]{\setlength{\rightskip}{0pt plus 5cm}static set (
+\begin{DoxyParamCaption}
+\item[{}]{\$key, }
+\item[{}]{\$value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_config_aa485369b2925858d92e468d405bd0798}
+
+
+Записывает конфигурационные настройки 
+
+
+\begin{DoxyParams}{Аргументы}
+{\em key} & Ключ устанавливоемого параметра\\
+\hline
+{\em value} & Значение устанавливаемого параметра\\
+\hline
+\end{DoxyParams}
+Запись в protected static \$settings = array() необходимого свойства (параметра) с заданным ключем 
+
+См. определение в файле Config.\-php строка 34
+
+
+
+\subsection{Поля}
+\hypertarget{class_config_ac7c3353107070daa85f641882931b358}{\index{Config@{Config}!\$settings@{\$settings}}
+\index{\$settings@{\$settings}!Config@{Config}}
+\subsubsection[{\$settings}]{\setlength{\rightskip}{0pt plus 5cm}\$settings = array()\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}}\label{class_config_ac7c3353107070daa85f641882931b358}
+
+
+содержит конфигурационные настройки 
+
+
+
+См. определение в файле Config.\-php строка 11
+
+
+
+Объявления и описания членов класса находятся в файле\-:\begin{DoxyCompactItemize}
 \item 
-Library/Config.\-php\end{DoxyCompactItemize}
+/home/artem/public\-\_\-html/test01/\-Library/\hyperlink{_config_8php}{Config.\-php}\end{DoxyCompactItemize}

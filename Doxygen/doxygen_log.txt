@@ -1,277 +1,359 @@
-Searching for include files...
-Searching for example files...
-Searching for images...
-Searching for dot files...
-Searching for msc files...
-Searching for dia files...
-Searching for files to exclude
-Searching for files to process...
-Searching for files in directory /home/artem/public_html/test01
-Searching for files in directory /home/artem/public_html/test01/Applicationroot
-Searching for files in directory /home/artem/public_html/test01/Applicationroot/css
-Searching for files in directory /home/artem/public_html/test01/Applicationroot/fonts
-Searching for files in directory /home/artem/public_html/test01/Applicationroot/images
-Searching for files in directory /home/artem/public_html/test01/Applicationroot/js
-Searching for files in directory /home/artem/public_html/test01/Applicationroot/plagins
-Searching for files in directory /home/artem/public_html/test01/Applicationroot/uploads
-Searching for files in directory /home/artem/public_html/test01/Applicationroot/uploads/files
-Searching for files in directory /home/artem/public_html/test01/Applicationroot/uploads/images
-Searching for files in directory /home/artem/public_html/test01/Config
-Searching for files in directory /home/artem/public_html/test01/Controller
-Searching for files in directory /home/artem/public_html/test01/Doxygen
-Searching for files in directory /home/artem/public_html/test01/Library
-Searching for files in directory /home/artem/public_html/test01/Model
-Searching for files in directory /home/artem/public_html/test01/View
-Searching for files in directory /home/artem/public_html/test01/View/Admin
-Searching for files in directory /home/artem/public_html/test01/View/Index
-Searching for files in directory /home/artem/public_html/test01/View/Node
-Reading and parsing tag files
-Parsing files
-Reading /home/artem/public_html/test01/Applicationroot/index.php...
-Parsing file /home/artem/public_html/test01/Applicationroot/index.php...
-Reading /home/artem/public_html/test01/Applicationroot/init.php...
-Parsing file /home/artem/public_html/test01/Applicationroot/init.php...
-Reading /home/artem/public_html/test01/Config/conf.php...
-Parsing file /home/artem/public_html/test01/Config/conf.php...
-Reading /home/artem/public_html/test01/Controller/AdminController.php...
-Parsing file /home/artem/public_html/test01/Controller/AdminController.php...
-Reading /home/artem/public_html/test01/Controller/IndexController.php...
-Parsing file /home/artem/public_html/test01/Controller/IndexController.php...
-Reading /home/artem/public_html/test01/Controller/NodeController.php...
-Parsing file /home/artem/public_html/test01/Controller/NodeController.php...
-Reading /home/artem/public_html/test01/Library/Config.php...
-Parsing file /home/artem/public_html/test01/Library/Config.php...
-Reading /home/artem/public_html/test01/Library/Connect_db.php...
-Parsing file /home/artem/public_html/test01/Library/Connect_db.php...
-Reading /home/artem/public_html/test01/Library/Connect_SNMP.php...
-Parsing file /home/artem/public_html/test01/Library/Connect_SNMP.php...
-Reading /home/artem/public_html/test01/Library/Controller.php...
-Parsing file /home/artem/public_html/test01/Library/Controller.php...
-Reading /home/artem/public_html/test01/Library/Debugger.php...
-Parsing file /home/artem/public_html/test01/Library/Debugger.php...
-Reading /home/artem/public_html/test01/Library/Request.php...
-Parsing file /home/artem/public_html/test01/Library/Request.php...
-Reading /home/artem/public_html/test01/Library/responseValue.php...
-Parsing file /home/artem/public_html/test01/Library/responseValue.php...
-Reading /home/artem/public_html/test01/Library/Router.php...
-Parsing file /home/artem/public_html/test01/Library/Router.php...
-Reading /home/artem/public_html/test01/Library/routes.php...
-Parsing file /home/artem/public_html/test01/Library/routes.php...
-Reading /home/artem/public_html/test01/Library/Session.php...
-Parsing file /home/artem/public_html/test01/Library/Session.php...
-Reading /home/artem/public_html/test01/Model/adminModel.php...
-Parsing file /home/artem/public_html/test01/Model/adminModel.php...
-Reading /home/artem/public_html/test01/Model/errorModel.php...
-Parsing file /home/artem/public_html/test01/Model/errorModel.php...
-Reading /home/artem/public_html/test01/Model/helperModel.php...
-Parsing file /home/artem/public_html/test01/Model/helperModel.php...
-Reading /home/artem/public_html/test01/Model/historyModel.php...
-Parsing file /home/artem/public_html/test01/Model/historyModel.php...
-Reading /home/artem/public_html/test01/Model/IndexModel.php...
-Parsing file /home/artem/public_html/test01/Model/IndexModel.php...
-Reading /home/artem/public_html/test01/Model/NodeModel.php...
-Parsing file /home/artem/public_html/test01/Model/NodeModel.php...
-Reading /home/artem/public_html/test01/Model/patternModel.php...
-Parsing file /home/artem/public_html/test01/Model/patternModel.php...
-Reading /home/artem/public_html/test01/View/Admin/insert.phtml...
-Parsing file /home/artem/public_html/test01/View/Admin/insert.phtml...
-Reading /home/artem/public_html/test01/View/Index/errorUser.phtml...
-Parsing file /home/artem/public_html/test01/View/Index/errorUser.phtml...
-Reading /home/artem/public_html/test01/View/Index/history.phtml...
-Parsing file /home/artem/public_html/test01/View/Index/history.phtml...
-Reading /home/artem/public_html/test01/View/Index/historySelect.phtml...
-Parsing file /home/artem/public_html/test01/View/Index/historySelect.phtml...
-Reading /home/artem/public_html/test01/View/Index/index.phtml...
-Parsing file /home/artem/public_html/test01/View/Index/index.phtml...
-Reading /home/artem/public_html/test01/View/Index/snmpData.phtml...
-Parsing file /home/artem/public_html/test01/View/Index/snmpData.phtml...
-Reading /home/artem/public_html/test01/View/layout.phtml...
-Parsing file /home/artem/public_html/test01/View/layout.phtml...
-Reading /home/artem/public_html/test01/View/Node/index.phtml...
-Parsing file /home/artem/public_html/test01/View/Node/index.phtml...
-Building group list...
-Building directory list...
-Building namespace list...
-Building file list...
-Building class list...
-Associating documentation with classes...
-Computing nesting relations for classes...
-Building example list...
-Searching for enumerations...
-Searching for documented typedefs...
-Searching for members imported via using declarations...
-Searching for included using directives...
-Searching for documented variables...
-Building interface member list...
-Building member list...
-Searching for friends...
-Searching for documented defines...
-Computing class inheritance relations...
-Computing class usage relations...
-Flushing cached template relations that have become invalid...
-Creating members for template instances...
-Computing class relations...
-/home/artem/public_html/test01/Model/adminModel.php:5: warning: Compound adminModel is not documented.
-/home/artem/public_html/test01/Model/errorModel.php:5: warning: Compound errorModel is not documented.
-/home/artem/public_html/test01/Model/IndexModel.php:5: warning: Compound IndexModel is not documented.
-/home/artem/public_html/test01/Library/Connect_db.php:4: warning: Compound Connect_db is not documented.
-/home/artem/public_html/test01/Model/historyModel.php:5: warning: Compound historyModel is not documented.
-/home/artem/public_html/test01/Controller/IndexController.php:5: warning: Compound IndexController is not documented.
-/home/artem/public_html/test01/Model/helperModel.php:5: warning: Compound helperModel is not documented.
-/home/artem/public_html/test01/Model/patternModel.php:5: warning: Compound patternModel is not documented.
-/home/artem/public_html/test01/Controller/NodeController.php:4: warning: Compound NodeController is not documented.
-/home/artem/public_html/test01/Library/Config.php:3: warning: Compound Config is not documented.
-/home/artem/public_html/test01/Model/NodeModel.php:5: warning: Compound NodeModel is not documented.
-/home/artem/public_html/test01/Library/Request.php:5: warning: Compound Request is not documented.
-/home/artem/public_html/test01/Library/Connect_SNMP.php:5: warning: Compound Connect_SNMP is not documented.
-/home/artem/public_html/test01/Library/Debugger.php:4: warning: Compound Debugger is not documented.
-/home/artem/public_html/test01/Library/Session.php:5: warning: Compound Session is not documented.
-/home/artem/public_html/test01/Library/Router.php:5: warning: Compound Router is not documented.
-Add enum values to enums...
-Searching for member function documentation...
-Building page list...
-Search for main page...
-Computing page relations...
-Determining the scope of groups...
-Sorting lists...
-Freeing entry tree
-Determining which enums are documented
-Computing member relations...
-Building full member lists recursively...
-Adding members to member groups.
-Computing member references...
-Inheriting documentation...
-Generating disk names...
-Adding source references...
-Adding xrefitems...
-Sorting member lists...
-Computing dependencies between directories...
-Generating citations page...
-Counting data structures...
-Resolving user defined references...
-Finding anchors and sections in the documentation...
-Transferring function references...
-Combining using relations...
-Adding members to index pages...
-Generating style sheet...
-Generating search indices...
-Generating example documentation...
-Generating file sources...
-Generating file documentation...
-Generating page documentation...
-Generating group documentation...
-Generating class documentation...
-Generating docs for compound AdminController...
-Generating docs for compound adminModel...
-/home/artem/public_html/test01/Model/adminModel.php:6: warning: Member insertAction() (function) of class adminModel is not documented.
-Generating docs for compound Config...
-/home/artem/public_html/test01/Library/Config.php:6: warning: Member get($key) (function) of class Config is not documented.
-/home/artem/public_html/test01/Library/Config.php:11: warning: Member set($key, $value) (function) of class Config is not documented.
-/home/artem/public_html/test01/Library/Config.php:4: warning: Member $settings (variable) of class Config is not documented.
-Generating docs for compound Connect_db...
-/home/artem/public_html/test01/Library/Connect_db.php:50: warning: Member getDate($sql, array $placeholders=array()) (function) of class Connect_db is not documented.
-/home/artem/public_html/test01/Library/Connect_db.php:66: warning: Member getPDO() (function) of class Connect_db is not documented.
-/home/artem/public_html/test01/Library/Connect_db.php:22: warning: Member getConnection($db_number=1) (function) of class Connect_db is not documented.
-Generating docs for compound Connect_SNMP...
-/home/artem/public_html/test01/Library/Connect_SNMP.php:12: warning: Member __construct($switch_ip, $wr_rd= 'r') (function) of class Connect_SNMP is not documented.
-/home/artem/public_html/test01/Library/Connect_SNMP.php:28: warning: Member close_session() (function) of class Connect_SNMP is not documented.
-/home/artem/public_html/test01/Library/Connect_SNMP.php:33: warning: Member getByKey($key) (function) of class Connect_SNMP is not documented.
-/home/artem/public_html/test01/Library/Connect_SNMP.php:41: warning: Member setData($object_id, $type, $value) (function) of class Connect_SNMP is not documented.
-/home/artem/public_html/test01/Library/Connect_SNMP.php:48: warning: Member walkByKey($key) (function) of class Connect_SNMP is not documented.
-Generating docs for compound Controller...
-sh: 1: epstopdf: not found
-error: Problems running epstopdf. Check your TeX installation!
-/home/artem/public_html/test01/Library/Controller.php:41: warning: Member redirect($url) (function) of class Controller is not documented.
-/home/artem/public_html/test01/Library/Controller.php:24: warning: Member render(array $args=array(), $tpl=null) (function) of class Controller is not documented.
-Generating docs for compound Debugger...
-/home/artem/public_html/test01/Library/Debugger.php:5: warning: Member PrintR($item) (function) of class Debugger is not documented.
-/home/artem/public_html/test01/Library/Debugger.php:25: warning: Member VarDamp($item) (function) of class Debugger is not documented.
-Generating docs for compound errorModel...
-/home/artem/public_html/test01/Model/errorModel.php:17: warning: Member writeError($error) (function) of class errorModel is not documented.
-/home/artem/public_html/test01/Model/errorModel.php:38: warning: Member getErrorData($date) (function) of class errorModel is not documented.
-/home/artem/public_html/test01/Model/errorModel.php:60: warning: Member cleanUserError() (function) of class errorModel is not documented.
-/home/artem/public_html/test01/Model/errorModel.php:6: warning: Member $user_id (variable) of class errorModel is not documented.
-/home/artem/public_html/test01/Model/errorModel.php:7: warning: Member $date (variable) of class errorModel is not documented.
-/home/artem/public_html/test01/Model/errorModel.php:8: warning: Member $time (variable) of class errorModel is not documented.
-Generating docs for compound helperModel...
-/home/artem/public_html/test01/Model/helperModel.php:6: warning: Member insertMac($id, $mac, $switch_ip, $port, $switch_model, $firmware, $manufacturer) (function) of class helperModel is not documented.
-Generating docs for compound historyModel...
-/home/artem/public_html/test01/Model/historyModel.php:6: warning: Member insertData($account_id, array $data_switch, array $data_db) (function) of class historyModel is not documented.
-/home/artem/public_html/test01/Model/historyModel.php:39: warning: Member selectData($account_id) (function) of class historyModel is not documented.
-/home/artem/public_html/test01/Model/historyModel.php:52: warning: Member cleanHistory() (function) of class historyModel is not documented.
-Generating docs for compound IndexController...
-sh: 1: epstopdf: not found
-error: Problems running epstopdf. Check your TeX installation!
-/home/artem/public_html/test01/Controller/IndexController.php:162: warning: Member indexAction() (function) of class IndexController is not documented.
-/home/artem/public_html/test01/Controller/IndexController.php:201: warning: Member snmpDataAction($account_id=null, $tpl=null) (function) of class IndexController is not documented.
-/home/artem/public_html/test01/Controller/IndexController.php:351: warning: Member historyAction($account_id=NULL, $tpl=null) (function) of class IndexController is not documented.
-/home/artem/public_html/test01/Controller/IndexController.php:388: warning: Member historySelectAction() (function) of class IndexController is not documented.
-/home/artem/public_html/test01/Controller/IndexController.php:410: warning: Member errorUserAction() (function) of class IndexController is not documented.
-/home/artem/public_html/test01/Controller/IndexController.php:429: warning: Member rewrite_file($file_path, $mode, $date) (function) of class IndexController is not documented.
-/home/artem/public_html/test01/Controller/IndexController.php:437: warning: Member errorAction(Exception $e) (function) of class IndexController is not documented.
-/home/artem/public_html/test01/Library/Controller.php:41: warning: Member redirect($url) (function) of class Controller is not documented.
-/home/artem/public_html/test01/Controller/IndexController.php:6: warning: Member $account_id (variable) of class IndexController is not documented.
-/home/artem/public_html/test01/Library/Controller.php:24: warning: Member render(array $args=array(), $tpl=null) (function) of class Controller is not documented.
-Generating docs for compound IndexModel...
-/home/artem/public_html/test01/Model/IndexModel.php:46: warning: Member snmpData($account_id, $key) (function) of class IndexModel is not documented.
-/home/artem/public_html/test01/Model/IndexModel.php:199: warning: Member getAllMac($account_id, $pattern_id, $port_coefficient) (function) of class IndexModel is not documented.
-/home/artem/public_html/test01/Model/IndexModel.php:271: warning: Member cableTest($account_id, $pattern_id, $port, $switch_manufacturer) (function) of class IndexModel is not documented.
-/home/artem/public_html/test01/Model/IndexModel.php:296: warning: Member indexPage($id) (function) of class IndexModel is not documented.
-/home/artem/public_html/test01/Model/IndexModel.php:308: warning: Member snmpByKey($account_id, $key) (function) of class IndexModel is not documented.
-Generating docs for compound NodeController...
-sh: 1: epstopdf: not found
-error: Problems running epstopdf. Check your TeX installation!
-/home/artem/public_html/test01/Controller/NodeController.php:15: warning: Member indexAction() (function) of class NodeController is not documented.
-/home/artem/public_html/test01/Controller/NodeController.php:9: warning: Member writeErrorData(Exception $e) (function) of class NodeController is not documented.
-/home/artem/public_html/test01/Library/Controller.php:41: warning: Member redirect($url) (function) of class Controller is not documented.
-/home/artem/public_html/test01/Library/Controller.php:24: warning: Member render(array $args=array(), $tpl=null) (function) of class Controller is not documented.
-Generating docs for compound NodeModel...
-/home/artem/public_html/test01/Model/NodeModel.php:7: warning: Member indexPage($id) (function) of class NodeModel is not documented.
-Generating docs for compound patternModel...
-/home/artem/public_html/test01/Model/patternModel.php:8: warning: Member __construct($account_id) (function) of class patternModel is not documented.
-/home/artem/public_html/test01/Model/patternModel.php:13: warning: Member switchData() (function) of class patternModel is not documented.
-/home/artem/public_html/test01/Model/patternModel.php:45: warning: Member getPatternUserData() (function) of class patternModel is not documented.
-/home/artem/public_html/test01/Model/patternModel.php:67: warning: Member PatternData($port_number, $pattern_id) (function) of class patternModel is not documented.
-/home/artem/public_html/test01/Model/patternModel.php:94: warning: Member macData($pattern_id) (function) of class patternModel is not documented.
-/home/artem/public_html/test01/Model/patternModel.php:106: warning: Member getPortCoefficient($pattern_id) (function) of class patternModel is not documented.
-/home/artem/public_html/test01/Model/patternModel.php:6: warning: Member $account_id (variable) of class patternModel is not documented.
-Generating docs for compound Request...
-/home/artem/public_html/test01/Library/Request.php:28: warning: Member get($key) (function) of class Request is not documented.
-/home/artem/public_html/test01/Library/Request.php:33: warning: Member post($key) (function) of class Request is not documented.
-/home/artem/public_html/test01/Library/Request.php:39: warning: Member server($key) (function) of class Request is not documented.
-/home/artem/public_html/test01/Library/Request.php:44: warning: Member files($key) (function) of class Request is not documented.
-/home/artem/public_html/test01/Library/Request.php:52: warning: Member isPost() (function) of class Request is not documented.
-Generating docs for compound Router...
-/home/artem/public_html/test01/Library/Router.php:57: warning: Member get_content_by_url($url) (function) of class Router is not documented.
-/home/artem/public_html/test01/Library/Router.php:108: warning: Member getAccountId() (function) of class Router is not documented.
-/home/artem/public_html/test01/Library/Router.php:113: warning: Member getId() (function) of class Router is not documented.
-Generating docs for compound Session...
-/home/artem/public_html/test01/Library/Session.php:8: warning: Member has($key) (function) of class Session is not documented.
-/home/artem/public_html/test01/Library/Session.php:13: warning: Member set($key, $val) (function) of class Session is not documented.
-/home/artem/public_html/test01/Library/Session.php:20: warning: Member hasUser($user_name) (function) of class Session is not documented.
-/home/artem/public_html/test01/Library/Session.php:28: warning: Member get($key) (function) of class Session is not documented.
-/home/artem/public_html/test01/Library/Session.php:36: warning: Member remove($key) (function) of class Session is not documented.
-/home/artem/public_html/test01/Library/Session.php:43: warning: Member start() (function) of class Session is not documented.
-/home/artem/public_html/test01/Library/Session.php:48: warning: Member destroy() (function) of class Session is not documented.
-/home/artem/public_html/test01/Library/Session.php:53: warning: Member setFlash($message) (function) of class Session is not documented.
-/home/artem/public_html/test01/Library/Session.php:59: warning: Member getFlash() (function) of class Session is not documented.
-/home/artem/public_html/test01/Library/Session.php:6: warning: Member $flash_messages (variable) of class Session is not documented.
-Generating namespace index...
-Generating graph info page...
-Generating directory documentation...
-Generating index page...
-Generating page index...
-Generating module index...
-Generating namespace index...
-Generating namespace member index...
-Generating annotated compound index...
-Generating alphabetical compound index...
-Generating hierarchical class index...
-Generating member index...
-Generating file index...
-Generating file member index...
-Generating example index...
-finalizing index lists...
-lookup cache used 11/65536 hits=16 misses=12
-finished...
-*** Doxygen has finished
+# Doxyfile 1.8.6
+
+#---------------------------------------------------------------------------
+# Project related configuration options
+#---------------------------------------------------------------------------
+DOXYFILE_ENCODING      = UTF-8
+PROJECT_NAME           = user_test
+PROJECT_NUMBER         = 
+PROJECT_BRIEF          = 
+PROJECT_LOGO           = 
+OUTPUT_DIRECTORY       = /home/artem/public_html/test01/Doxygen
+CREATE_SUBDIRS         = NO
+OUTPUT_LANGUAGE        = English
+BRIEF_MEMBER_DESC      = YES
+REPEAT_BRIEF           = YES
+ABBREVIATE_BRIEF       = "The $name class" \
+                         "The $name widget" \
+                         "The $name file" \
+                         is \
+                         provides \
+                         specifies \
+                         contains \
+                         represents \
+                         a \
+                         an \
+                         the
+ALWAYS_DETAILED_SEC    = NO
+INLINE_INHERITED_MEMB  = NO
+FULL_PATH_NAMES        = YES
+STRIP_FROM_PATH        = 
+STRIP_FROM_INC_PATH    = 
+SHORT_NAMES            = NO
+JAVADOC_AUTOBRIEF      = NO
+QT_AUTOBRIEF           = NO
+MULTILINE_CPP_IS_BRIEF = NO
+INHERIT_DOCS           = YES
+SEPARATE_MEMBER_PAGES  = NO
+TAB_SIZE               = 4
+ALIASES                = 
+TCL_SUBST              = 
+OPTIMIZE_OUTPUT_FOR_C  = YES
+OPTIMIZE_OUTPUT_JAVA   = NO
+OPTIMIZE_FOR_FORTRAN   = NO
+OPTIMIZE_OUTPUT_VHDL   = NO
+EXTENSION_MAPPING      = 
+MARKDOWN_SUPPORT       = YES
+AUTOLINK_SUPPORT       = YES
+BUILTIN_STL_SUPPORT    = NO
+CPP_CLI_SUPPORT        = NO
+SIP_SUPPORT            = NO
+IDL_PROPERTY_SUPPORT   = YES
+DISTRIBUTE_GROUP_DOC   = NO
+SUBGROUPING            = YES
+INLINE_GROUPED_CLASSES = NO
+INLINE_SIMPLE_STRUCTS  = NO
+TYPEDEF_HIDES_STRUCT   = NO
+LOOKUP_CACHE_SIZE      = 0
+#---------------------------------------------------------------------------
+# Build related configuration options
+#---------------------------------------------------------------------------
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_PACKAGE        = NO
+EXTRACT_STATIC         = NO
+EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_LOCAL_METHODS  = NO
+EXTRACT_ANON_NSPACES   = NO
+HIDE_UNDOC_MEMBERS     = NO
+HIDE_UNDOC_CLASSES     = NO
+HIDE_FRIEND_COMPOUNDS  = NO
+HIDE_IN_BODY_DOCS      = NO
+INTERNAL_DOCS          = NO
+CASE_SENSE_NAMES       = NO
+HIDE_SCOPE_NAMES       = YES
+SHOW_INCLUDE_FILES     = YES
+SHOW_GROUPED_MEMB_INC  = NO
+FORCE_LOCAL_INCLUDES   = NO
+INLINE_INFO            = YES
+SORT_MEMBER_DOCS       = YES
+SORT_BRIEF_DOCS        = NO
+SORT_MEMBERS_CTORS_1ST = NO
+SORT_GROUP_NAMES       = NO
+SORT_BY_SCOPE_NAME     = NO
+STRICT_PROTO_MATCHING  = NO
+GENERATE_TODOLIST      = YES
+GENERATE_TESTLIST      = YES
+GENERATE_BUGLIST       = YES
+GENERATE_DEPRECATEDLIST= YES
+ENABLED_SECTIONS       = 
+MAX_INITIALIZER_LINES  = 30
+SHOW_USED_FILES        = YES
+SHOW_FILES             = YES
+SHOW_NAMESPACES        = YES
+FILE_VERSION_FILTER    = 
+LAYOUT_FILE            = 
+CITE_BIB_FILES         = 
+#---------------------------------------------------------------------------
+# Configuration options related to warning and progress messages
+#---------------------------------------------------------------------------
+QUIET                  = NO
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = NO
+WARN_FORMAT            = "$file:$line: $text"
+WARN_LOGFILE           = 
+#---------------------------------------------------------------------------
+# Configuration options related to the input files
+#---------------------------------------------------------------------------
+INPUT                  = /home/artem/public_html/test01
+INPUT_ENCODING         = UTF-8
+FILE_PATTERNS          = *.c \
+                         *.cc \
+                         *.cxx \
+                         *.cpp \
+                         *.c++ \
+                         *.java \
+                         *.ii \
+                         *.ixx \
+                         *.ipp \
+                         *.i++ \
+                         *.inl \
+                         *.idl \
+                         *.ddl \
+                         *.odl \
+                         *.h \
+                         *.hh \
+                         *.hxx \
+                         *.hpp \
+                         *.h++ \
+                         *.cs \
+                         *.d \
+                         *.php \
+                         *.php4 \
+                         *.php5 \
+                         *.phtml \
+                         *.inc \
+                         *.m \
+                         *.markdown \
+                         *.md \
+                         *.mm \
+                         *.dox \
+                         *.py \
+                         *.f90 \
+                         *.f \
+                         *.for \
+                         *.tcl \
+                         *.vhd \
+                         *.vhdl \
+                         *.ucf \
+                         *.qsf \
+                         *.as \
+                         *.js
+RECURSIVE              = YES
+EXCLUDE                = 
+EXCLUDE_SYMLINKS       = NO
+EXCLUDE_PATTERNS       = 
+EXCLUDE_SYMBOLS        = 
+EXAMPLE_PATH           = 
+EXAMPLE_PATTERNS       = *
+EXAMPLE_RECURSIVE      = NO
+IMAGE_PATH             = 
+INPUT_FILTER           = 
+FILTER_PATTERNS        = 
+FILTER_SOURCE_FILES    = NO
+FILTER_SOURCE_PATTERNS = 
+USE_MDFILE_AS_MAINPAGE = 
+#---------------------------------------------------------------------------
+# Configuration options related to source browsing
+#---------------------------------------------------------------------------
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+STRIP_CODE_COMMENTS    = YES
+REFERENCED_BY_RELATION = NO
+REFERENCES_RELATION    = NO
+REFERENCES_LINK_SOURCE = YES
+SOURCE_TOOLTIPS        = YES
+USE_HTAGS              = NO
+VERBATIM_HEADERS       = YES
+#---------------------------------------------------------------------------
+# Configuration options related to the alphabetical class index
+#---------------------------------------------------------------------------
+ALPHABETICAL_INDEX     = YES
+COLS_IN_ALPHA_INDEX    = 5
+IGNORE_PREFIX          = 
+#---------------------------------------------------------------------------
+# Configuration options related to the HTML output
+#---------------------------------------------------------------------------
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
+HTML_HEADER            = 
+HTML_FOOTER            = 
+HTML_STYLESHEET        = 
+HTML_EXTRA_STYLESHEET  = 
+HTML_EXTRA_FILES       = 
+HTML_COLORSTYLE_HUE    = 220
+HTML_COLORSTYLE_SAT    = 100
+HTML_COLORSTYLE_GAMMA  = 80
+HTML_TIMESTAMP         = YES
+HTML_DYNAMIC_SECTIONS  = NO
+HTML_INDEX_NUM_ENTRIES = 100
+GENERATE_DOCSET        = NO
+DOCSET_FEEDNAME        = "Doxygen generated docs"
+DOCSET_BUNDLE_ID       = org.doxygen.Project
+DOCSET_PUBLISHER_ID    = org.doxygen.Publisher
+DOCSET_PUBLISHER_NAME  = Publisher
+GENERATE_HTMLHELP      = NO
+CHM_FILE               = 
+HHC_LOCATION           = 
+GENERATE_CHI           = NO
+CHM_INDEX_ENCODING     = 
+BINARY_TOC             = NO
+TOC_EXPAND             = NO
+GENERATE_QHP           = NO
+QCH_FILE               = 
+QHP_NAMESPACE          = org.doxygen.Project
+QHP_VIRTUAL_FOLDER     = doc
+QHP_CUST_FILTER_NAME   = 
+QHP_CUST_FILTER_ATTRS  = 
+QHP_SECT_FILTER_ATTRS  = 
+QHG_LOCATION           = 
+GENERATE_ECLIPSEHELP   = NO
+ECLIPSE_DOC_ID         = org.doxygen.Project
+DISABLE_INDEX          = NO
+GENERATE_TREEVIEW      = NO
+ENUM_VALUES_PER_LINE   = 4
+TREEVIEW_WIDTH         = 250
+EXT_LINKS_IN_WINDOW    = NO
+FORMULA_FONTSIZE       = 10
+FORMULA_TRANSPARENT    = YES
+USE_MATHJAX            = NO
+MATHJAX_FORMAT         = HTML-CSS
+MATHJAX_RELPATH        = http://cdn.mathjax.org/mathjax/latest
+MATHJAX_EXTENSIONS     = 
+MATHJAX_CODEFILE       = 
+SEARCHENGINE           = YES
+SERVER_BASED_SEARCH    = NO
+EXTERNAL_SEARCH        = NO
+SEARCHENGINE_URL       = 
+SEARCHDATA_FILE        = searchdata.xml
+EXTERNAL_SEARCH_ID     = 
+EXTRA_SEARCH_MAPPINGS  = 
+#---------------------------------------------------------------------------
+# Configuration options related to the LaTeX output
+#---------------------------------------------------------------------------
+GENERATE_LATEX         = YES
+LATEX_OUTPUT           = latex
+LATEX_CMD_NAME         = latex
+MAKEINDEX_CMD_NAME     = makeindex
+COMPACT_LATEX          = NO
+PAPER_TYPE             = a4
+EXTRA_PACKAGES         = 
+LATEX_HEADER           = 
+LATEX_FOOTER           = 
+LATEX_EXTRA_FILES      = 
+PDF_HYPERLINKS         = YES
+USE_PDFLATEX           = YES
+LATEX_BATCHMODE        = NO
+LATEX_HIDE_INDICES     = NO
+LATEX_SOURCE_CODE      = NO
+LATEX_BIB_STYLE        = plain
+#---------------------------------------------------------------------------
+# Configuration options related to the RTF output
+#---------------------------------------------------------------------------
+GENERATE_RTF           = NO
+RTF_OUTPUT             = rtf
+COMPACT_RTF            = NO
+RTF_HYPERLINKS         = NO
+RTF_STYLESHEET_FILE    = 
+RTF_EXTENSIONS_FILE    = 
+#---------------------------------------------------------------------------
+# Configuration options related to the man page output
+#---------------------------------------------------------------------------
+GENERATE_MAN           = NO
+MAN_OUTPUT             = man
+MAN_EXTENSION          = .3
+MAN_LINKS              = NO
+#---------------------------------------------------------------------------
+# Configuration options related to the XML output
+#---------------------------------------------------------------------------
+GENERATE_XML           = NO
+XML_OUTPUT             = xml
+XML_SCHEMA             = 
+XML_DTD                = 
+XML_PROGRAMLISTING     = YES
+#---------------------------------------------------------------------------
+# Configuration options related to the DOCBOOK output
+#---------------------------------------------------------------------------
+GENERATE_DOCBOOK       = NO
+DOCBOOK_OUTPUT         = docbook
+#---------------------------------------------------------------------------
+# Configuration options for the AutoGen Definitions output
+#---------------------------------------------------------------------------
+GENERATE_AUTOGEN_DEF   = NO
+#---------------------------------------------------------------------------
+# Configuration options related to the Perl module output
+#---------------------------------------------------------------------------
+GENERATE_PERLMOD       = NO
+PERLMOD_LATEX          = NO
+PERLMOD_PRETTY         = YES
+PERLMOD_MAKEVAR_PREFIX = 
+#---------------------------------------------------------------------------
+# Configuration options related to the preprocessor
+#---------------------------------------------------------------------------
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = NO
+EXPAND_ONLY_PREDEF     = NO
+SEARCH_INCLUDES        = YES
+INCLUDE_PATH           = 
+INCLUDE_FILE_PATTERNS  = 
+PREDEFINED             = 
+EXPAND_AS_DEFINED      = 
+SKIP_FUNCTION_MACROS   = YES
+#---------------------------------------------------------------------------
+# Configuration options related to external references
+#---------------------------------------------------------------------------
+TAGFILES               = 
+GENERATE_TAGFILE       = 
+ALLEXTERNALS           = NO
+EXTERNAL_GROUPS        = YES
+EXTERNAL_PAGES         = YES
+PERL_PATH              = /usr/bin/perl
+#---------------------------------------------------------------------------
+# Configuration options related to the dot tool
+#---------------------------------------------------------------------------
+CLASS_DIAGRAMS         = YES
+MSCGEN_PATH            = 
+DIA_PATH               = 
+HIDE_UNDOC_RELATIONS   = YES
+HAVE_DOT               = NO
+DOT_NUM_THREADS        = 0
+DOT_FONTNAME           = Helvetica
+DOT_FONTSIZE           = 10
+DOT_FONTPATH           = 
+CLASS_GRAPH            = YES
+COLLABORATION_GRAPH    = YES
+GROUP_GRAPHS           = YES
+UML_LOOK               = NO
+UML_LIMIT_NUM_FIELDS   = 10
+TEMPLATE_RELATIONS     = NO
+INCLUDE_GRAPH          = YES
+INCLUDED_BY_GRAPH      = YES
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
+GRAPHICAL_HIERARCHY    = YES
+DIRECTORY_GRAPH        = YES
+DOT_IMAGE_FORMAT       = png
+INTERACTIVE_SVG        = NO
+DOT_PATH               = 
+DOTFILE_DIRS           = 
+MSCFILE_DIRS           = 
+DIAFILE_DIRS           = 
+DOT_GRAPH_MAX_NODES    = 50
+MAX_DOT_GRAPH_DEPTH    = 0
+DOT_TRANSPARENT        = NO
+DOT_MULTI_TARGETS      = NO
+GENERATE_LEGEND        = YES
+DOT_CLEANUP            = YES

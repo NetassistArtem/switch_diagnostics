@@ -1,0 +1,44 @@
+\hypertarget{init_8php}{\section{Файл /home/artem/public\-\_\-html/test01/\-Applicationroot/init.php}
+\label{init_8php}\index{/home/artem/public\-\_\-html/test01/\-Applicationroot/init.\-php@{/home/artem/public\-\_\-html/test01/\-Applicationroot/init.\-php}}
+}
+
+
+Файл содержит автозагрузчик классов и подключает конфиги  
+
+
+\subsection*{Функции}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{init_8php_a2ecfde85f554ea0b3fef0993aef304a9}{\-\_\-\-\_\-autoload} (\$class\-Name)
+\end{DoxyCompactItemize}
+
+
+\subsection{Подробное описание}
+Файл содержит автозагрузчик классов и подключает конфиги Файл подключает конфигурационный файл, а также содержит функцию автозагрузки файлов классов. 
+
+См. определение в файле \hyperlink{init_8php_source}{init.\-php}
+
+
+
+\subsection{Функции}
+\hypertarget{init_8php_a2ecfde85f554ea0b3fef0993aef304a9}{\index{init.\-php@{init.\-php}!\-\_\-\-\_\-autoload@{\-\_\-\-\_\-autoload}}
+\index{\-\_\-\-\_\-autoload@{\-\_\-\-\_\-autoload}!init.php@{init.\-php}}
+\subsubsection[{\-\_\-\-\_\-autoload}]{\setlength{\rightskip}{0pt plus 5cm}\-\_\-\-\_\-autoload (
+\begin{DoxyParamCaption}
+\item[{}]{\$class\-Name}
+\end{DoxyParamCaption}
+)}}\label{init_8php_a2ecfde85f554ea0b3fef0993aef304a9}
+Принимает имена классов, определяет путь файлов содержащих эти класы и произодитиз загрузку. Необходимым условием является совпадение названия классов и файлов в которых они определены. Если путь файла не найдет выбрасывает исключение с кодом ошибки 404.
+
+
+\begin{DoxyParams}{Аргументы}
+{\em \$class\-Name} & Имя класса. Любое имя класса встречающееся по ходу выполнения скрипта.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+загружает файл нужного класса или выбрасывает исключение 
+\end{DoxyReturn}
+
+
+См. определение в файле init.\-php строка 21
+
