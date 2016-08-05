@@ -29,6 +29,7 @@ abstract class Router
         $url = rtrim($arr[0], '/');
 
         $url_a = explode('/', $url);
+
         if ($url_a[1] == 'bl') {
 
 

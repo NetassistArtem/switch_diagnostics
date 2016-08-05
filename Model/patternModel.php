@@ -107,6 +107,7 @@ class patternModel
 
         $port_coefficient_array = IndexModel::getPortCoeff();
 
+
         /*
         if($port_number <= $data_switch[0]['simple_port']){
 
@@ -120,7 +121,7 @@ class patternModel
 
 
         foreach ($data[0] as $k => $v) {
-            if ($k != 'id' /* && $k != 'port_coefficient'&&  $k != 'gig_port_coefficient' */ && $k != 'mac_all' && $k != 'macs_ports') {
+            if ($k != 'id' /* && $k != 'port_coefficient'&&  $k != 'gig_port_coefficient' */ && $k != 'mac_all' && $k != 'macs_ports' && $k != 'temperature') {
 
                 $data[0][$k] = $data[0][$k] . $port;
 
@@ -129,9 +130,15 @@ class patternModel
                 }
 
             }
+            if($k == 'temperature'){
+                if (empty($v)) {
+                    unset($data[0][$k]);
+                }else{
+                    $data[0][$k] = '.'.trim($v,'.');
+                }
+
+            }
         }
-
-
         return $data[0];
 
     }

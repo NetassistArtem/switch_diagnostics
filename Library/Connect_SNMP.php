@@ -83,6 +83,7 @@ class Connect_SNMP
      */
     public function getByKey($key)
     {
+
         $data = $this->snmp_session->get($key, $preserve_keys = true);
         $this->close_session();
 

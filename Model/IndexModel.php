@@ -5,6 +5,9 @@ class IndexModel
 {
     private $switch_mac;
     private static $port_coeff = array();
+    private $switch_data_db = null;
+    private $switch_mod_manuf = null;
+
 
     /*
       public function testConnect()
@@ -79,27 +82,36 @@ class IndexModel
 
     }
 
-    public function snmpData($account_id, $key, $variable = null, $switch_id = null, $port_id = null)
+    public function snmpData($account_id, $key, $variable = null, $switch_id = null, $port_id = null, $firmware_switch = null)
     {
-        if (!$this->switch_mac) {
 
+        if (!$this->switch_mac) {
             $this->switch_mac = $this->getDataByID($account_id, $switch_id, $port_id);
         }
+        if ($firmware_switch) {
 
+            foreach ($this->switch_data_db as $v) {
+
+                if (strpos($this->switch_mod_manuf, strtolower($v['model_name'])) !== false) {
+
+                    if (strpos($firmware_switch, $v['firmware']) !== false) {
+
+                        $this->switch_mac['firmware'] = $v['firmware'];
+                    }
+                }
+            }
+        }
 
         $snmp = new Connect_SNMP($this->switch_mac['switch_ip']);
-
 
 
         $switch_data = $snmp->getByKey($key);
 
 
 
-
         if ($variable[$switch_data]) {
             $switch_data = $variable[$switch_data];
         }
-
 
         $data = array(
 
@@ -112,13 +124,11 @@ class IndexModel
             'manufacturer' => $this->switch_mac['manufacturer'],
             'snmp' => $this->switch_mac['snmp'],
             'write_community' => $this->switch_mac['write_community'],
-            'user_id'=> $this->switch_mac['user_id'],
-            'switch_id' => $this->switch_mac['sw_id']
-
+            'user_id' => $this->switch_mac['user_id'],
+            'switch_id' => $this->switch_mac['sw_id'],
+            'ref_sw_id' => $this->switch_mac['ref_sw_id'],
 
         );
-
-
 
         return $data;
     }
@@ -138,14 +148,14 @@ class IndexModel
         $dbc = Connect_db::getConnection(3);
 
         if ($account_id) {
-            $sql = "SELECT pl.sw_id, pl.port_id AS port, sl.sw_ip AS switch_ip,  sl.sw_model  AS switch_mod_manuf, ul.user_mac AS mac, sl.use_snmp AS snmp, sl.snmp_auth_rw AS write_community  FROM port_list pl JOIN sw_list sl
+            $sql = "SELECT pl.sw_id, pl.port_id AS port, pl.ref_sw_id, sl.sw_ip AS switch_ip,  sl.sw_model  AS switch_mod_manuf, ul.user_mac AS mac, sl.use_snmp AS snmp, sl.snmp_auth_rw AS write_community  FROM port_list pl JOIN sw_list sl
 JOIN user_list ul ON pl.ref_user_id = :account_id AND pl.sw_id = sl.sw_id AND pl.ref_user_id = ul.user_id";
             $placeholders = array(
                 'account_id' => $account_id
             );
         } elseif ($switch_id && $port) {
 
-            $sql = "SELECT pl.ref_user_id AS user_id, sl.sw_ip AS switch_ip,  sl.sw_model  AS switch_mod_manuf, ul.user_mac AS mac, sl.use_snmp AS snmp, sl.snmp_auth_rw AS write_community  FROM port_list pl JOIN sw_list sl
+            $sql = "SELECT pl.ref_user_id AS user_id, pl.ref_sw_id, sl.sw_ip AS switch_ip,  sl.sw_model  AS switch_mod_manuf, ul.user_mac AS mac, sl.use_snmp AS snmp, sl.snmp_auth_rw AS write_community  FROM port_list pl JOIN sw_list sl
 JOIN user_list ul ON pl.sw_id = :switch_id AND pl.port_id = :port_id AND pl.sw_id = sl.sw_id AND pl.ref_user_id = ul.user_id";
             $placeholders = array(
                 'switch_id' => $switch_id,
@@ -155,8 +165,9 @@ JOIN user_list ul ON pl.sw_id = :switch_id AND pl.port_id = :port_id AND pl.sw_i
             throw new Exception('Нет данных account_id, switch_id, port_id.', 1);
         }
         $d = $dbc->getDate($sql, $placeholders);
-        if($switch_id && $port && !$d){
-            $sql = "SELECT sl.sw_ip AS switch_ip,  sl.sw_model  AS switch_mod_manuf, sl.use_snmp AS snmp, sl.snmp_auth_rw
+
+        if ($switch_id && $port && !$d) {
+            $sql = "SELECT sl.sw_ip AS switch_ip, pl.ref_sw_id, sl.sw_model  AS switch_mod_manuf, sl.use_snmp AS snmp, sl.snmp_auth_rw
 AS write_community  FROM port_list pl JOIN sw_list sl ON pl.sw_id = :switch_id AND pl.port_id = :port_id AND pl.sw_id = sl.sw_id";
             $placeholders = array(
                 'switch_id' => $switch_id,
@@ -175,24 +186,34 @@ AS write_community  FROM port_list pl JOIN sw_list sl ON pl.sw_id = :switch_id A
         $d[0]['switch_mod_manuf'] = str_replace(" ", "", $d[0]['switch_mod_manuf']);
         $d[0]['switch_mod_manuf'] = str_replace('å', 'E', $d[0]['switch_mod_manuf']);
         //окончание временного костыля
-        //  Debugger::PrintR($d);
+        //Debugger::PrintR($d);
 
         $switch_data_db = $this->switchData();
+        $this->switch_data_db = $switch_data_db;
         $switch_mod_manuf = strtolower($d[0]['switch_mod_manuf']);
+        $this->switch_mod_manuf = $switch_mod_manuf;
 
         foreach ($switch_data_db as $v) {
 
             if (strpos($switch_mod_manuf, strtolower($v['model_name'])) !== false) {
+
                 $d[0]['switch_model'] = $v['model_name'];
                 $d[0]['manufacturer'] = $v['manufacturer'];
                 $d[0]['firmware'] = $v['firmware'];
             }
         }
-
         if (!$d[0]['switch_model']) {
+            if ($d[0]['user_id'] == 'Нет данных') {
+                $port_id = Router::getPortId();
+                $switch = Router::getSwitchId();
+                throw new Exception("Порт $port_id , свич  $switch не существуют.", 1);
+            } elseif (!$d[0]['switch_mod_manuf']) {
+                $user = Router::getAccountId();
+                throw new Exception("Пользователь с id = $user не существует.", 1);
+            } else {
+                throw new Exception('Модель свича отсутсвтует в базе данных. Введите модель свича и соответствующий ей шаблон SNMP запросов', 1);
+            }
 
-
-            throw new Exception('Модель свича отсутсвтует в базе данных. Введите модель свича и соответствующий ей шаблон SNMP запросов', 1);
         }
         if (!$d[0]['snmp']) {
 
@@ -210,7 +231,8 @@ AS write_community  FROM port_list pl JOIN sw_list sl ON pl.sw_id = :switch_id A
             'write_community' => $d['0']['write_community'],
             'snmp' => $d['0']['snmp'],
             'user_id' => $account_id ? $account_id : $d['0']['user_id'],
-            'sw_id' => $d[0]['sw_id']
+            'sw_id' => $d[0]['sw_id'],
+            'ref_sw_id' => $d[0]['ref_sw_id'],
 
         );
 
@@ -283,10 +305,10 @@ AS write_community  FROM port_list pl JOIN sw_list sl ON pl.sw_id = :switch_id A
     }
 
 
-    public function getAllMac($account_id, $pattern_id, array $port_coefficient, $switch_id=null, $port_id=null)
+    public function getAllMac($account_id, $pattern_id, array $port_coefficient, $switch_id = null, $port_id = null)
     {
         $snmp = new Connect_SNMP($this->switch_mac['switch_ip']);
-        $patternModel = new patternModel($account_id,$switch_id,$port_id);
+        $patternModel = new patternModel($account_id, $switch_id, $port_id);
 
 
         $mac_port = $patternModel->macData($pattern_id);
@@ -303,7 +325,7 @@ AS write_community  FROM port_list pl JOIN sw_list sl ON pl.sw_id = :switch_id A
 
     }
 
-    public function cableTest($account_id, $pattern_id, $port, $switch_manufacturer, $style_class = null,$switch_id = null)
+    public function cableTest($account_id, $pattern_id, $port, $switch_manufacturer, $switch_model, $style_class = null, $switch_id = null)
     {
 
         if (!$this->switch_mac) {
@@ -313,6 +335,7 @@ AS write_community  FROM port_list pl JOIN sw_list sl ON pl.sw_id = :switch_id A
 
         $patternModel = new patternModel($account_id, $switch_id, $port);
         $object_id = $patternModel->PatternData($port, $pattern_id)['cable_test_start'];
+        $sleep_time = Config::get('timeout_cabletest')[$switch_manufacturer];
 
         if ($object_id) {
             $write_test = 1;
@@ -320,12 +343,24 @@ AS write_community  FROM port_list pl JOIN sw_list sl ON pl.sw_id = :switch_id A
                 $write_test = 2;
             }
 
+            if (strtolower($switch_manufacturer) == 'd-link' && ($switch_model == 'DES-1210-28' || $switch_model == 'DGS-1100-06/ME')) {
+                $write_test = $port;
+                $object_id = substr($object_id, 0, -(1 + strlen($port)));
+                $sleep_time = Config::get('timeout_cabletest')['D-Link_' . $switch_model];
+            }
+
+            if(strtolower($switch_manufacturer) == 'edge-core'){
+                $write_test = $port;
+                $object_id = substr($object_id, 0, -(1 + strlen($port)));
+            }
+
             $snmp = new Connect_SNMP($this->switch_mac['switch_ip'], 'w');
 
 
             $snmp->setData($object_id, 'i', $write_test);
 
-            sleep(Config::get('timeout_cabletest')[$switch_manufacturer]);
+
+            sleep($sleep_time);
         } else {
             Session::setFlash('Тест кабеля для свича ' . $this->switch_mac['switch_model'] . ' ' . $this->switch_mac['manufacturer'] . ' ' . $this->switch_mac['firmware'] . ' на данный момент не доступен (отсутствует необходимый OID)', $style_class['notice']);
             return 1;
@@ -344,14 +379,14 @@ AS write_community  FROM port_list pl JOIN sw_list sl ON pl.sw_id = :switch_id A
             $placeholders = array(
                 'account_id' => Router::getAccountId()
             );
-        }elseif($switch_id){
+        } elseif ($switch_id) {
 
             $sql = 'SELECT sw.snmp_auth, sw.use_snmp FROM sw_list sw WHERE sw.sw_id = :switch_id';
             $placeholders = array(
                 'switch_id' => $switch_id,
             );
-        }else{
-            throw new Exception('Нет данных user_id, switch_id',1);
+        } else {
+            throw new Exception('Нет данных user_id, switch_id', 1);
         }
         $data = $dbc->getDate($sql, $placeholders);
         return $data[0];
@@ -369,16 +404,23 @@ AS write_community  FROM port_list pl JOIN sw_list sl ON pl.sw_id = :switch_id A
         return $data;
     }
 
-    public function snmpByKey($account_id, $key, $switch_id = null, $port_id = null)
+// функция полчает данные снмп по ключу или по массиву ключей если параметр $multi = 1
+    public function snmpByKey($account_id, $key, $switch_id = null, $port_id = null, $multi = null)
     {
         if (!$this->switch_mac) {
             $this->switch_mac = $this->getDataByID($account_id, $switch_id, $port_id);
         }
 
         $snmp = new Connect_SNMP($this->switch_mac['switch_ip']);
-        $data = $snmp->walkByKey($key);
+        if ($multi) {
+            $data = $snmp->getByKey($key);
+        } else {
+            $data = $snmp->walkByKey($key);
+        }
+
         return $data;
     }
+
 
     public function userIdByPort($port, $switch_id)
     {
@@ -398,7 +440,7 @@ AS write_community  FROM port_list pl JOIN sw_list sl ON pl.sw_id = :switch_id A
     public function getPortCoefficient($account_id, $port_number, $switch_id)
     {
 
-        $patternModel = new patternModel($account_id,$switch_id,$port_number);
+        $patternModel = new patternModel($account_id, $switch_id, $port_number);
 
         $data_switch = $patternModel->getSwitchDataByName($this->switch_mac['switch_model']);
 
@@ -436,6 +478,7 @@ AS write_community  FROM port_list pl JOIN sw_list sl ON pl.sw_id = :switch_id A
         return $port_coefficient;
 
     }
+
     public function getUserByMac($mac)
     {
         $dbc = Connect_db::getConnection(3);
@@ -448,6 +491,7 @@ AS write_community  FROM port_list pl JOIN sw_list sl ON pl.sw_id = :switch_id A
         return $data[0]['user_id'];
 
     }
+
 
     /**
      * @return array

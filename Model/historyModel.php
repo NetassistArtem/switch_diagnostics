@@ -5,8 +5,29 @@ class historyModel
 {
     public function insertData($account_id, array $data_switch, array  $data_db, $switch_id)
     {
+        $cable_status_total = isset($data_switch['cable_status'])? $data_switch['cable_status'] : '-';
+        $cable_status_p1 = isset($data_switch['cable_status_p1'])? $data_switch['cable_status_p1'] : '-';
+        $cable_status_p2 = isset($data_switch['cable_status_p2'])? $data_switch['cable_status_p2'] : '-';
+        $cable_status_p3 = isset($data_switch['cable_status_p3'])? $data_switch['cable_status_p3'] : '-';
+        $cable_status_p4 = isset($data_switch['cable_status_p4'])? $data_switch['cable_status_p4'] : '-';
+        $cable_status = $cable_status_total.'<br> Пара 1: '.$cable_status_p1.'<br> Пара 2: '.$cable_status_p2.'<br> Пара 3: '.$cable_status_p3.'<br> Пара 4: '.$cable_status_p4;
+        $cable_lenght_total = isset($data_switch['cable_lenght'])? $data_switch['cable_lenght'] : '-';
+        $cable_lenght_p1 = isset($data_switch['cable_lenght_p1'])? $data_switch['cable_lenght_p1'] : '-';
+        $cable_lenght_p2 = isset($data_switch['cable_lenght_p2'])? $data_switch['cable_lenght_p2'] : '-';
+        $cable_lenght_p3 = isset($data_switch['cable_lenght_p3'])? $data_switch['cable_lenght_p3'] : '-';
+        $cable_lenght_p4 = isset($data_switch['cable_lenght_p4'])? $data_switch['cable_lenght_p4'] : '-';
+        $cable_lenght = $cable_lenght_total.' / ('.$cable_lenght_p1.' / '.$cable_lenght_p2.' / '.$cable_lenght_p3.' / '.$cable_lenght_p4.')';
+        $mac_int = '';
+        if(!empty($data_switch['mac'])){
 
-        $mac_int = base_convert($data_db['mac'], 16, 10);
+            foreach($data_switch['mac'] as $v){
+                $mac_int .= base_convert($v, 16, 10).',';
+            }
+            $mac_int = trim($mac_int,',');
+        }else{
+            $mac_int = 'Нет данных';
+        }
+
         $switch_ip_int = ip2long($data_db['switch_ip']);
         $placeholders = array(
             'date_time' => strtotime(date('Y-m-d h:i:s')),
@@ -26,17 +47,27 @@ class historyModel
             'duplex' => $data_switch['duplex'],
             'speed' => $data_switch['speed'],
             'last_change' => $data_switch['last_change'],
-            'switch_id' => $data_db['switch_id'] ? $data_db['switch_id'] : $switch_id
+            'switch_id' => $data_db['switch_id'] ? $data_db['switch_id'] : $switch_id,
+            'temperature' => $data_switch['temperature'],
+            'ref_sw_id' => $data_db['ref_sw_id'] == -1 ? 'Нет данных' : $data_db['ref_sw_id'],
+            'cable_status' => $cable_status,
+            'cable_lenght' => $cable_lenght,
+
+
+
 
         );
 
         $dbc = Connect_db::getConnection();
         $sql = "INSERT INTO `users_history`(`date_time`,`account_id`, `switch_ip`, `mac`, `port`, `switch_model`, `firmware`,
- `port_status`, `counter_byte_in`, `counter_byte_out`,`counter_pkts_unicast_in`, `counter_pkts_unicast_out`, `error_in`, `error_out`, `duplex`,`speed`, `last_change`, `switch_id`)
+ `port_status`, `counter_byte_in`, `counter_byte_out`,`counter_pkts_unicast_in`, `counter_pkts_unicast_out`, `error_in`, `error_out`, `duplex`,`speed`, `last_change`, `switch_id`, `temperature`, `ref_sw_id`, `cable_status`, `cable_lenght`)
   VALUES (:date_time,:account_id, :switch_ip, :mac, :port, :switch_model, :firmware, :port_status, :counter_byte_in,
-  :counter_byte_out, :counter_pkts_unicast_in, :counter_pkts_unicast_out, :error_in, :error_out, :duplex, :speed, :last_change, :switch_id)";
+  :counter_byte_out, :counter_pkts_unicast_in, :counter_pkts_unicast_out, :error_in, :error_out, :duplex, :speed, :last_change, :switch_id, :temperature, :ref_sw_id, :cable_status, :cable_lenght)";
+
         $sth = $dbc->getPDO()->prepare($sql);
+
         $sth->execute($placeholders);
+
 
     }
 

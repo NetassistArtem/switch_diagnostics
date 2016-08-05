@@ -9,15 +9,17 @@
 <table border="1">
     <tr>
         <td>Дата-время</td>
+        <td>Пользователь ID</td>
         <td>Cвич ID</td>
         <td>Свич ip</td>
         <td>Макадрес</td>
         <td>Порт</td>
+        <td>Подключенный в порт свич, id</td>
         <td>Модель свича</td>
         <td>Прошивка свича</td>
         <td>Состояние порта</td>
-        <td>счетчик(in), байт</td>
-        <td>счетчик(out), байт</td>
+        <td>счетчик(in), байт / скорость байт/с</td>
+        <td>счетчик(out), байт / скорость байт/с</td>
         <td>счетчик пакетов(unicast,in)</td>
         <td>счетчик пакетов(unicast,out)</td>
         <td>Ошибки(in)</td>
@@ -25,29 +27,45 @@
         <td>Дупликс</td>
         <td>Скорость</td>
         <td>Время последнего изменения порта</td>
+        <td>Температура, С</td>
+        <td>Состояние кабеля</td>
+        <td>Длина кабеля, порт,
+            общая / по парам (1/2/3/4)</td>
     </tr>
-    <?php foreach($data_history as $v ): ?>
+    <?php foreach ($data_history as $v): ?>
 
 
-    <tr>
-        <td><?= $v['date_time'] ?></td>
-        <td><?= $v['switch_id'] ?></td>
-        <td><?= $v['switch_ip'] ?></td>
-        <td><?= $v['mac'] ?></td>
-        <td><?= $v['port'] ?></td>
-        <td><?= $v['switch_model'] ?></td>
-        <td><?= $v['firmware'] ?></td>
-        <td><?= $v['port_status'] ?></td>
-        <td><?= $v['counter_byte_in'] ?></td>
-        <td><?= $v['counter_byte_out'] ?></td>
-        <td><?= $v['counter_pkts_unicast_in'] ?></td>
-        <td><?= $v['counter_pkts_unicast_out'] ?></td>
-        <td><?= $v['error_in'] ?></td>
-        <td><?= $v['error_out'] ?></td>
-        <td><?= $v['duplex'] ?></td>
-        <td><?= $v['speed'] ?></td>
-        <td><?= $v['last_change'] ?></td>
-    </tr>
+        <tr>
+            <td><?= $v['date_time'] ?></td>
+            <td><?= $v['account_id'] ?></td>
+            <td><?= $v['switch_id'] ?></td>
+            <td><?= $v['switch_ip'] ?></td>
+            <td>
+                <ul>
+                    <?php foreach ($v['mac'] as $val): ?>
+                        <li><?= $val ?></li>
+                    <?php endforeach; ?>
+                </ul>
+
+            </td>
+            <td><?= $v['port'] ?></td>
+            <td><?= $v['ref_sw_id'] ?></td>
+            <td><?= $v['switch_model'] ?></td>
+            <td><?= $v['firmware'] ?></td>
+            <td><?= $v['port_status'] ?></td>
+            <td><?= $v['counter_byte_in'] ?></td>
+            <td><?= $v['counter_byte_out'] ?></td>
+            <td><?= $v['counter_pkts_unicast_in'] ?></td>
+            <td><?= $v['counter_pkts_unicast_out'] ?></td>
+            <td><?= $v['error_in'] ?></td>
+            <td><?= $v['error_out'] ?></td>
+            <td><?= $v['duplex'] ?></td>
+            <td><?= $v['speed'] ?></td>
+            <td><?= $v['last_change'] ?></td>
+            <td><?= $v['temperature'] ?></td>
+            <td><?= $v['cable_status'] ?></td>
+            <td><?= $v['cable_lenght'] ?></td>
+        </tr>
     <?php endforeach; ?>
 
 </table>

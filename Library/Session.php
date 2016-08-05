@@ -92,6 +92,15 @@ class Session
         $errorModel = new errorModel($account_id, $switch_id, $port_id, $switch_port_id);
         $errorModel->writeError($message);
 
+        //удалени сообщений не важных для сопорта Сообщения с пометной "Switch_SNMP_data_problem". Но в историю они записываются
+
+        foreach($message as $k=> $v){
+            if(strpos($v['message'],'Switch_SNMP_data_problem') !== false){
+                unset($message[$k]);
+
+            }
+        }
+
         self::remove('flash');
 
         return $message;

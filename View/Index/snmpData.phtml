@@ -31,42 +31,52 @@
 
 <table border="1">
     <tr>
-        <td colspan="2">Данные полученные со свича</td>
+        <td colspan="3">Данные полученные со свича</td>
     </tr>
     <tr>
         <td>Состояние порта</td>
-        <td><?= isset($data_switch['port_status']) ? $data_switch['port_status'] : 'Нет данных' ?></td>
+        <td colspan="2"><?= isset($data_switch['port_status']) ? $data_switch['port_status'] : 'Нет данных' ?></td>
+
     </tr>
     <tr>
-        <td>счетчик(in), байт</td>
+        <td>счетчик(in), байт / скорость, байт/с</td>
         <td><?= isset($data_switch['counter_byte_in']) ? $data_switch['counter_byte_in'] : 'Нет данных' ?></td>
+        <td rowspan="2" >
+            <!-- Сюда необходимо вставить кнопку - Уточнить скорость - В функции параметр $byte_velocity = 1 -->
+            <?php if (!$billing_request): ?>
+            <p>
+                <a href="<?= Config::get('host_for_link') ?>/account_test/<?= $account_id ?>?byte_velocity=1">Уточнить скорость</a>
+            </p>
+            <?php endif; ?>
+        </td>
     </tr>
 
     <tr>
-        <td>счетчик(out), байт</td>
+        <td>счетчик(out), байт / скорость, байт/с</td>
         <td><?= isset($data_switch['counter_byte_out']) ? $data_switch['counter_byte_out'] : 'Нет данных' ?></td>
+
     </tr>
     <tr>
         <td>счетчик пакетов(unicast,in)</td>
-        <td><?= isset($data_switch['counter_pkts_unicast_in']) ? $data_switch['counter_pkts_unicast_in'] : 'Нет данных' ?></td>
+        <td colspan="2"><?= isset($data_switch['counter_pkts_unicast_in']) ? $data_switch['counter_pkts_unicast_in'] : 'Нет данных' ?></td>
     </tr>
     <tr>
         <td>счетчик пакетов(unicast,out)</td>
-        <td><?= isset($data_switch['counter_pkts_unicast_out']) ? $data_switch['counter_pkts_unicast_out'] : 'Нет данных' ?></td>
+        <td colspan="2"><?= isset($data_switch['counter_pkts_unicast_out']) ? $data_switch['counter_pkts_unicast_out'] : 'Нет данных' ?></td>
     </tr>
     <tr>
         <td>Ошибки(in)</td>
-        <td><?= isset($data_switch['error_in']) ? $data_switch['error_in'] : 'Нет данных' ?></td>
+        <td colspan="2"><?= isset($data_switch['error_in']) ? $data_switch['error_in'] : 'Нет данных' ?></td>
     </tr>
     <tr>
         <td>Ошибки(out)</td>
-        <td><?= isset($data_switch['error_out']) ? $data_switch['error_out'] : 'Нет данных' ?></td>
+        <td colspan="2"><?= isset($data_switch['error_out']) ? $data_switch['error_out'] : 'Нет данных' ?></td>
     </tr>
 
     <?php if (Config::get('duplex_speed_view') == 'string'): ?>
         <tr>
             <td>Дуплекс, Скорость мб/с</td>
-            <td>
+            <td colspan="2">
                 <?= isset($data_switch['duplex']) ? $data_switch['duplex'] : '' ?>
                 <?= isset($data_switch['speed']) ? $data_switch['speed'] : '' ?>
             </td>
@@ -75,28 +85,77 @@
     <?php if (Config::get('duplex_speed_view') == 'table'): ?>
         <tr>
             <td>Скорость мб/с</td>
-            <td><?= isset($data_switch['speed']) ? $data_switch['speed'] : 'Нет данных' ?></td>
+            <td colspan="2"><?= isset($data_switch['speed']) ? $data_switch['speed'] : 'Нет данных' ?></td>
         </tr>
         <tr>
             <td>Дуплекс</td>
-            <td><?= isset($data_switch['duplex']) ? $data_switch['duplex'] : 'Нет данных' ?></td>
+            <td colspan="2"><?= isset($data_switch['duplex']) ? $data_switch['duplex'] : 'Нет данных' ?></td>
         </tr>
     <?php endif; ?>
     <tr>
         <td>Состояние кабеля</td>
-        <td><?= (isset($cabletest_start) && $cabletest_start == 'yes') ? $data_switch['cable_status'] : 'Нет данных' ?></td>
+        <td colspan="2">
+            <?php if ((isset($cabletest_start) && $cabletest_start == 'yes')):?>
+                <?= isset($data_switch['cable_status']) ? $data_switch['cable_status'] : 'Нет данных' ; ?>
+                <br>
+                Пара 1 :  <?= isset($data_switch['cable_status_p1']) ? $data_switch['cable_status_p1'] : 'Нет данных'; ?>
+                <br>
+                Пара 2 :  <?= isset($data_switch['cable_status_p2']) ? $data_switch['cable_status_p2'] : 'Нет данных'; ?>
+                <br>
+                Пара 3 :  <?= isset($data_switch['cable_status_p3']) ? $data_switch['cable_status_p3'] : 'Нет данных'; ?>
+                <br>
+                Пара 4 :  <?php echo (isset($data_switch['cable_status_p4']) ? $data_switch['cable_status_p4'] : 'Нет данных');
+            else: ?>
+                Нет данных
+                <br>
+                Пара 1 :  Нет данных
+                <br>
+                Пара 2 :  Нет данных
+                <br>
+                Пара 3 :  Нет данных
+                <br>
+                Пара 4 :  Нет данных
+            <?php endif; ?>
+        </td>
     </tr>
-    <tr class="<?= $cable_length_status_port_on ?>">
-        <td>Длина кабеля, порт - "ON"</td>
-        <td><?= (isset($cabletest_start) && $cabletest_start == 'yes') ? $cable_length_port_on : 'Нет данных' ?></td>
+    <tr >
+        <td>Длина кабеля, порт - "ON",<br>
+            общая / по парам (1/2/3/4)
+        </td>
+        <td colspan="2">
+            <?php if ((isset($cabletest_start) && $cabletest_start == 'yes')):?>
+                <span class="<?= $cable_length_status_port_on ?>" ><?= isset($cable_length_port_on) ? $cable_length_port_on : '-' ?></span>
+                / (<span class="<?= $cable_length_status_port_on_p1 ?>" ><?= isset($cable_length_port_on_p1) ? $cable_length_port_on_p1 : '-' ?></span> /
+                <span class="<?= $cable_length_status_port_on_p2 ?>" ><?= isset($cable_length_port_on_p2) ? $cable_length_port_on_p2 : '-' ?></span> /
+                <span class="<?= $cable_length_status_port_on_p3 ?>" ><?= isset($cable_length_port_on_p3) ? $cable_length_port_on_p3 : '-' ?></span> /
+                <span class="<?= $cable_length_status_port_on_p4 ?>" ><?= isset($cable_length_port_on_p4) ? $cable_length_port_on_p4 : '-' ?></span>)
+                <?php
+            else: ?>
+                - / (- / - / - / -)
+            <?php endif; ?>
+        </td>
     </tr>
-    <tr class="<?= $cable_length_status_port_off ?>">
-        <td>Длина кабеля, порт - "OFF"</td>
-        <td><?= (isset($cabletest_start) && $cabletest_start == 'yes') ? $cable_length_port_off : 'Нет данных' ?></td>
+    <tr >
+        <td>Длина кабеля, порт - "OFF",<br>
+            общая / по парам (1/2/3/4)
+        </td>
+        <td colspan="2">
+            <?php if ((isset($cabletest_start) && $cabletest_start == 'yes')):?>
+                <span class="<?= $cable_length_status_port_off ?>" ><?= isset($cable_length_port_off) ? $cable_length_port_off : '-' ?></span>
+                / (<span class="<?= $cable_length_status_port_off_p1 ?>" ><?= isset($cable_length_port_off_p1) ? $cable_length_port_off_p1 : '-' ?></span> /
+                <span class="<?= $cable_length_status_port_off_p2 ?>" ><?= isset($cable_length_port_off_p2) ? $cable_length_port_off_p2 : '-' ?></span> /
+                <span class="<?= $cable_length_status_port_off_p3 ?>" ><?= isset($cable_length_port_off_p3) ? $cable_length_port_off_p3 : '-' ?></span> /
+                <span class="<?= $cable_length_status_port_off_p4 ?>" ><?= isset($cable_length_port_off_p4) ? $cable_length_port_off_p4 : '-' ?></span>)
+                <?php
+            else: ?>
+                - / (- / - / - / -)
+            <?php endif; ?>
+
+        </td>
     </tr>
     <tr>
         <td>Время последнего изменения порта</td>
-        <td><?= isset($data_switch['last_change']) ? $data_switch['last_change'] : 'Нет данных' ?></td>
+        <td colspan="2"><?= isset($data_switch['last_change']) ? $data_switch['last_change'] : 'Нет данных' ?></td>
     </tr>
     <?php
     if (!empty($data_switch['mac'])):
@@ -105,19 +164,19 @@
 
                 <tr>
                     <td>Мак адрес № <?= $k + 1; ?></td>
-                    <td><?= $v; ?></td>
+                    <td colspan="2"><?= $v; ?></td>
                 </tr>
 
             <?php endforeach;
 
         else:?>
             <tr>
-            <td style="text-align: center" colspan="2">Мак адреса</td>
+            <td style="text-align: center" colspan="3">Мак адреса</td>
             </tr>
            <?php foreach ($data_switch['mac'] as $k => $v): ?>
 
                 <tr>
-                    <td style="text-align: center" colspan="2"><?= $v; ?></td>
+                    <td style="text-align: center" colspan="3"><?= $v; ?></td>
                 </tr>
 
             <?php endforeach;
@@ -126,36 +185,44 @@
 
         <tr>
             <td>Мак адрес</td>
-            <td>Нет данных</td>
+            <td colspan="2">Нет данных</td>
         </tr>
 
     <?php endif; ?>
 
+<tr>
+    <td>Температура, С</td>
+    <td colspan="2" class="<?= $temperature_warning_class ?>" ><?= isset($data_switch['temperature']) ? $data_switch['temperature'] : 'Нет данных' ?></td>
+</tr>
     <?php if ($switch_data_on_off == 1): ?>
 
         <tr>
-            <td colspan="2">Данные полученные из базы данных билинга</td>
+            <td colspan="3">Данные полученные из базы данных билинга</td>
         </tr>
         <tr>
             <td>ip свича</td>
-            <td><?= $data_db['switch_ip'] ? $data_db['switch_ip'] : 'Нет данных' ?></td>
+            <td colspan="2"><?= $data_db['switch_ip'] ? $data_db['switch_ip'] : 'Нет данных' ?></td>
         </tr>
         <tr>
             <td>Мак адрес пользователя</td>
-            <td><?= $data_db['mac'] ? $data_db['mac'] : 'Нет данных' ?></td>
+            <td colspan="2"><?= $data_db['mac'] ? $data_db['mac'] : 'Нет данных' ?></td>
         </tr>
         <tr>
             <td>Порт</td>
-            <td><?= $data_db['port'] ? $data_db['port'] : 'Нет данных' ?></td>
+            <td colspan="2"><?= $data_db['port'] ? $data_db['port'] : 'Нет данных' ?></td>
         </tr>
         <tr>
             <td>Свич id</td>
-            <td><?= $data_db['switch_id'] ? $data_db['switch_id'] : 'Нет данных' ?></td>
+            <td colspan="2"><?= $data_db['switch_id'] ? $data_db['switch_id'] : 'Нет данных' ?></td>
+        </tr>
+        <tr>
+            <td>Подключенный в порт свич, id</td>
+            <td colspan="2"><?= $data_db['ref_sw_id']&& $data_db['ref_sw_id'] != -1 ? $data_db['ref_sw_id'] : 'Нет данных' ?></td>
         </tr>
         <?php if (Config::get('switch_info_view') == 'string'): ?>
             <tr>
                 <td>Свич</td>
-                <td>
+                <td colspan="2">
                     <?= $data_db['manufacturer'] ? $data_db['manufacturer'] : '' ?>
                     <?= $data_db['switch_model'] ? $data_db['switch_model'] : '' ?>
                     <?= $data_db['firmware'] ? $data_db['firmware'] : '' ?>
@@ -165,21 +232,21 @@
         <?php if (Config::get('switch_info_view') == 'table'): ?>
             <tr>
                 <td>Производитель свича</td>
-                <td><?= $data_db['manufacturer'] ? $data_db['manufacturer'] : 'Нет данных' ?></td>
+                <td colspan="2"><?= $data_db['manufacturer'] ? $data_db['manufacturer'] : 'Нет данных' ?></td>
             </tr>
             <tr>
                 <td>Модель свича</td>
-                <td><?= $data_db['switch_model'] ? $data_db['switch_model'] : 'Нет данных' ?></td>
+                <td colspan="2"><?= $data_db['switch_model'] ? $data_db['switch_model'] : 'Нет данных' ?></td>
             </tr>
             <tr>
                 <td>Прошивка свича</td>
-                <td><?= $data_db['firmware'] ? $data_db['firmware'] : 'Нет данных' ?></td>
+                <td colspan="2"><?= $data_db['firmware'] ? $data_db['firmware'] : 'Нет данных' ?></td>
             </tr>
         <?php endif ?>
         <?php if (Config::get('time_switch_response') == 'on'): ?>
             <tr>
                 <td>Время отработки свича, с</td>
-                <td><?= microtime(true) - $GLOBALS['start_time']; ?></td>
+                <td colspan="2"><?= microtime(true) - $GLOBALS['start_time']; ?></td>
             </tr>
         <?php endif ?>
 
