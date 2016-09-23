@@ -6,28 +6,30 @@ class cableLengthModel
     public function cableLength($user_id, $switch_id, $port_id)
     {
         $dbc = Connect_db::getConnection();
-        if($user_id){
-        $sql = "SELECT * FROM  cable_test WHERE user_id= :user_id";
-        $placeholders = array(
-            'user_id' => $user_id
-        );
-    }else{
+        if ($user_id) {
+            $sql = "SELECT * FROM  cable_test WHERE user_id= :user_id";
+            $placeholders = array(
+                'user_id' => $user_id
+            );
+        } else {
             $sql = "SELECT * FROM  cable_test WHERE switch_id= :switch_id AND port_id= :port_id";
             $placeholders = array(
                 'switch_id' => $switch_id,
                 'port_id' => $port_id
             );
         }
+
         $data = $dbc->getDate($sql, $placeholders);
 
         return $data;
     }
 
-    public function insertCableLength($user_id, $cable_length, $port_on_off, $switch_id, $port_id, array $cable_length_pairs){
+    public function insertCableLength($user_id, $cable_length, $port_on_off, $switch_id, $port_id, array $cable_length_pairs)
+    {
 
         $dbc = Connect_db::getConnection();
         $placeholders = array(
-            'cable_length'=> isset($cable_length) ? $cable_length : 0,
+            'cable_length' => isset($cable_length) ? $cable_length : 0,
             'user_id' => $user_id,
             'switch_id' => $switch_id,
             'port_id' => $port_id,
@@ -47,9 +49,9 @@ class cableLengthModel
     {
         $dbc = Connect_db::getConnection();
         $placeholders = array(
-            'cable_length'=> isset($cable_length) ? $cable_length : 0,
+            'cable_length' => isset($cable_length) ? $cable_length : 0,
             'user_id' => $user_id,
-            'switch_id'=> $switch_id,
+            'switch_id' => $switch_id,
             'port_id' => $port_id,
             'cable_length_pair_1' => isset($cable_length_pairs[0]) ? $cable_length_pairs[0] : 0,
             'cable_length_pair_2' => isset($cable_length_pairs[1]) ? $cable_length_pairs[1] : 0,

@@ -194,6 +194,24 @@
         <td>Температура, С</td>
         <td colspan="2" class="<?= $temperature_warning_class ?>" ><?= isset($data_switch['temperature']) ? $data_switch['temperature'] : 'Нет данных' ?></td>
     </tr>
+
+    <tr>
+        <td>Загрузка CPU, %, (5с/1мин/5мин)</td>
+        <td colspan="2" class="<?= $cpu_warning_class ?>">
+            <?php if ($data_switch['cpu_5s'] || $data_switch['cpu_1m'] || $data_switch['cpu_5m']): ?>
+                (
+                <?= isset($data_switch['cpu_5s']) ? $data_switch['cpu_5s'] : ' - ' ?>
+                /
+                <?= isset($data_switch['cpu_1m']) ? $data_switch['cpu_1m'] : ' - ' ?>
+                /
+                <?= isset($data_switch['cpu_5m']) ? $data_switch['cpu_5m'] : ' - ' ?>
+                )
+            <?php else: ?>
+                Нет данных
+            <?php endif; ?>
+        </td>
+    </tr>
+
     <?php if ($switch_data_on_off == 1): ?>
 
         <tr>

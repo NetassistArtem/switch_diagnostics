@@ -366,13 +366,30 @@ class IndexController extends Controller
     }
 
 
+    private function criticalCpuLoading($cpu_5s = null,$cpu_1m= null, $cpu_5m= null)
+    {
+        if (($cpu_5s && is_numeric($cpu_5s)) ||($cpu_1m && is_numeric($cpu_1m)) || ($cpu_5m && is_numeric($cpu_5m))) {
+            $max_cpu_loading = Config::get('critical_cpu_loading');
+
+            if ($cpu_5s > $max_cpu_loading || $cpu_1m > $max_cpu_loading || $cpu_5m > $max_cpu_loading) {
+
+                    Session::setFlash("CPU свича сильно загружен! Загрзка CPU свича больше $max_cpu_loading %.", $this->style_class['warning']);
+                    return $this->style_class['warning'];
+            }
+        }
+        return ''; //'information';
+
+    }
+
+
+
     private function isCableLength($port_status, $pattern_data)
     {
+
         $cable_length_write = null;
         $cableLengthModel = new cableLengthModel();
         $cable_length = $cableLengthModel->cableLength($this->account_id, $this->switch_id, $this->port_id);
         $this->cable_length = $cable_length;
-        //  Debugger::PrintR($cable_length);
         if ($port_status[1] && ((!$cable_length[0]['cable_length_port_on'] && $pattern_data['cable_lenght']) || (!$cable_length[0]['cable_length_port_on_p1'] && $pattern_data['cable_lenght_p1']) || (!$cable_length[0]['cable_length_port_on_p3'] && $pattern_data['cable_lenght_p3']))) {
 
             $cable_length_write = 1;
@@ -493,6 +510,7 @@ class IndexController extends Controller
         $port_coefficient_array = $indexModel->getPortCoefficient($this->account_id, $d['port'], $this->switch_id);//$patternModel->getPortCoefficient($pattern_id, $d['port'], $d['switch_model']);
         $port_coefficient = $port_coefficient_array['port_coefficient_simple_gig'];
 
+        $pattern_data = $patternModel->PatternData($d['port'], $pattern_id);
 
         $mac_port_array = $indexModel->getAllMac($this->account_id, $pattern_id, $port_coefficient_array);
         // Debugger::PrintR($mac_port_array);
@@ -542,16 +560,18 @@ class IndexController extends Controller
             } elseif ($d['mac'] == 'Нет данных') { //это значение присваивается в indexModel когда в б.д. id  пользователя = -1, т.е. он не числится на порту
 
                 Session::setFlash("На запрашиваемом прту (свич $switch_id, порт $port) по данным базы данных пользователь не числится", $this->style_class['warning']);
+            }elseif(!$pattern_data['mac_all']){
+                Session::setFlash("Для данной модели свича ($d[manufacturer] $d[switch_model] $d[firmware]) отсутствует OID получения мак адресов", $this->style_class['notice']);
             } else {
 
-                Session::setFlash("Мак адрес для свича $switch_id, порт $port  указанный в базе даных билинга не обнаружен в данных свича", $this->style_class['warning']);
+                Session::setFlash("Мак адрес пользователя $this->account_id (свич $switch_id, порт $port )  указанный в базе даных билинга не обнаружен в данных свича", $this->style_class['warning']);
             }
 
         } else {
             Session::setFlash("Мак адрес в базе даных билинга для user $this->account_id отсутствует", $this->style_class['warning']);
         }
 
-        $pattern_data = $patternModel->PatternData($d['port'], $pattern_id);
+
         //  Debugger::PrintR($d);
 
 
@@ -703,8 +723,20 @@ class IndexController extends Controller
         // echo '</br>';
 
 
+        $oid_cable_test_start = $oids['cable_test_start'];
         $oids = array_flip($oids);
+        // Debugger::PrintR($oids);
+        // Debugger::PrintR($data['key']);
+
+        if($d['manufacturer'] == 'Huawei' && $oid_cable_test_start){ //Для Хуавеев значение для запуска теста кабеля отсутствует,(при запуске через приложение
+            //через консоль ==1), а в случае если тест кабеля запущен то необходимо целое число для последующего запуска записи длины кабеля
+            $data['key'][$oid_cable_test_start] = 1;
+        }
         $data_switch = array_combine($oids, $data['key']);
+
+        if ($d['manufacturer'] == 'TP-Link' && $d['switch_model'] == 'TL-SG3210'){
+            $data_switch['speed'] = $data_switch['speed']/1000000;
+        }
 
         //получени скорости в байтах
 
@@ -837,6 +869,8 @@ class IndexController extends Controller
         $c_l_port_off_p4 = $this->cable_length[0]['cable_length_port_off_p4'] ? $this->cable_length[0]['cable_length_port_off_p4'] : ' - ';
 
         $temperature_warning_class = $this->criticalTemperature($data_switch['temperature'], $data['manufacturer']);
+        $cpu_warning_class = $this ->criticalCpuLoading($data_switch['cpu_5s'], $data_switch['cpu_1m'], $data_switch['cpu_5m']);
+
 
         $args = array(
             'data_switch' => $data_switch,
@@ -868,6 +902,7 @@ class IndexController extends Controller
             'billing_request' => isset($billing_request) ? $billing_request : null,
             'switch_port_id' => Router::getSwitchPortId() ? Router::getSwitchPortId() : '',
             'temperature_warning_class' => $temperature_warning_class,
+            'cpu_warning_class' => $cpu_warning_class,
         );
 
 
@@ -1052,8 +1087,11 @@ class IndexController extends Controller
         $port_coefficient = $port_coefficient_array['port_coefficient_simple_gig'];
 
 
+        $pattern_data = $patternModel->PatternData($d['port'], $pattern_id); //получение oid-ов из шаблона
+        //Debugger::PrintR($pattern_data);
+
+
         $mac_port_array = $indexModel->getAllMac($this->account_id, $pattern_id, $port_coefficient_array, $this->switch_id, $this->port_id);
-        // Debugger::PrintR($mac_port_array);
 
 
         if ($d['mac']) {
@@ -1099,6 +1137,8 @@ class IndexController extends Controller
             } elseif ($d['mac'] == 'Нет данных') {
 
                 Session::setFlash("Нa запрашиваемом порту (свич $this->switch_id, порт $this->port_id) по данным базы данных пользователь не числится", $this->style_class['warning']);
+            }elseif(!$pattern_data['mac_all']){
+                Session::setFlash("Для данной модели свича ($d[manufacturer] $d[switch_model] $d[firmware]) отсутствует OID получения мак адресов", $this->style_class['notice']);
             } else {
                 Session::setFlash("Мак адрес для свич $this->switch_id, порт $this->port_id  указанный в базе даных билинга не обнаружен в данных свича", $this->style_class['warning']);
             }
@@ -1107,7 +1147,7 @@ class IndexController extends Controller
             Session::setFlash("Мак адрес в базе даных билинга для свич $this->switch_id, порт $this->port_id отсутствует", $this->style_class['warning']);
         }
 
-        $pattern_data = $patternModel->PatternData($d['port'], $pattern_id);
+
 
 
         $key_1 = array($pattern_data['counter_byte_in'], $pattern_data['counter_byte_out']);
@@ -1160,7 +1200,6 @@ class IndexController extends Controller
                 $cabletest_start = "no";
                 break;
             case 'onoff':
-
                 if (isset($data_status[2]) ||
                     (!$first_write_cable_test['cable_length_port_on'] && $pattern_data['cable_status']) ||
                     (!$first_write_cable_test['cable_length_port_on_p1'] && $pattern_data['cable_status_p1']) ||
@@ -1189,7 +1228,6 @@ class IndexController extends Controller
                 break;
 
         }
-
         $oids = array();
         foreach ($pattern_data as $k => $v) {
             if ($k != 'id' /* && $k != 'port_coefficient'*/ && $k != 'mac_all' && $k != 'macs_ports'/* && $k != 'gig_port_coefficient' */) {
@@ -1197,13 +1235,13 @@ class IndexController extends Controller
             }
         }
 
-
         // $manufacturer = strtolower($d['manufacturer']);
 
         if ($d['manufacturer'] == 'Eltex') {
             $oids['cable_status'] = $oids['cable_status'] . '.2';
             $oids['cable_lenght'] = $oids['cable_lenght'] . '.3';
         }
+
         if ($d['manufacturer'] == 'D-Link' && ($d['switch_model'] == 'DES-1210-28' || $d['switch_model'] == 'DGS-1100-06/ME')) {
             if ($oids['cable_status']) {
                 $oids['cable_status'] = substr($oids['cable_status'], 0, -(1 + strlen($d['port'])));
@@ -1249,14 +1287,23 @@ class IndexController extends Controller
 
         $time_byte_in_out_2 = microtime(true);
         $time_dif = $time_byte_in_out_2 - $this->time_byte_in_out;
-        // Debugger::Eho($this->time_byte_in_out);
-        // echo '</br>';
 
-
+       $oid_cable_test_start = $oids['cable_test_start'];
         $oids = array_flip($oids);
        // Debugger::PrintR($oids);
-     //   Debugger::PrintR($data['key']);
+       // Debugger::PrintR($data['key']);
+
+        if($d['manufacturer'] == 'Huawei' && $oid_cable_test_start){ //Для Хуавеев значение для запуска теста кабеля отсутствует,(при запуске через приложение
+            //через консоль ==1), а в случае если тест кабеля запущен то необходимо целое число для последующего запуска записи длины кабеля
+            $data['key'][$oid_cable_test_start] = 1;
+        }
+
         $data_switch = array_combine($oids, $data['key']);
+
+        if ($d['manufacturer'] == 'TP-Link' && $d['switch_model'] == 'TL-SG3210'){
+            $data_switch['speed'] = $data_switch['speed']/1000000;
+        }
+
 
 
 
@@ -1402,6 +1449,7 @@ class IndexController extends Controller
         //  Debugger::Eho($ttt);
 
         $temperature_warning_class = $this->criticalTemperature($data_switch['temperature'], $data['manufacturer']);
+        $cpu_warning_class = $this ->criticalCpuLoading($data_switch['cpu_5s'], $data_switch['cpu_1m'], $data_switch['cpu_5m']);
 
         $args = array(
             'data_switch' => $data_switch,
@@ -1434,6 +1482,7 @@ class IndexController extends Controller
             'billing_request' => isset($billing_request) ? $billing_request : null,
             'switch_port_id' => Router::getSwitchPortId() ? Router::getSwitchPortId() : '',
             'temperature_warning_class' => $temperature_warning_class,
+            'cpu_warning_class' => $cpu_warning_class,
         );
 
 

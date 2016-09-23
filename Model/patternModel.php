@@ -121,7 +121,7 @@ class patternModel
 
 
         foreach ($data[0] as $k => $v) {
-            if ($k != 'id' /* && $k != 'port_coefficient'&&  $k != 'gig_port_coefficient' */ && $k != 'mac_all' && $k != 'macs_ports' && $k != 'temperature') {
+            if ($k != 'id' /* && $k != 'port_coefficient'&&  $k != 'gig_port_coefficient' */ && $k != 'mac_all' && $k != 'macs_ports' && $k != 'temperature' && $k != 'cpu_5s' && $k != 'cpu_1m' && $k != 'cpu_5m') {
 
                 $data[0][$k] = $data[0][$k] . $port;
 
@@ -130,7 +130,7 @@ class patternModel
                 }
 
             }
-            if($k == 'temperature'){
+            if($k == 'temperature' || $k == 'cpu_5s' || $k == 'cpu_1m' || $k == 'cpu_5m'){
                 if (empty($v)) {
                     unset($data[0][$k]);
                 }else{

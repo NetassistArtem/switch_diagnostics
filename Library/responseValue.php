@@ -104,5 +104,11 @@ $duplex = array(
 );
 $tp_link = array(
     '8 Giga + 1 SFP ports managed switch w/WebView' => 'TP-Link TL-SG3109',
-    '24-Port Managed 10/100 Switch w/WebView' => 'TP-Link TL-SL3428'
+    '24-Port Managed 10/100 Switch w/WebView' => 'TP-Link TL-SL3428',
+    '8-Port 10/100Mbps + 2-Port Gigabit Smart Switch' => 'TP-Link TL-SL2210',
+    '10G Managed Switch' =>'TP-Link TL-SG3210',
+    '12-Port Gigabit SFP L2 Managed Switch with 4 Combo 1000BASE-T Ports' => 'TP-Link TL-SG5412F',
+    '16-Port 10/100Mbps + 2-Port Gigabit Smart Switch' => 'TP-Link TL-SL2218',
+    '24-Port 10/100Mbps + 4-Port Gigabit Smart Switch' => 'TP-Link TL-SL2428',
+    'JetStream 16-Port Gigabit L2 Managed Switch with 2 Combo SFP Slots' => 'TP-Link TL-SG3216',
 );

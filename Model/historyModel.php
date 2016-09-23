@@ -18,6 +18,10 @@ class historyModel
         $cable_lenght_p4 = isset($data_switch['cable_lenght_p4'])? $data_switch['cable_lenght_p4'] : '-';
         $cable_lenght = $cable_lenght_total.' / ('.$cable_lenght_p1.' / '.$cable_lenght_p2.' / '.$cable_lenght_p3.' / '.$cable_lenght_p4.')';
         $mac_int = '';
+        $cpu_5s = isset($data_switch['cpu_5s']) ? $data_switch['cpu_5s'] : '-';
+        $cpu_1m = isset($data_switch['cpu_1m']) ? $data_switch['cpu_1m'] : '-';
+        $cpu_5m = isset($data_switch['cpu_5m']) ? $data_switch['cpu_5m'] : '-';
+        $cpu = '('.$cpu_5s .'/'. $cpu_1m . '/' . $cpu_5m . ')';
         if(!empty($data_switch['mac'])){
 
             foreach($data_switch['mac'] as $v){
@@ -52,6 +56,7 @@ class historyModel
             'ref_sw_id' => $data_db['ref_sw_id'] == -1 ? 'Нет данных' : $data_db['ref_sw_id'],
             'cable_status' => $cable_status,
             'cable_lenght' => $cable_lenght,
+            'cpu' => $cpu,
 
 
 
@@ -60,9 +65,9 @@ class historyModel
 
         $dbc = Connect_db::getConnection();
         $sql = "INSERT INTO `users_history`(`date_time`,`account_id`, `switch_ip`, `mac`, `port`, `switch_model`, `firmware`,
- `port_status`, `counter_byte_in`, `counter_byte_out`,`counter_pkts_unicast_in`, `counter_pkts_unicast_out`, `error_in`, `error_out`, `duplex`,`speed`, `last_change`, `switch_id`, `temperature`, `ref_sw_id`, `cable_status`, `cable_lenght`)
+ `port_status`, `counter_byte_in`, `counter_byte_out`,`counter_pkts_unicast_in`, `counter_pkts_unicast_out`, `error_in`, `error_out`, `duplex`,`speed`, `last_change`, `switch_id`, `temperature`, `ref_sw_id`, `cable_status`, `cable_lenght`, `cpu`)
   VALUES (:date_time,:account_id, :switch_ip, :mac, :port, :switch_model, :firmware, :port_status, :counter_byte_in,
-  :counter_byte_out, :counter_pkts_unicast_in, :counter_pkts_unicast_out, :error_in, :error_out, :duplex, :speed, :last_change, :switch_id, :temperature, :ref_sw_id, :cable_status, :cable_lenght)";
+  :counter_byte_out, :counter_pkts_unicast_in, :counter_pkts_unicast_out, :error_in, :error_out, :duplex, :speed, :last_change, :switch_id, :temperature, :ref_sw_id, :cable_status, :cable_lenght, :cpu)";
 
         $sth = $dbc->getPDO()->prepare($sql);
 
