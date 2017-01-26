@@ -27,7 +27,7 @@ class IndexController extends Controller
 
 
         $patternModel = new patternModel($this->account_id, $this->switch_id, $this->port_id);
-
+        $indexModel = new IndexModel();
 
         if ($data_switch) {
             $switch = $patternModel->switchData();
@@ -36,7 +36,8 @@ class IndexController extends Controller
 
             $switch_manufacturer = array();
             $switch_model = array();
-            $switch_soft_version = array();
+            $switch_soft_version = $data_switch['firmware_array'];
+
             $switch_data_result = array();
             foreach ($switch as $v) {
                 $switch_manufacturer[] = $v['manufacturer'];
@@ -78,24 +79,19 @@ class IndexController extends Controller
             $key_m = max($switch_data_result_model_array_count);
             $switch_data_result['model_name'] = array_flip($switch_data_result_model_array_count)[$key_m];
 
-
-            foreach ($switch as $v) {
-                if ($v['model_name'] == $switch_data_result['model_name']) {
-                    $switch_soft_version[] = $v['firmware'];
-                }
-            }
-
+           // Debugger::PrintR($switch_soft_version);
             if (!empty($switch_soft_version)) {
-                //  Debugger::PrintR($switch_soft_version);
+
+                 // Debugger::PrintR($switch_soft_version);
                 foreach ($switch_soft_version as $val) {
 //echo $data_switch['key'].'  test '.$val.'</br>  ';
+//Debugger::Eho($data_switch['key']);
                     if (stripos($data_switch['key'], $val) !== false) {
                         $switch_data_result['soft_version'] = $val;
-
                     } elseif (strtoupper($data_switch['manufacturer']) == 'ELTEX') {
 
 
-                        $indexModel = new IndexModel();
+
 
 
                         $soft_ver_array = $indexModel->snmpByKey($this->account_id, '1.3.6.1.4.1.89.2.4', $this->switch_id, $this->port_id);
@@ -107,19 +103,23 @@ class IndexController extends Controller
                         }
 
 
+                    }elseif($val == 'Version no available'){
+                        $switch_data_result['soft_version'] = 'Version no available';
+
                     }
 
                 }
             }
 
-
+            $indexModel->setSwitchFirmware($switch_data_result['soft_version']);
             if (!empty($switch_data_result)) {
                 if (!$switch_data_result['manufacturer']) {
                     Session::setFlash('Switch_SNMP_data_problem.В полученных со свича данных отсутствует информация о производители свича.', $this->style_class['information']);
                 }
 
                 if (!$switch_data_result['soft_version']) {
-                    Session::setFlash('Switch_SNMP_data_problem.В полученных со свича данных версия прошивки не совпадает с версией указанной в шаблоне свича.', $this->style_class['information']);
+
+                    Session::setFlash('Версия пришивки свича отсутствует в шаблоне. Некоторые данные могут быть не корректны. Введите данные прошивки в шаблон.', $this->style_class['information']);
                     $patterns_array = array();
                     foreach ($switch as $v) {
                         if ($switch_data_result['model_name'] == $v['model_name']) {
@@ -872,6 +872,9 @@ class IndexController extends Controller
         $cpu_warning_class = $this ->criticalCpuLoading($data_switch['cpu_5s'], $data_switch['cpu_1m'], $data_switch['cpu_5m']);
 
 
+        global $sw_firmware;
+        $data['firmware'] = $sw_firmware;
+
         $args = array(
             'data_switch' => $data_switch,
             'data_db' => $data,
@@ -1084,6 +1087,7 @@ class IndexController extends Controller
         $port_coefficient_array = $indexModel->getPortCoefficient($this->account_id, $d['port'], $this->switch_id);//$patternModel->getPortCoefficient($pattern_id, $d['port'], $d['switch_model']);
 
 
+
         $port_coefficient = $port_coefficient_array['port_coefficient_simple_gig'];
 
 
@@ -1092,8 +1096,7 @@ class IndexController extends Controller
 
 
         $mac_port_array = $indexModel->getAllMac($this->account_id, $pattern_id, $port_coefficient_array, $this->switch_id, $this->port_id);
-
-
+//Debugger::PrintR($mac_port_array);
         if ($d['mac']) {
             if (array_key_exists($d['mac'], $mac_port_array)) {
                 $port_db = $d['port'];// + $port_coefficient;
@@ -1284,7 +1287,7 @@ class IndexController extends Controller
 
 
         $data = $indexModel->snmpData($this->account_id, $oids, null, $this->switch_id, $this->port_id, $switch_firmware);
-
+//Debugger::PrintR($data);
         $time_byte_in_out_2 = microtime(true);
         $time_dif = $time_byte_in_out_2 - $this->time_byte_in_out;
 
@@ -1450,6 +1453,10 @@ class IndexController extends Controller
 
         $temperature_warning_class = $this->criticalTemperature($data_switch['temperature'], $data['manufacturer']);
         $cpu_warning_class = $this ->criticalCpuLoading($data_switch['cpu_5s'], $data_switch['cpu_1m'], $data_switch['cpu_5m']);
+
+
+        global $sw_firmware;
+        $data['firmware'] = $sw_firmware;
 
         $args = array(
             'data_switch' => $data_switch,

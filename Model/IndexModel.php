@@ -7,6 +7,9 @@ class IndexModel
     private static $port_coeff = array();
     private $switch_data_db = null;
     private $switch_mod_manuf = null;
+    public $test;
+
+
 
 
     /*
@@ -48,9 +51,12 @@ class IndexModel
                 }
                 $mac_16 = trim($mac_16, ':');
                 $port = str_replace('INTEGER: ', '', $v);
+//Debugger::PrintR($this->switch_mac);
+
+                global $sw_firmware; //временный костыль, надо пердавать свойством объекта
 
                 // у ELTEX и у hawei для старой версии прошивки, указание портов для макадресов идут с коэфициентом (не путать с именованиями портов для формирования всех остальных оидов)
-                if (strtolower($this->switch_mac['manufacturer']) == 'eltex' || strtolower($this->switch_mac['manufacturer']) == 'huawei') {
+                if (strtolower($this->switch_mac['manufacturer']) == 'eltex' || (strtolower($this->switch_mac['manufacturer']) == 'huawei' && $sw_firmware !='Version 5.70 (S2300 V100R006C05)')) {
                     $port_coef = ($port <= $data_switch[0]['simple_port'] || $port == 0) ? $port_coefficient['port_coefficient'] : $port_coefficient['gig_port_coefficient'];
 
                 } else {
@@ -85,10 +91,15 @@ class IndexModel
     public function snmpData($account_id, $key, $variable = null, $switch_id = null, $port_id = null, $firmware_switch = null)
     {
 
+
+
         if (!$this->switch_mac) {
+
             $this->switch_mac = $this->getDataByID($account_id, $switch_id, $port_id);
+
         }
-        //Debugger::PrintR($this->switch_mac);
+
+
         if ($firmware_switch) {
 
             foreach ($this->switch_data_db as $v) {
@@ -121,6 +132,7 @@ class IndexModel
             'port' => $this->switch_mac['port'],
             'switch_model' => $this->switch_mac['switch_model'],
             'firmware' => $this->switch_mac['firmware'],
+            'firmware_array'=> $this->switch_mac['firmware_array'],
             'manufacturer' => $this->switch_mac['manufacturer'],
             'snmp' => $this->switch_mac['snmp'],
             'write_community' => $this->switch_mac['write_community'],
@@ -192,10 +204,10 @@ AS write_community, pl.ref_user_id  FROM port_list pl JOIN sw_list sl ON pl.sw_i
         //Debugger::PrintR($d);
 
         $switch_data_db = $this->switchData();
+     //   Debugger::PrintR($switch_data_db);
         $this->switch_data_db = $switch_data_db;
         $switch_mod_manuf = strtolower($d[0]['switch_mod_manuf']);
         $this->switch_mod_manuf = $switch_mod_manuf;
-
 
         foreach ($switch_data_db as $v) {
 
@@ -204,8 +216,43 @@ AS write_community, pl.ref_user_id  FROM port_list pl JOIN sw_list sl ON pl.sw_i
                 $d[0]['switch_model'] = $v['model_name'];
                 $d[0]['manufacturer'] = $v['manufacturer'];
                 $d[0]['firmware'] = $v['firmware'];
+                $d[0]['firmware_array_temp'][] = $v['firmware'];
+                $d[0]['models_array'][] = $v['model_name'];
+                $d[0]['firmware_array'] = array();
             }
         }
+        //Удаление схожих моделей (когда в фильтр попадают например следующие модели S2326TP-EI и S2326TP-EI-AC)
+        if(isset($d[0]['models_array'])){
+            if(count($d[0]['models_array'])>1){
+                $mod_str_count_array= array();
+                foreach($d[0]['models_array'] as $key_mod=>$val_mod){
+                    $mod_str_count_array[$key_mod] = strlen($val_mod);
+                }
+                if(  count(array_unique($mod_str_count_array))>1 ){
+
+                  $switch_name = $d[0]['models_array'][array_search(max($mod_str_count_array),$mod_str_count_array)];
+                    $d[0]['switch_model'] = $switch_name;
+                    foreach($d[0]['models_array'] as $key_mod=>$val_mod){
+
+                        if($val_mod == $switch_name){
+                            $d[0]['firmware_array'][] = $d[0]['firmware_array_temp'][$key_mod];
+                        }
+
+
+                    }
+
+                }else{
+                    $d[0]['firmware_array'] = $d[0]['firmware_array_temp'];
+                }
+            }
+            else{
+                $d[0]['firmware_array'][] = $d[0]['firmware_array_temp'][0];
+            }
+        }
+       // unset($d[0]['models_array']);
+       // unset($d[0]['firmware_array_temp']);
+        //Debugger::PrintR($d);
+
         if (isset($d[0]['snmp']) && $d[0]['snmp'] != 1) {
 
             throw new Exception('SNMP отключено в запрашиваемом свиче (информация из базы данных биллинга).', 1);
@@ -239,6 +286,7 @@ AS write_community, pl.ref_user_id  FROM port_list pl JOIN sw_list sl ON pl.sw_i
             'user_id' => $account_id ? $account_id : $d['0']['user_id'],
             'sw_id' => $d[0]['sw_id'],
             'ref_sw_id' => $d[0]['ref_sw_id'],
+            'firmware_array' => $d[0]['firmware_array'],
 
         );
 
@@ -257,7 +305,7 @@ AS write_community, pl.ref_user_id  FROM port_list pl JOIN sw_list sl ON pl.sw_i
         if (!$data['mac']) {
             Session::setFlash('Not found in data base mac-adress for user with account id = ' . $account_id . '.');
         }
-//Debugger::PrintR($data);
+
 
         return $data;
     }
@@ -508,6 +556,19 @@ AS write_community, pl.ref_user_id  FROM port_list pl JOIN sw_list sl ON pl.sw_i
     public static function getPortCoeff()
     {
         return self::$port_coeff;
+    }
+
+    public function setSwitchFirmware($switch_firmware)
+    {
+        global $sw_firmware;
+
+        if(isset($switch_firmware)){
+            $sw_firmware = $switch_firmware;
+        }else{
+            $sw_firmware = 'Not found';
+
+        }
+
     }
 
 
